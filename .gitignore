@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual Environment
+.venv/
+
+# VS Code
+.vscode/
+
+# Environment Variables
+.env
+
+# Uploads
+backend/uploads/
+
+# Logs
+*.log
+
+# macOS
+.DS_Store
+
+# Linux
+*~

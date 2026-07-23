@@ -1,0 +1,25 @@
+Project Title: 2-to-1 Multiplexer
+
+Module Name:
+mux2to1
+
+Description:
+Design a combinational 2-to-1 multiplexer.
+
+Inputs:
+- a : 1-bit input
+- b : 1-bit input
+- sel : 1-bit select signal
+
+Output:
+- y : 1-bit output
+
+Functional Requirements:
+1. If sel = 0, output y shall be equal to input a.
+2. If sel = 1, output y shall be equal to input b.
+
+Timing:
+Pure combinational logic.
+
+Language:
+SystemVerilog
