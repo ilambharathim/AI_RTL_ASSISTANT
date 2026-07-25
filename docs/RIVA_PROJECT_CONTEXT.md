@@ -371,11 +371,11 @@ cefdf7b  refactor: establish RIVA architecture v2 foundation
 d487ff9  feat: implement deterministic specification lexer
 b310405  docs: add RIVA project context and architecture record
 741195b  feat: strengthen generic specification AST
+7e27c21  feat: implement generic specification parser
 ```
 
-The deterministic generic parser, parser exceptions, focused parser tests,
-and this documentation update are the current verified changes awaiting their
-Git checkpoint.
+The current verified implementation checkpoint is 7e27c21. The repository
+was clean after the generic parser milestone commit.
 
 ## 13. Development Environment
 
