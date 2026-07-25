@@ -1,140 +1,267 @@
 """
-Specification Lexer
+RIVA specification document lexer.
 
-Converts normalized specification text into
-generic document tokens.
+Converts normalized specification text into generic document tokens using
+the shared scanner, line reader, classifier, and token builder.
+
+The lexer recognizes document structure only. Engineering meaning belongs
+to the parser and semantic-analysis stages.
 """
 
-from app.parsers.specification.tokens import Token
+from app.parsers.specification.classifier import (
+    DocumentClassifier,
+    LineType,
+)
+from app.parsers.specification.line_reader import LineReader
+from app.parsers.specification.scanner import Scanner
+from app.parsers.specification.token_builder import TokenBuilder
 from app.parsers.specification.token_types import TokenType
+from app.parsers.specification.tokens import Token
 
 
 class SpecificationLexer:
+    """
+    Deterministic lexer for normalized specification documents.
 
-    def __init__(self, text: str, source_file: str = ""):
+    The lexer emits generic structural tokens while preserving source
+    locations and section context. Calling ``tokenize`` multiple times
+    returns a fresh token stream each time.
+    """
 
-        self.text = text
-        self.source_file = source_file
+    def __init__(self, text: str, source_file: str = "") -> None:
+        if not isinstance(text, str):
+            raise TypeError("text must be a string.")
 
-        self.position = 0
-        self.line = 1
-        self.column = 1
+        if not isinstance(source_file, str):
+            raise TypeError("source_file must be a string.")
 
-        self.length = len(text)
+        self._text = text
+        self._source_file = source_file
 
-        self.current_char = text[0] if self.length else None
-
-    # ---------------------------------------------------------
-
-    def advance(self):
-
-        if self.current_char == "\n":
-            self.line += 1
-            self.column = 1
-        else:
-            self.column += 1
-
-        self.position += 1
-
-        if self.position >= self.length:
-            self.current_char = None
-        else:
-            self.current_char = self.text[self.position]
-
-    # ---------------------------------------------------------
-
-    def peek(self):
-
-        nxt = self.position + 1
-
-        if nxt >= self.length:
-            return None
-
-        return self.text[nxt]
-
-    # ---------------------------------------------------------
-
-    def skip_whitespace(self):
-
-        while self.current_char is not None:
-
-            if self.current_char in (" ", "\t"):
-                self.advance()
-            else:
-                break
-
-    # ---------------------------------------------------------
-
-    def create_token(self, token_type, value):
-
-        return Token(
-            type=token_type,
-            value=value,
-            line=self.line,
-            column=self.column,
-            source_file=self.source_file,
-        )
-
-    # ---------------------------------------------------------
-
-    def read_line(self):
+    def tokenize(self) -> list[Token]:
         """
-        Read one logical line.
+        Convert the complete document into a token stream.
 
-        Stops at newline but does not consume
-        the next line.
+        Every logical input line produces a NEWLINE token. The stream always
+        ends with exactly one EOF token.
         """
 
-        chars = []
+        scanner = Scanner(self._text)
+        line_reader = LineReader(scanner)
 
-        while self.current_char is not None:
+        tokens: list[Token] = []
+        current_section = ""
 
-            if self.current_char == "\n":
+        while not line_reader.eof():
+            line_start = scanner.position()
+            line_start_index = line_start.index
+
+            raw_line = line_reader.next_line()
+
+            if raw_line is None:
                 break
 
-            chars.append(self.current_char)
+            line_tokens, current_section = self._tokenize_line(
+                raw_line=raw_line,
+                line_number=line_start.line,
+                current_section=current_section,
+            )
 
-            self.advance()
+            tokens.extend(line_tokens)
 
-        return "".join(chars).strip()
+            newline_column = self._newline_column(
+                scanner=scanner,
+                line_start_index=line_start_index,
+                line_start_number=line_start.line,
+            )
 
-    # ---------------------------------------------------------
+            tokens.append(
+                self._build_token(
+                    token_type=TokenType.NEWLINE,
+                    value="\n",
+                    line=line_start.line,
+                    column=newline_column,
+                    section=current_section,
+                )
+            )
 
-    def tokenize(self):
-
-        tokens = []
-
-        while self.current_char is not None:
-
-            self.skip_whitespace()
-
-            if self.current_char is None:
-                break
-
-            #
-            # Skip blank lines
-            #
-
-            if self.current_char == "\n":
-                self.advance()
-                continue
-
-            line = self.read_line()
-
-            print(f"LINE --> {line}")
-
-            #
-            # consume newline
-            #
-
-            if self.current_char == "\n":
-                self.advance()
+        eof_position = scanner.position()
 
         tokens.append(
-            self.create_token(
-                TokenType.EOF,
-                ""
+            self._build_token(
+                token_type=TokenType.EOF,
+                value="",
+                line=eof_position.line,
+                column=eof_position.column,
+                section=current_section,
             )
         )
 
         return tokens
+
+    def _tokenize_line(
+        self,
+        raw_line: str,
+        line_number: int,
+        current_section: str,
+    ) -> tuple[list[Token], str]:
+        """
+        Tokenize one logical line and return its resulting section context.
+        """
+
+        line_type = DocumentClassifier.classify(raw_line)
+        stripped_line = raw_line.strip()
+
+        if line_type is LineType.EMPTY:
+            return [], current_section
+
+        if line_type is LineType.SECTION_HEADER:
+            section_name = stripped_line[:-1].strip()
+            column = self._first_content_column(raw_line)
+
+            return (
+                [
+                    self._build_token(
+                        token_type=TokenType.SECTION_HEADER,
+                        value=section_name,
+                        line=line_number,
+                        column=column,
+                        section=section_name,
+                    )
+                ],
+                section_name,
+            )
+
+        if line_type is LineType.KEY_VALUE:
+            return (
+                self._tokenize_key_value(
+                    raw_line=raw_line,
+                    line_number=line_number,
+                    section=current_section,
+                ),
+                current_section,
+            )
+
+        token_type = (
+            TokenType.LIST_ITEM
+            if line_type is LineType.LIST_ITEM
+            else TokenType.TEXT
+        )
+
+        return (
+            [
+                self._build_token(
+                    token_type=token_type,
+                    value=stripped_line,
+                    line=line_number,
+                    column=self._first_content_column(raw_line),
+                    section=current_section,
+                )
+            ],
+            current_section,
+        )
+
+    def _tokenize_key_value(
+        self,
+        raw_line: str,
+        line_number: int,
+        section: str,
+    ) -> list[Token]:
+        """
+        Tokenize a generic ``key: value`` line.
+        """
+
+        colon_index = raw_line.index(":")
+        key = raw_line[:colon_index].strip()
+
+        value_start_index = colon_index + 1
+
+        while (
+            value_start_index < len(raw_line)
+            and raw_line[value_start_index].isspace()
+        ):
+            value_start_index += 1
+
+        value = raw_line[value_start_index:].strip()
+
+        tokens = [
+            self._build_token(
+                token_type=TokenType.KEY,
+                value=key,
+                line=line_number,
+                column=self._first_content_column(raw_line),
+                section=section,
+            ),
+            self._build_token(
+                token_type=TokenType.COLON,
+                value=":",
+                line=line_number,
+                column=colon_index + 1,
+                section=section,
+            ),
+        ]
+
+        if value:
+            tokens.append(
+                self._build_token(
+                    token_type=TokenType.VALUE,
+                    value=value,
+                    line=line_number,
+                    column=value_start_index + 1,
+                    section=section,
+                )
+            )
+
+        return tokens
+
+    def _build_token(
+        self,
+        token_type: TokenType,
+        value: str,
+        line: int,
+        column: int,
+        section: str,
+    ) -> Token:
+        """
+        Build a validated token using the shared TokenBuilder.
+        """
+
+        return TokenBuilder.build(
+            token_type=token_type,
+            value=value,
+            line=line,
+            column=column,
+            source_file=self._source_file,
+            section=section,
+        )
+
+    @staticmethod
+    def _first_content_column(line: str) -> int:
+        """
+        Return the one-based column of the first non-whitespace character.
+        """
+
+        for index, character in enumerate(line):
+            if not character.isspace():
+                return index + 1
+
+        return 1
+
+    @staticmethod
+    def _newline_column(
+        scanner: Scanner,
+        line_start_index: int,
+        line_start_number: int,
+    ) -> int:
+        """
+        Return the physical or synthetic newline column.
+
+        When the source contains a newline, the scanner index delta preserves
+        correct metadata for both LF and CRLF input. For a final line without
+        a newline, the token is placed immediately after its final character.
+        """
+
+        if scanner.line > line_start_number:
+            return scanner.index - line_start_index
+
+        return scanner.column
