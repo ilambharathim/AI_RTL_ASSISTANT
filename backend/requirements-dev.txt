@@ -1,0 +1,8 @@
+# RIVA backend development and test dependencies
+#
+# Runtime dependencies are inherited from requirements.txt.
+
+-r requirements.txt
+
+# Required by Starlette/FastAPI TestClient.
+httpx2==2.9.1

@@ -1,26 +1,50 @@
-# Python
+# Python bytecode
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
+*.py[cod]
+*$py.class
 
-# Virtual Environment
+# Python virtual environments
 .venv/
+venv/
+env/
 
-# VS Code
-.vscode/
+# Python test, lint, and type-check caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
 
-# Environment Variables
+# Test coverage
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# Python packaging and build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Environment variables and local secrets
 .env
+.env.*
+!.env.example
 
-# Uploads
+# IDE and editor settings
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# RIVA runtime uploads
 backend/uploads/
 
 # Logs
 *.log
 
-# macOS
+# Operating-system files
 .DS_Store
-
-# Linux
-*~
+Thumbs.db
