@@ -2,6 +2,10 @@
 Exceptions raised by the RIVA specification-processing frontend.
 """
 
+from app.parsers.specification.parser_diagnostic_code import (
+    SpecificationParserDiagnosticCode,
+)
+
 
 class SpecificationParserError(Exception):
     """
@@ -36,10 +40,18 @@ class SpecificationSyntaxError(SpecificationParserError):
         self,
         message: str,
         *,
+        code: SpecificationParserDiagnosticCode = (
+            SpecificationParserDiagnosticCode.UNEXPECTED_TOKEN
+        ),
         line: int,
         column: int,
         source_file: str = "",
     ) -> None:
+        if not isinstance(code, SpecificationParserDiagnosticCode):
+            raise TypeError(
+                "code must be a SpecificationParserDiagnosticCode."
+            )
+
         if not isinstance(message, str) or not message:
             raise ValueError("message must be a non-empty string.")
 
@@ -54,6 +66,7 @@ class SpecificationSyntaxError(SpecificationParserError):
         if not isinstance(source_file, str):
             raise TypeError("source_file must be a string.")
 
+        self.code = code.value
         self.message = message
         self.line = line
         self.column = column

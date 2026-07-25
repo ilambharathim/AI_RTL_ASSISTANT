@@ -20,6 +20,9 @@ from app.parsers.specification.exceptions import (
     SpecificationSyntaxError,
     SpecificationTokenStreamError,
 )
+from app.parsers.specification.parser_diagnostic_code import (
+    SpecificationParserDiagnosticCode,
+)
 from app.parsers.specification.token_types import TokenType
 from app.parsers.specification.tokens import Token
 
@@ -107,6 +110,7 @@ class SpecificationParser:
 
             token = self._current()
             self._raise_syntax_error(
+                SpecificationParserDiagnosticCode.UNEXPECTED_TOKEN,
                 f"Unexpected {token.type.name} token.",
                 token,
             )
@@ -117,17 +121,20 @@ class SpecificationParser:
     def _parse_section(self, document: DocumentNode) -> None:
         header = self._consume(
             TokenType.SECTION_HEADER,
+            SpecificationParserDiagnosticCode.EXPECTED_SECTION_HEADER,
             "Expected a section header.",
         )
 
         if not header.value.strip():
             self._raise_syntax_error(
+                SpecificationParserDiagnosticCode.EMPTY_SECTION_HEADER,
                 "Section header must not be empty.",
                 header,
             )
 
         self._consume(
             TokenType.NEWLINE,
+            SpecificationParserDiagnosticCode.EXPECTED_NEWLINE_AFTER_SECTION_HEADER,
             "Expected NEWLINE after section header.",
         )
 
@@ -144,17 +151,20 @@ class SpecificationParser:
     def _parse_key_value(self) -> KeyValueNode:
         key_token = self._consume(
             TokenType.KEY,
+            SpecificationParserDiagnosticCode.EXPECTED_KEY,
             "Expected a key.",
         )
 
         if not key_token.value.strip():
             self._raise_syntax_error(
+                SpecificationParserDiagnosticCode.EMPTY_KEY,
                 "Key must not be empty.",
                 key_token,
             )
 
         self._consume(
             TokenType.COLON,
+            SpecificationParserDiagnosticCode.EXPECTED_COLON_AFTER_KEY,
             "Expected COLON after key.",
         )
 
@@ -165,6 +175,7 @@ class SpecificationParser:
 
             if not value_token.value.strip():
                 self._raise_syntax_error(
+                    SpecificationParserDiagnosticCode.EMPTY_VALUE,
                     "VALUE token must not be empty.",
                     value_token,
                 )
@@ -173,6 +184,7 @@ class SpecificationParser:
 
         self._consume(
             TokenType.NEWLINE,
+            SpecificationParserDiagnosticCode.EXPECTED_NEWLINE_AFTER_KEY_VALUE,
             "Expected NEWLINE after key-value entry.",
         )
 
@@ -187,17 +199,20 @@ class SpecificationParser:
     def _parse_list_item(self) -> ListItemNode:
         token = self._consume(
             TokenType.LIST_ITEM,
+            SpecificationParserDiagnosticCode.EXPECTED_LIST_ITEM,
             "Expected a list item.",
         )
 
         if not token.value.strip():
             self._raise_syntax_error(
+                SpecificationParserDiagnosticCode.EMPTY_LIST_ITEM,
                 "List item must not be empty.",
                 token,
             )
 
         self._consume(
             TokenType.NEWLINE,
+            SpecificationParserDiagnosticCode.EXPECTED_NEWLINE_AFTER_LIST_ITEM,
             "Expected NEWLINE after list item.",
         )
 
@@ -211,17 +226,20 @@ class SpecificationParser:
     def _parse_text(self) -> TextNode:
         token = self._consume(
             TokenType.TEXT,
+            SpecificationParserDiagnosticCode.EXPECTED_TEXT,
             "Expected text.",
         )
 
         if not token.value.strip():
             self._raise_syntax_error(
+                SpecificationParserDiagnosticCode.EMPTY_TEXT,
                 "Text must not be empty.",
                 token,
             )
 
         self._consume(
             TokenType.NEWLINE,
+            SpecificationParserDiagnosticCode.EXPECTED_NEWLINE_AFTER_TEXT,
             "Expected NEWLINE after text.",
         )
 
@@ -267,20 +285,27 @@ class SpecificationParser:
     def _consume(
         self,
         token_type: TokenType,
+        code: SpecificationParserDiagnosticCode,
         message: str,
     ) -> Token:
         if self._check(token_type):
             return self._advance()
 
-        self._raise_syntax_error(message, self._current())
+        self._raise_syntax_error(
+            code,
+            message,
+            self._current(),
+        )
 
     @staticmethod
     def _raise_syntax_error(
+        code: SpecificationParserDiagnosticCode,
         message: str,
         token: Token,
     ) -> None:
         raise SpecificationSyntaxError(
             message,
+            code=code,
             line=token.line,
             column=token.column,
             source_file=token.source_file,
