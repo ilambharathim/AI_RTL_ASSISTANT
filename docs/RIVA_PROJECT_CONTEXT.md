@@ -207,6 +207,23 @@ Implemented parser behavior includes:
 The parser understands generic document grammar only. It does not assign
 hardware meaning or populate the Specification IR.
 
+### Diagnostics Foundation
+
+The diagnostics engine now contains an immutable shared `Diagnostic` value
+model and stable `DiagnosticSeverity` values for `ERROR`, `WARNING`, and
+`INFO`.
+
+Implemented behavior includes:
+
+- stable code, message, severity, and stage fields;
+- optional source-file, line, and column metadata;
+- validation of required fields and source locations;
+- immutable diagnostic instances;
+- stable compiler-style single-line formatting.
+
+Parser recovery, diagnostic aggregation, suppression, rendering, and
+reporting integration remain unimplemented.
+
 ## 6. Current Domain Models
 
 Implemented domain components include:
@@ -273,6 +290,7 @@ Current regression coverage includes:
 - normalizer;
 - deterministic specification lexer;
 - deterministic generic specification parser;
+- shared diagnostic value model;
 - domain models and specification IR;
 - tokens and token builder;
 - upload service and upload API.
@@ -287,8 +305,12 @@ entries, active-section routing, empty documents, source metadata, malformed
 token streams, source-located syntax errors, repeated parsing, independent AST
 objects, and absence of debug output.
 
-The complete backend regression passed after the generic parser and its
-focused regression suite were added.
+The diagnostic model has assertion-based tests for stable severity values,
+field validation, source-location formatting, immutability, and compiler-style
+string rendering.
+
+The complete backend regression passed after the shared diagnostic value model
+and its focused regression suite were added.
 
 Future testing improvements include migration to pytest, linting,
 formatting, static type checking, coverage reporting, and CI execution.
@@ -372,10 +394,11 @@ d487ff9  feat: implement deterministic specification lexer
 b310405  docs: add RIVA project context and architecture record
 741195b  feat: strengthen generic specification AST
 7e27c21  feat: implement generic specification parser
+c8bf163  docs: record generic parser checkpoint
 ```
 
-The current verified implementation checkpoint is 7e27c21. The repository
-was clean after the generic parser milestone commit.
+The checkpoint list records selected committed milestones and is not intended
+to duplicate the complete Git history.
 
 ## 13. Development Environment
 
