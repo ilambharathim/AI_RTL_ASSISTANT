@@ -16,9 +16,14 @@ from app.domain.ast.keyvalue_node import KeyValueNode
 from app.domain.ast.listitem_node import ListItemNode
 from app.domain.ast.section_node import SectionNode
 from app.domain.ast.text_node import TextNode
+from app.engines.diagnostics.diagnostic import Diagnostic
+from app.engines.diagnostics.diagnostic_severity import DiagnosticSeverity
 from app.parsers.specification.exceptions import (
     SpecificationSyntaxError,
     SpecificationTokenStreamError,
+)
+from app.parsers.specification.parse_result import (
+    SpecificationParseResult,
 )
 from app.parsers.specification.parser_diagnostic_code import (
     SpecificationParserDiagnosticCode,
@@ -61,13 +66,41 @@ class SpecificationParser:
         self._index = 0
         self._current_section: SectionNode | None = None
 
+    DIAGNOSTIC_STAGE = "specification-parser"
+
     def parse(self) -> DocumentNode:
         """
         Parse the complete token stream into a fresh DocumentNode.
 
-        Repeated calls are deterministic and return independent AST objects.
+        This strict API remains fail-fast. The first grammar error raises
+        SpecificationSyntaxError. Repeated calls are deterministic and return
+        independent AST objects.
         """
 
+        document, _ = self._parse_document(recover=False)
+        return document
+
+    def parse_with_diagnostics(self) -> SpecificationParseResult:
+        """
+        Parse with line-oriented recovery and aggregate syntax diagnostics.
+
+        Invalid token-stream contracts remain fatal and are rejected during
+        construction. Grammar failures produce ordered error diagnostics while
+        valid later constructs are preserved in a valid partial AST.
+        """
+
+        document, diagnostics = self._parse_document(recover=True)
+
+        return SpecificationParseResult(
+            document=document,
+            diagnostics=diagnostics,
+        )
+
+    def _parse_document(
+        self,
+        *,
+        recover: bool,
+    ) -> tuple[DocumentNode, tuple[Diagnostic, ...]]:
         self._index = 0
         self._current_section = None
 
@@ -78,45 +111,64 @@ class SpecificationParser:
             column=first_token.column,
             source_file=first_token.source_file,
         )
+        diagnostics: list[Diagnostic] = []
 
         while not self._check(TokenType.EOF):
             if self._match(TokenType.NEWLINE):
                 continue
 
-            if self._check(TokenType.SECTION_HEADER):
-                self._parse_section(document)
-                continue
+            start_index = self._index
+            failed_line = self._current().line
 
-            if self._check(TokenType.KEY):
-                self._add_entry(
-                    document,
-                    self._parse_key_value(),
+            try:
+                self._parse_construct(document)
+            except SpecificationSyntaxError as error:
+                if not recover:
+                    raise
+
+                diagnostics.append(
+                    self._diagnostic_from_syntax_error(error)
                 )
-                continue
-
-            if self._check(TokenType.LIST_ITEM):
-                self._add_entry(
-                    document,
-                    self._parse_list_item(),
+                self._synchronize(
+                    start_index=start_index,
+                    failed_line=failed_line,
                 )
-                continue
-
-            if self._check(TokenType.TEXT):
-                self._add_entry(
-                    document,
-                    self._parse_text(),
-                )
-                continue
-
-            token = self._current()
-            self._raise_syntax_error(
-                SpecificationParserDiagnosticCode.UNEXPECTED_TOKEN,
-                f"Unexpected {token.type.name} token.",
-                token,
-            )
 
         self._advance()
-        return document
+        return document, tuple(diagnostics)
+
+    def _parse_construct(self, document: DocumentNode) -> None:
+        if self._check(TokenType.SECTION_HEADER):
+            self._parse_section(document)
+            return
+
+        if self._check(TokenType.KEY):
+            self._add_entry(
+                document,
+                self._parse_key_value(),
+            )
+            return
+
+        if self._check(TokenType.LIST_ITEM):
+            self._add_entry(
+                document,
+                self._parse_list_item(),
+            )
+            return
+
+        if self._check(TokenType.TEXT):
+            self._add_entry(
+                document,
+                self._parse_text(),
+            )
+            return
+
+        token = self._current()
+        self._raise_syntax_error(
+            SpecificationParserDiagnosticCode.UNEXPECTED_TOKEN,
+            f"Unexpected {token.type.name} token.",
+            token,
+        )
 
     def _parse_section(self, document: DocumentNode) -> None:
         header = self._consume(
@@ -249,6 +301,52 @@ class SpecificationParser:
             column=token.column,
             source_file=token.source_file,
         )
+
+    @classmethod
+    def _diagnostic_from_syntax_error(
+        cls,
+        error: SpecificationSyntaxError,
+    ) -> Diagnostic:
+        return Diagnostic(
+            code=error.code,
+            message=error.message,
+            severity=DiagnosticSeverity.ERROR,
+            stage=cls.DIAGNOSTIC_STAGE,
+            line=error.line,
+            column=error.column,
+            source_file=error.source_file,
+        )
+
+    def _synchronize(
+        self,
+        *,
+        start_index: int,
+        failed_line: int,
+    ) -> None:
+        """
+        Recover at a logical line boundary while guaranteeing parser progress.
+
+        Tokens remaining on the failed source line are discarded. A token on a
+        later source line is preserved so it can begin the next construct.
+        """
+
+        if self._check(TokenType.EOF):
+            return
+
+        if self._index == start_index:
+            self._advance()
+
+        while not self._check(TokenType.EOF):
+            token = self._current()
+
+            if token.type is TokenType.NEWLINE:
+                self._advance()
+                return
+
+            if token.line > failed_line:
+                return
+
+            self._advance()
 
     def _add_entry(
         self,
