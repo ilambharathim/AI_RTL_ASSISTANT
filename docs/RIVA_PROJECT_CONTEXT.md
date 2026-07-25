@@ -395,6 +395,7 @@ b310405  docs: add RIVA project context and architecture record
 741195b  feat: strengthen generic specification AST
 7e27c21  feat: implement generic specification parser
 c8bf163  docs: record generic parser checkpoint
+7343aa4  feat: add shared diagnostic foundation
 ```
 
 The checkpoint list records selected committed milestones and is not intended
