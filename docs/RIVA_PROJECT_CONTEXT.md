@@ -135,6 +135,7 @@ Implemented specification frontend components include:
 - lexer rules;
 - token builder;
 - lexer;
+- parser;
 - token model;
 - token types;
 - parser exceptions.
@@ -180,7 +181,31 @@ Implemented lexer behavior includes:
 - no debug-output side effects.
 
 The lexer intentionally recognizes document structure only. Engineering
-meaning belongs to later parser and semantic-builder stages.
+meaning belongs to later semantic-builder stages.
+
+### Parser Status
+
+The generic specification parser deterministically consumes lexer tokens and
+constructs the generic specification AST.
+
+Implemented parser behavior includes:
+
+- token-stream type and metadata validation;
+- enforcement of exactly one final EOF token;
+- document-level entry handling;
+- section construction and active-section routing;
+- key-value node construction;
+- list-item node construction;
+- free-form text node construction;
+- blank-line handling;
+- empty key-value support;
+- source-location propagation;
+- source-located syntax errors;
+- repeatable parsing with independent AST objects;
+- no debug-output side effects.
+
+The parser understands generic document grammar only. It does not assign
+hardware meaning or populate the Specification IR.
 
 ## 6. Current Domain Models
 
@@ -194,7 +219,8 @@ Implemented domain components include:
 - document node;
 - section node;
 - key-value node;
-- list-item node.
+- list-item node;
+- free-form text node.
 
 These models are an early foundation rather than a complete hardware
 verification representation.
@@ -246,6 +272,7 @@ Current regression coverage includes:
 - scanner and line reader;
 - normalizer;
 - deterministic specification lexer;
+- deterministic generic specification parser;
 - domain models and specification IR;
 - tokens and token builder;
 - upload service and upload API.
@@ -255,7 +282,13 @@ locations, section context, indentation, blank lines, CRLF input, final
 lines without physical newlines, repeated tokenization, invalid inputs,
 and absence of debug output.
 
-The complete backend regression passed at commit d487ff9.
+The parser has assertion-based tests for AST construction, document-level
+entries, active-section routing, empty documents, source metadata, malformed
+token streams, source-located syntax errors, repeated parsing, independent AST
+objects, and absence of debug output.
+
+The complete backend regression passed after the generic parser and its
+focused regression suite were added.
 
 Future testing improvements include migration to pytest, linting,
 formatting, static type checking, coverage reporting, and CI execution.
@@ -264,9 +297,7 @@ formatting, static type checking, coverage reporting, and CI execution.
 
 The following capabilities are not yet implemented:
 
-- production generic parser;
-- AST construction from lexer tokens;
-- parser recovery and production diagnostics;
+- parser recovery and aggregated production diagnostics;
 - semantic specification builder;
 - complete Specification IR population from source documents;
 - PDF and DOCX reader backends;
@@ -284,16 +315,17 @@ mocked success responses, or unsupported capability claims.
 
 ## 10. Near-Term Roadmap
 
+The generic parser and generic AST construction are complete foundational
+milestones.
+
 The immediate specification-compiler roadmap is:
 
-1. Generic parser.
-2. Generic AST construction.
-3. Parser diagnostics and recovery.
-4. Semantic specification builder.
-5. Specification IR population.
-6. Traceability model.
-7. Deterministic engineering validation rules.
-8. Reporting and diagnostics integration.
+1. Parser recovery and aggregated diagnostics.
+2. Semantic specification builder.
+3. Specification IR population.
+4. Traceability model.
+5. Deterministic engineering validation rules.
+6. Reporting and diagnostics integration.
 
 After the specification pipeline is stable, RIVA should add format-specific
 readers and industrial hardware-language parser adapters.
@@ -337,10 +369,13 @@ Important implementation checkpoints:
 ```text
 cefdf7b  refactor: establish RIVA architecture v2 foundation
 d487ff9  feat: implement deterministic specification lexer
+b310405  docs: add RIVA project context and architecture record
+741195b  feat: strengthen generic specification AST
 ```
 
-At the time this document was created, d487ff9 was the current code
-checkpoint and the documentation file was the only uncommitted change.
+The deterministic generic parser, parser exceptions, focused parser tests,
+and this documentation update are the current verified changes awaiting their
+Git checkpoint.
 
 ## 13. Development Environment
 
