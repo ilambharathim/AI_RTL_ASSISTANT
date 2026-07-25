@@ -200,16 +200,28 @@ Implemented parser behavior includes:
 - blank-line handling;
 - empty key-value support;
 - source-location propagation;
-- source-located syntax errors;
+- strict fail-fast parsing through `parse()`;
+- stable machine-readable parser diagnostic codes;
+- backward-compatible source-located syntax errors;
+- recoverable parsing through `parse_with_diagnostics()`;
+- ordered aggregation of parser error diagnostics;
+- line-oriented synchronization with guaranteed parser progress;
+- preservation of valid later constructs in a valid partial AST;
+- protection against malformed sections becoming active;
+- fatal handling of invalid token-stream contracts;
 - repeatable parsing with independent AST objects;
 - no debug-output side effects.
+
+Recoverable parsing returns an immutable `SpecificationParseResult` containing
+the complete or partial `DocumentNode` and an ordered tuple of immutable
+diagnostics.
 
 The parser understands generic document grammar only. It does not assign
 hardware meaning or populate the Specification IR.
 
 ### Diagnostics Foundation
 
-The diagnostics engine now contains an immutable shared `Diagnostic` value
+The diagnostics engine contains an immutable shared `Diagnostic` value
 model and stable `DiagnosticSeverity` values for `ERROR`, `WARNING`, and
 `INFO`.
 
@@ -219,10 +231,17 @@ Implemented behavior includes:
 - optional source-file, line, and column metadata;
 - validation of required fields and source locations;
 - immutable diagnostic instances;
-- stable compiler-style single-line formatting.
+- stable compiler-style single-line formatting;
+- a stable generic-parser diagnostic-code catalog;
+- coded `SpecificationSyntaxError` instances;
+- backward compatibility for the legacy syntax-error constructor;
+- immutable `SpecificationParseResult` containers;
+- ordered immutable diagnostic tuples;
+- error, warning, and information counts;
+- parser recovery with aggregated error diagnostics.
 
-Parser recovery, diagnostic aggregation, suppression, rendering, and
-reporting integration remain unimplemented.
+Diagnostic suppression, deduplication, rendering, and reporting integration
+remain unimplemented.
 
 ## 6. Current Domain Models
 
@@ -290,6 +309,10 @@ Current regression coverage includes:
 - normalizer;
 - deterministic specification lexer;
 - deterministic generic specification parser;
+- stable parser diagnostic-code catalog;
+- coded parser syntax-error contracts;
+- specification parse-result contract;
+- recoverable parser behavior and aggregated diagnostics;
 - shared diagnostic value model;
 - domain models and specification IR;
 - tokens and token builder;
@@ -302,14 +325,22 @@ and absence of debug output.
 
 The parser has assertion-based tests for AST construction, document-level
 entries, active-section routing, empty documents, source metadata, malformed
-token streams, source-located syntax errors, repeated parsing, independent AST
+token streams, source-located syntax errors, stable error-code mappings,
+backward-compatible exception construction, repeated parsing, independent AST
 objects, and absence of debug output.
 
-The diagnostic model has assertion-based tests for stable severity values,
-field validation, source-location formatting, immutability, and compiler-style
+Recoverable parsing has focused tests for valid-stream equivalence, ordered
+multi-error aggregation, complete diagnostic metadata, malformed-section
+handling, preservation of later source lines, EOF recovery, synchronization
+progress, deterministic repeated calls, independent partial AST objects,
+silence, and strict fail-fast compatibility.
+
+The diagnostic and parse-result models have assertion-based tests for stable
+severity and code values, validation, source-location formatting,
+immutability, ordered diagnostic storage, severity counts, and compiler-style
 string rendering.
 
-The complete backend regression passed after the shared diagnostic value model
+The complete backend regression passed after recoverable specification parsing
 and its focused regression suite were added.
 
 Future testing improvements include migration to pytest, linting,
@@ -319,7 +350,6 @@ formatting, static type checking, coverage reporting, and CI execution.
 
 The following capabilities are not yet implemented:
 
-- parser recovery and aggregated production diagnostics;
 - semantic specification builder;
 - complete Specification IR population from source documents;
 - PDF and DOCX reader backends;
@@ -329,6 +359,7 @@ The following capabilities are not yet implemented:
 - requirement-to-RTL traceability;
 - assertion and verification-plan generation;
 - simulation and formal orchestration;
+- diagnostic suppression, deduplication, and rendering;
 - production rule, diagnostics, and reporting engines;
 - controlled AI workflow integration.
 
@@ -337,17 +368,18 @@ mocked success responses, or unsupported capability claims.
 
 ## 10. Near-Term Roadmap
 
-The generic parser and generic AST construction are complete foundational
+The generic parser, generic AST construction, stable parser diagnostics,
+parse-result contract, and recoverable parsing are complete foundational
 milestones.
 
 The immediate specification-compiler roadmap is:
 
-1. Parser recovery and aggregated diagnostics.
-2. Semantic specification builder.
-3. Specification IR population.
-4. Traceability model.
-5. Deterministic engineering validation rules.
-6. Reporting and diagnostics integration.
+1. Semantic specification builder.
+2. Specification IR population.
+3. Traceability model.
+4. Deterministic engineering validation rules.
+5. Diagnostic rendering and reporting integration.
+6. Format-specific specification reader expansion.
 
 After the specification pipeline is stable, RIVA should add format-specific
 readers and industrial hardware-language parser adapters.
@@ -396,6 +428,11 @@ b310405  docs: add RIVA project context and architecture record
 7e27c21  feat: implement generic specification parser
 c8bf163  docs: record generic parser checkpoint
 7343aa4  feat: add shared diagnostic foundation
+4c8aa91  docs: record diagnostic foundation checkpoint
+0769ab8  feat: add specification parse result contract
+86fa37b  feat: add parser diagnostic code catalog
+86e727e  feat: attach stable codes to parser syntax errors
+6188774  feat: add recoverable specification parsing
 ```
 
 The checkpoint list records selected committed milestones and is not intended
