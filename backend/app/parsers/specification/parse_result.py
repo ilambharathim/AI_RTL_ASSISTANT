@@ -6,7 +6,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from app.domain.ast.document_node import DocumentNode
+from app.domain.specification_ast.document_node import DocumentNode
 from app.engines.diagnostics.diagnostic import Diagnostic
 from app.engines.diagnostics.diagnostic_severity import DiagnosticSeverity
 

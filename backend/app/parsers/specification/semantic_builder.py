@@ -7,12 +7,12 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass, field
 
-from app.domain.ast.ast_node import ASTNode
-from app.domain.ast.document_node import DocumentNode
-from app.domain.ast.keyvalue_node import KeyValueNode
-from app.domain.ast.listitem_node import ListItemNode
-from app.domain.ast.section_node import SectionNode
-from app.domain.ast.text_node import TextNode
+from app.domain.specification_ast.ast_node import ASTNode
+from app.domain.specification_ast.document_node import DocumentNode
+from app.domain.specification_ast.keyvalue_node import KeyValueNode
+from app.domain.specification_ast.listitem_node import ListItemNode
+from app.domain.specification_ast.section_node import SectionNode
+from app.domain.specification_ast.text_node import TextNode
 from app.domain.metadata import Metadata
 from app.domain.port import Port
 from app.domain.requirement import Requirement

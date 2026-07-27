@@ -4,7 +4,7 @@ Regression tests for recoverable specification parse results.
 
 from dataclasses import FrozenInstanceError
 
-from app.domain.ast.document_node import DocumentNode
+from app.domain.specification_ast.document_node import DocumentNode
 from app.engines.diagnostics.diagnostic import Diagnostic
 from app.engines.diagnostics.diagnostic_severity import DiagnosticSeverity
 from app.parsers.specification.parse_result import SpecificationParseResult

@@ -10,12 +10,12 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 
-from app.domain.ast.ast_node import ASTNode
-from app.domain.ast.document_node import DocumentNode
-from app.domain.ast.keyvalue_node import KeyValueNode
-from app.domain.ast.listitem_node import ListItemNode
-from app.domain.ast.section_node import SectionNode
-from app.domain.ast.text_node import TextNode
+from app.domain.specification_ast.ast_node import ASTNode
+from app.domain.specification_ast.document_node import DocumentNode
+from app.domain.specification_ast.keyvalue_node import KeyValueNode
+from app.domain.specification_ast.listitem_node import ListItemNode
+from app.domain.specification_ast.section_node import SectionNode
+from app.domain.specification_ast.text_node import TextNode
 from app.engines.diagnostics.diagnostic import Diagnostic
 from app.engines.diagnostics.diagnostic_severity import DiagnosticSeverity
 from app.parsers.specification.exceptions import (

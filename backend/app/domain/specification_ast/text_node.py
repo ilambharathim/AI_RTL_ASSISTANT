@@ -1,18 +1,20 @@
 """
-List-item entry node for the RIVA generic specification AST.
+Free-form text node for the RIVA generic specification AST.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
 
-from app.domain.ast.ast_node import ASTNode
+from app.domain.specification_ast.ast_node import ASTNode
 
 
 @dataclass(init=False)
-class ListItemNode(ASTNode):
+class TextNode(ASTNode):
     """
-    Represents one generic list entry in a specification document.
+    Represents one free-form text line in a specification document.
+
+    Interpretation of the text belongs to later semantic-analysis stages.
     """
 
     value: str = ""
@@ -31,7 +33,7 @@ class ListItemNode(ASTNode):
             raise ValueError("value must not be empty.")
 
         super().__init__(
-            node_type="LIST_ITEM",
+            node_type="TEXT",
             line=line,
             column=column,
             source_file=source_file,

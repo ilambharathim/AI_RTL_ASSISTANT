@@ -5,9 +5,9 @@ Regression tests for recoverable specification parsing.
 from contextlib import redirect_stderr, redirect_stdout
 from io import StringIO
 
-from app.domain.ast.keyvalue_node import KeyValueNode
-from app.domain.ast.listitem_node import ListItemNode
-from app.domain.ast.text_node import TextNode
+from app.domain.specification_ast.keyvalue_node import KeyValueNode
+from app.domain.specification_ast.listitem_node import ListItemNode
+from app.domain.specification_ast.text_node import TextNode
 from app.engines.diagnostics.diagnostic_severity import DiagnosticSeverity
 from app.parsers.specification.exceptions import SpecificationSyntaxError
 from app.parsers.specification.parser import SpecificationParser

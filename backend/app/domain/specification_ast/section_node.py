@@ -6,7 +6,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-from app.domain.ast.ast_node import ASTNode
+from app.domain.specification_ast.ast_node import ASTNode
 
 
 @dataclass(init=False)

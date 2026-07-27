@@ -4,11 +4,11 @@ Diagnostic regression tests for the specification semantic builder.
 
 from __future__ import annotations
 
-from app.domain.ast.ast_node import ASTNode
-from app.domain.ast.document_node import DocumentNode
-from app.domain.ast.keyvalue_node import KeyValueNode
-from app.domain.ast.section_node import SectionNode
-from app.domain.ast.text_node import TextNode
+from app.domain.specification_ast.ast_node import ASTNode
+from app.domain.specification_ast.document_node import DocumentNode
+from app.domain.specification_ast.keyvalue_node import KeyValueNode
+from app.domain.specification_ast.section_node import SectionNode
+from app.domain.specification_ast.text_node import TextNode
 from app.engines.diagnostics.diagnostic_severity import DiagnosticSeverity
 from app.parsers.specification.semantic_builder import (
     SpecificationSemanticBuilder,
