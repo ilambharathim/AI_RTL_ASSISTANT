@@ -7,20 +7,17 @@ class NumberReader:
     """
     Reads SystemVerilog numeric literals.
 
-    Version 2:
+    Version 3:
         - decimal integers
         - based integers
+        - signed based integers
     """
 
     _BASE_SPECIFIERS = {
-        "b",
-        "B",
-        "o",
-        "O",
-        "d",
-        "D",
-        "h",
-        "H",
+        "b", "B",
+        "o", "O",
+        "d", "D",
+        "h", "H",
     }
 
     @staticmethod
@@ -31,11 +28,9 @@ class NumberReader:
         if stream.eof():
             return False
 
-        character = stream.peek()
-
         return (
-            character.isdigit()
-            or character == "'"
+            stream.peek().isdigit()
+            or stream.peek() == "'"
         )
 
     @staticmethod
@@ -70,6 +65,20 @@ class NumberReader:
                 stream.advance()
             )
 
+            #
+            # Optional signed flag
+            #
+            if (
+                not stream.eof()
+                and stream.peek() in ("s", "S")
+            ):
+                characters.append(
+                    stream.advance()
+                )
+
+            #
+            # Base specifier
+            #
             if (
                 stream.eof()
                 or stream.peek()
@@ -83,6 +92,9 @@ class NumberReader:
                 stream.advance()
             )
 
+            #
+            # Digits
+            #
             while (
                 not stream.eof()
                 and (
