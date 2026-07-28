@@ -1,6 +1,7 @@
 from app.domain.rtl_tokens import RTLToken, RTLTokenType
 from app.parsers.rtl.character_stream import CharacterStream
 from app.parsers.rtl.lexer_result import RTLLexerResult
+from app.parsers.rtl.readers.comment_reader import CommentReader
 from app.parsers.rtl.readers.identifier_reader import IdentifierReader
 from app.parsers.rtl.readers.number_reader import NumberReader
 from app.parsers.rtl.readers.operator_reader import OperatorReader
@@ -12,12 +13,13 @@ class RTLLexer:
     """
     Deterministic RTL lexer.
 
-    Version 7:
+    Version 8:
         - whitespace
+        - single-line comments
         - identifiers
         - keywords
         - decimal numbers
-        - string literals
+        - strings
         - operators
         - symbols
         - EOF
@@ -38,6 +40,10 @@ class RTLLexer:
 
             if stream.eof():
                 break
+
+            if CommentReader.matches(stream):
+                CommentReader.read(stream)
+                continue
 
             if IdentifierReader.matches(stream):
                 tokens.append(
