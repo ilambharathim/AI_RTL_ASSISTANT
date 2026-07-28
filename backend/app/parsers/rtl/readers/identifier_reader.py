@@ -1,25 +1,33 @@
-from app.domain.rtl_tokens import RTLToken, RTLTokenType
+from app.domain.rtl_tokens import RTLToken
+from app.domain.rtl_tokens import RTLTokenType
 from app.language.systemverilog.keywords import SYSTEMVERILOG_KEYWORDS
 from app.parsers.rtl.character_stream import CharacterStream
 
 
 class IdentifierReader:
     """
-    Reads SystemVerilog identifiers and reserved keywords.
+    Reads SystemVerilog identifiers.
+
+    Supports:
+        - normal identifiers
+        - escaped identifiers
     """
 
     @staticmethod
     def matches(
         stream: CharacterStream,
     ) -> bool:
+
         if stream.eof():
             return False
 
         character = stream.peek()
 
         return (
-            character == "_"
-            or character.isalpha()
+            character.isalpha()
+            or character == "_"
+            or character == "$"
+            or character == "\\"
         )
 
     @staticmethod
@@ -29,39 +37,55 @@ class IdentifierReader:
 
         location = stream.location()
 
+        #
+        # Escaped identifier
+        #
+        if stream.peek() == "\\":
+
+            stream.advance()
+
+            characters: list[str] = []
+
+            while (
+                not stream.eof()
+                and not stream.peek().isspace()
+            ):
+                characters.append(
+                    stream.advance()
+                )
+
+            return RTLToken(
+                token_type=RTLTokenType.IDENTIFIER,
+                value="\\" + "".join(characters),
+                source_location=location,
+            )
+
+        #
+        # Normal identifier
+        #
         characters: list[str] = []
 
         while (
             not stream.eof()
-            and IdentifierReader._is_identifier_continue(
-                stream.peek()
+            and (
+                stream.peek().isalnum()
+                or stream.peek() in ("_", "$")
             )
         ):
             characters.append(
                 stream.advance()
             )
 
-        value = "".join(characters)
+        identifier = "".join(characters)
 
         token_type = (
             RTLTokenType.KEYWORD
-            if value in SYSTEMVERILOG_KEYWORDS
+            if identifier in SYSTEMVERILOG_KEYWORDS
             else RTLTokenType.IDENTIFIER
         )
 
         return RTLToken(
             token_type=token_type,
-            value=value,
+            value=identifier,
             source_location=location,
-        )
-
-    @staticmethod
-    def _is_identifier_continue(
-        character: str,
-    ) -> bool:
-        return (
-            character == "_"
-            or character == "$"
-            or character.isalpha()
-            or character.isdigit()
         )

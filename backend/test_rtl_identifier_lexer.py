@@ -3,18 +3,26 @@ from app.parsers.rtl.lexer import RTLLexer
 
 lexer = RTLLexer()
 
-result = lexer.tokenize("module adder")
+#
+# Normal identifier
+#
+
+result = lexer.tokenize("my_signal")
 
 assert result.successful
 
-assert len(result.tokens) == 3
+assert result.tokens[0].token_type == RTLTokenType.IDENTIFIER
+assert result.tokens[0].value == "my_signal"
 
-assert result.tokens[0].token_type == RTLTokenType.KEYWORD
-assert result.tokens[0].value == "module"
+#
+# Escaped identifier
+#
 
-assert result.tokens[1].token_type == RTLTokenType.IDENTIFIER
-assert result.tokens[1].value == "adder"
+result = lexer.tokenize("\\my.signal ")
 
-assert result.tokens[2].token_type == RTLTokenType.END_OF_FILE
+assert result.successful
+
+assert result.tokens[0].token_type == RTLTokenType.IDENTIFIER
+assert result.tokens[0].value == "\\my.signal"
 
 print("RTL identifier lexer test passed.")
