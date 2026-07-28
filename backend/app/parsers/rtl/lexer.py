@@ -1,5 +1,8 @@
 from app.domain.rtl_tokens import RTLToken
 from app.domain.rtl_tokens import RTLTokenType
+from app.engines.diagnostics.diagnostic_factory import (
+    LexerDiagnosticFactory,
+)
 from app.parsers.rtl.character_stream import CharacterStream
 from app.parsers.rtl.lexer_result import RTLLexerResult
 from app.parsers.rtl.readers.reader_registry import READERS
@@ -8,6 +11,9 @@ from app.parsers.rtl.readers.reader_registry import READERS
 class RTLLexer:
     """
     Deterministic RTL lexer.
+
+    Diagnostic-driven.
+    Never crashes on malformed user RTL.
     """
 
     def tokenize(
@@ -18,6 +24,7 @@ class RTLLexer:
         stream = CharacterStream(source)
 
         tokens: list[RTLToken] = []
+
         diagnostics = []
 
         while not stream.eof():
@@ -47,9 +54,14 @@ class RTLLexer:
             if matched:
                 continue
 
-            raise NotImplementedError(
-                f"Unsupported character: {stream.peek()!r}"
+            diagnostics.append(
+                LexerDiagnosticFactory.unknown_character(
+                    stream.peek(),
+                    stream.location(),
+                )
             )
+
+            stream.advance()
 
         tokens.append(
             RTLToken(

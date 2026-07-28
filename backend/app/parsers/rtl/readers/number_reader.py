@@ -1,5 +1,8 @@
 from app.domain.rtl_tokens import RTLToken
 from app.domain.rtl_tokens import RTLTokenType
+from app.engines.diagnostics.diagnostic_factory import (
+    LexerDiagnosticFactory,
+)
 from app.parsers.rtl.character_stream import CharacterStream
 
 
@@ -7,10 +10,11 @@ class NumberReader:
     """
     Reads SystemVerilog numeric literals.
 
-    Version 3:
+    Version 4:
         - decimal integers
         - based integers
         - signed based integers
+        - deterministic diagnostics
     """
 
     _BASE_SPECIFIERS = {
@@ -47,39 +51,40 @@ class NumberReader:
             not stream.eof()
             and stream.peek().isdigit()
         ):
-            characters.append(
-                stream.advance()
-            )
+            characters.append(stream.advance())
 
         if (
             not stream.eof()
             and stream.peek() == "'"
         ):
 
-            characters.append(
-                stream.advance()
-            )
+            characters.append(stream.advance())
 
             if (
                 not stream.eof()
                 and stream.peek() in ("s", "S")
             ):
-                characters.append(
-                    stream.advance()
-                )
+                characters.append(stream.advance())
 
             if (
                 stream.eof()
                 or stream.peek()
                 not in NumberReader._BASE_SPECIFIERS
             ):
-                raise RuntimeError(
-                    "Invalid based literal."
+
+                diagnostics.append(
+                    LexerDiagnosticFactory.invalid_based_literal(
+                        location
+                    )
                 )
 
-            characters.append(
-                stream.advance()
-            )
+                return RTLToken(
+                    token_type=RTLTokenType.NUMBER,
+                    value="".join(characters),
+                    source_location=location,
+                )
+
+            characters.append(stream.advance())
 
             while (
                 not stream.eof()
@@ -88,9 +93,7 @@ class NumberReader:
                     or stream.peek() == "_"
                 )
             ):
-                characters.append(
-                    stream.advance()
-                )
+                characters.append(stream.advance())
 
         return RTLToken(
             token_type=RTLTokenType.NUMBER,

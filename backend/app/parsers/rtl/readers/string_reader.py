@@ -1,9 +1,19 @@
 from app.domain.rtl_tokens import RTLToken
 from app.domain.rtl_tokens import RTLTokenType
+from app.engines.diagnostics.diagnostic_factory import (
+    LexerDiagnosticFactory,
+)
 from app.parsers.rtl.character_stream import CharacterStream
 
 
 class StringReader:
+    """
+    Reads SystemVerilog string literals.
+
+    Version 2:
+        - deterministic diagnostics
+        - no exceptions
+    """
 
     @staticmethod
     def matches(
@@ -36,8 +46,17 @@ class StringReader:
             )
 
         if stream.eof():
-            raise RuntimeError(
-                "Unterminated string literal."
+
+            diagnostics.append(
+                LexerDiagnosticFactory.unterminated_string(
+                    location
+                )
+            )
+
+            return RTLToken(
+                token_type=RTLTokenType.STRING,
+                value="".join(characters),
+                source_location=location,
             )
 
         stream.advance()

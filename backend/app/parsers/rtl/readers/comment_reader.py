@@ -1,3 +1,6 @@
+from app.engines.diagnostics.diagnostic_factory import (
+    LexerDiagnosticFactory,
+)
 from app.parsers.rtl.character_stream import CharacterStream
 
 
@@ -5,9 +8,10 @@ class CommentReader:
     """
     Reads and discards SystemVerilog comments.
 
-    Version 2:
+    Version 3:
         - //
         - /* */
+        - deterministic diagnostics
     """
 
     @staticmethod
@@ -33,6 +37,9 @@ class CommentReader:
 
         remaining = stream.source[stream.index:]
 
+        #
+        # Single-line comment
+        #
         if remaining.startswith("//"):
 
             while (
@@ -43,24 +50,29 @@ class CommentReader:
 
             return
 
-        if remaining.startswith("/*"):
+        #
+        # Block comment
+        #
+        location = stream.location()
 
-            stream.advance()
-            stream.advance()
+        stream.advance()
+        stream.advance()
 
-            while not stream.eof():
+        while not stream.eof():
 
-                if (
-                    stream.peek() == "*"
-                    and stream.index + 1 < len(stream.source)
-                    and stream.source[stream.index + 1] == "/"
-                ):
-                    stream.advance()
-                    stream.advance()
-                    return
-
+            if (
+                stream.peek() == "*"
+                and stream.index + 1 < len(stream.source)
+                and stream.source[stream.index + 1] == "/"
+            ):
                 stream.advance()
+                stream.advance()
+                return
 
-            raise RuntimeError(
-                "Unterminated block comment."
+            stream.advance()
+
+        diagnostics.append(
+            LexerDiagnosticFactory.unterminated_block_comment(
+                location
             )
+        )
