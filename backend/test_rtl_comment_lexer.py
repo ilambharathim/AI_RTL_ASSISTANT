@@ -3,10 +3,16 @@ from app.parsers.rtl.lexer import RTLLexer
 
 lexer = RTLLexer()
 
-result = lexer.tokenize("""
-// comment
+result = lexer.tokenize(
+"""
+/*
+block
+comment
+*/
+
 module test;
-""")
+"""
+)
 
 assert result.successful
 
@@ -21,4 +27,4 @@ assert result.tokens[2].value == ";"
 
 assert result.tokens[3].token_type == RTLTokenType.END_OF_FILE
 
-print("RTL comment lexer test passed.")
+print("RTL block comment lexer test passed.")

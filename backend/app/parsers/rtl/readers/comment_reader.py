@@ -5,9 +5,9 @@ class CommentReader:
     """
     Reads and discards SystemVerilog comments.
 
-    Version 1:
-        - supports //
-        - block comments will be added later
+    Version 2:
+        - //
+        - /* */
     """
 
     @staticmethod
@@ -20,15 +20,46 @@ class CommentReader:
 
         remaining = stream.source[stream.index:]
 
-        return remaining.startswith("//")
+        return (
+            remaining.startswith("//")
+            or remaining.startswith("/*")
+        )
 
     @staticmethod
     def read(
         stream: CharacterStream,
     ) -> None:
 
-        while (
-            not stream.eof()
-            and stream.peek() != "\n"
-        ):
+        remaining = stream.source[stream.index:]
+
+        if remaining.startswith("//"):
+
+            while (
+                not stream.eof()
+                and stream.peek() != "\n"
+            ):
+                stream.advance()
+
+            return
+
+        if remaining.startswith("/*"):
+
             stream.advance()
+            stream.advance()
+
+            while not stream.eof():
+
+                if (
+                    stream.peek() == "*"
+                    and stream.index + 1 < len(stream.source)
+                    and stream.source[stream.index + 1] == "/"
+                ):
+                    stream.advance()
+                    stream.advance()
+                    return
+
+                stream.advance()
+
+            raise RuntimeError(
+                "Unterminated block comment."
+            )
