@@ -3,6 +3,7 @@ from app.parsers.rtl.character_stream import CharacterStream
 from app.parsers.rtl.lexer_result import RTLLexerResult
 from app.parsers.rtl.readers.identifier_reader import IdentifierReader
 from app.parsers.rtl.readers.number_reader import NumberReader
+from app.parsers.rtl.readers.operator_reader import OperatorReader
 from app.parsers.rtl.readers.symbol_reader import SymbolReader
 
 
@@ -10,11 +11,12 @@ class RTLLexer:
     """
     Deterministic RTL lexer.
 
-    Version 5:
+    Version 6:
         - whitespace
         - identifiers
         - keywords
-        - decimal integers
+        - decimal numbers
+        - operators
         - symbols
         - EOF
     """
@@ -44,6 +46,12 @@ class RTLLexer:
             if NumberReader.matches(stream):
                 tokens.append(
                     NumberReader.read(stream)
+                )
+                continue
+
+            if OperatorReader.matches(stream):
+                tokens.append(
+                    OperatorReader.read(stream)
                 )
                 continue
 
