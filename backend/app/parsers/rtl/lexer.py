@@ -1,28 +1,13 @@
-from app.domain.rtl_tokens import RTLToken, RTLTokenType
+from app.domain.rtl_tokens import RTLToken
+from app.domain.rtl_tokens import RTLTokenType
 from app.parsers.rtl.character_stream import CharacterStream
 from app.parsers.rtl.lexer_result import RTLLexerResult
-from app.parsers.rtl.readers.comment_reader import CommentReader
-from app.parsers.rtl.readers.identifier_reader import IdentifierReader
-from app.parsers.rtl.readers.number_reader import NumberReader
-from app.parsers.rtl.readers.operator_reader import OperatorReader
-from app.parsers.rtl.readers.string_reader import StringReader
-from app.parsers.rtl.readers.symbol_reader import SymbolReader
+from app.parsers.rtl.readers.reader_registry import READERS
 
 
 class RTLLexer:
     """
     Deterministic RTL lexer.
-
-    Version 8:
-        - whitespace
-        - single-line comments
-        - identifiers
-        - keywords
-        - decimal numbers
-        - strings
-        - operators
-        - symbols
-        - EOF
     """
 
     def tokenize(
@@ -33,6 +18,7 @@ class RTLLexer:
         stream = CharacterStream(source)
 
         tokens: list[RTLToken] = []
+        diagnostics = []
 
         while not stream.eof():
 
@@ -41,38 +27,24 @@ class RTLLexer:
             if stream.eof():
                 break
 
-            if CommentReader.matches(stream):
-                CommentReader.read(stream)
-                continue
+            matched = False
 
-            if IdentifierReader.matches(stream):
-                tokens.append(
-                    IdentifierReader.read(stream)
-                )
-                continue
+            for reader in READERS:
 
-            if NumberReader.matches(stream):
-                tokens.append(
-                    NumberReader.read(stream)
-                )
-                continue
+                if reader.matches(stream):
 
-            if StringReader.matches(stream):
-                tokens.append(
-                    StringReader.read(stream)
-                )
-                continue
+                    token = reader.read(
+                        stream,
+                        diagnostics,
+                    )
 
-            if OperatorReader.matches(stream):
-                tokens.append(
-                    OperatorReader.read(stream)
-                )
-                continue
+                    if token is not None:
+                        tokens.append(token)
 
-            if SymbolReader.matches(stream):
-                tokens.append(
-                    SymbolReader.read(stream)
-                )
+                    matched = True
+                    break
+
+            if matched:
                 continue
 
             raise NotImplementedError(
@@ -89,13 +61,14 @@ class RTLLexer:
 
         return RTLLexerResult(
             tokens=tuple(tokens),
-            diagnostics=(),
+            diagnostics=tuple(diagnostics),
         )
 
     def _skip_whitespace(
         self,
         stream: CharacterStream,
     ) -> None:
+
         while (
             not stream.eof()
             and stream.peek().isspace()

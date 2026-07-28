@@ -9,14 +9,12 @@ from app.parsers.rtl.character_stream import CharacterStream
 
 
 class OperatorReader:
-    """
-    Reads SystemVerilog operators using the longest-match rule.
-    """
 
     @staticmethod
     def matches(
         stream: CharacterStream,
     ) -> bool:
+
         if stream.eof():
             return False
 
@@ -29,6 +27,7 @@ class OperatorReader:
     @staticmethod
     def read(
         stream: CharacterStream,
+        diagnostics,
     ) -> RTLToken:
 
         location = stream.location()
@@ -42,6 +41,7 @@ class OperatorReader:
             OPERATORS_1,
         ):
             for operator in table:
+
                 if remaining.startswith(operator):
 
                     for _ in operator:

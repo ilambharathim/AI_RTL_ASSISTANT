@@ -2,6 +2,7 @@ from dataclasses import dataclass
 
 from app.domain.rtl_tokens import RTLToken
 from app.engines.diagnostics.diagnostic import Diagnostic
+from app.engines.diagnostics.diagnostic_severity import DiagnosticSeverity
 
 
 @dataclass(slots=True, frozen=True)
@@ -14,10 +15,9 @@ class RTLLexerResult:
     diagnostics: tuple[Diagnostic, ...]
 
     def __post_init__(self) -> None:
+
         if not isinstance(self.tokens, tuple):
-            raise TypeError(
-                "tokens must be a tuple."
-            )
+            raise TypeError("tokens must be a tuple.")
 
         if not all(
             isinstance(token, RTLToken)
@@ -27,10 +27,7 @@ class RTLLexerResult:
                 "tokens must contain only RTLToken objects."
             )
 
-        if not isinstance(
-            self.diagnostics,
-            tuple,
-        ):
+        if not isinstance(self.diagnostics, tuple):
             raise TypeError(
                 "diagnostics must be a tuple."
             )
@@ -45,4 +42,18 @@ class RTLLexerResult:
 
     @property
     def successful(self) -> bool:
-        return len(self.diagnostics) == 0
+        return not self.has_errors
+
+    @property
+    def has_errors(self) -> bool:
+        return any(
+            diagnostic.severity == DiagnosticSeverity.ERROR
+            for diagnostic in self.diagnostics
+        )
+
+    @property
+    def has_warnings(self) -> bool:
+        return any(
+            diagnostic.severity == DiagnosticSeverity.WARNING
+            for diagnostic in self.diagnostics
+        )

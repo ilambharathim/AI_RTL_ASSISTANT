@@ -1,17 +1,16 @@
-from app.domain.rtl_tokens import RTLToken, RTLTokenType
+from app.domain.rtl_tokens import RTLToken
+from app.domain.rtl_tokens import RTLTokenType
 from app.language.systemverilog.symbols import SYSTEMVERILOG_SYMBOLS
 from app.parsers.rtl.character_stream import CharacterStream
 
 
 class SymbolReader:
-    """
-    Reads SystemVerilog punctuation symbols.
-    """
 
     @staticmethod
     def matches(
         stream: CharacterStream,
     ) -> bool:
+
         if stream.eof():
             return False
 
@@ -20,6 +19,7 @@ class SymbolReader:
     @staticmethod
     def read(
         stream: CharacterStream,
+        diagnostics,
     ) -> RTLToken:
 
         location = stream.location()

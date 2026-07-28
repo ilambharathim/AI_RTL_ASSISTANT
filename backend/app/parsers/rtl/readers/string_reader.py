@@ -4,19 +4,12 @@ from app.parsers.rtl.character_stream import CharacterStream
 
 
 class StringReader:
-    """
-    Reads simple SystemVerilog string literals.
-
-    Version 1:
-        - opening quote
-        - closing quote
-        - no escape sequences yet
-    """
 
     @staticmethod
     def matches(
         stream: CharacterStream,
     ) -> bool:
+
         if stream.eof():
             return False
 
@@ -25,6 +18,7 @@ class StringReader:
     @staticmethod
     def read(
         stream: CharacterStream,
+        diagnostics,
     ) -> RTLToken:
 
         location = stream.location()

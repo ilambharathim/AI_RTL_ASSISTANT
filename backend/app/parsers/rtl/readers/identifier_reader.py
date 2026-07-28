@@ -33,13 +33,11 @@ class IdentifierReader:
     @staticmethod
     def read(
         stream: CharacterStream,
+        diagnostics,
     ) -> RTLToken:
 
         location = stream.location()
 
-        #
-        # Escaped identifier
-        #
         if stream.peek() == "\\":
 
             stream.advance()
@@ -60,9 +58,6 @@ class IdentifierReader:
                 source_location=location,
             )
 
-        #
-        # Normal identifier
-        #
         characters: list[str] = []
 
         while (

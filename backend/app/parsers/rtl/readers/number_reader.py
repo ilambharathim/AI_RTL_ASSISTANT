@@ -36,15 +36,13 @@ class NumberReader:
     @staticmethod
     def read(
         stream: CharacterStream,
+        diagnostics,
     ) -> RTLToken:
 
         location = stream.location()
 
         characters: list[str] = []
 
-        #
-        # Optional size
-        #
         while (
             not stream.eof()
             and stream.peek().isdigit()
@@ -53,9 +51,6 @@ class NumberReader:
                 stream.advance()
             )
 
-        #
-        # Based literal
-        #
         if (
             not stream.eof()
             and stream.peek() == "'"
@@ -65,9 +60,6 @@ class NumberReader:
                 stream.advance()
             )
 
-            #
-            # Optional signed flag
-            #
             if (
                 not stream.eof()
                 and stream.peek() in ("s", "S")
@@ -76,9 +68,6 @@ class NumberReader:
                     stream.advance()
                 )
 
-            #
-            # Base specifier
-            #
             if (
                 stream.eof()
                 or stream.peek()
@@ -92,9 +81,6 @@ class NumberReader:
                 stream.advance()
             )
 
-            #
-            # Digits
-            #
             while (
                 not stream.eof()
                 and (

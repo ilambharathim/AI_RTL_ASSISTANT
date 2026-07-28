@@ -28,6 +28,7 @@ class CommentReader:
     @staticmethod
     def read(
         stream: CharacterStream,
+        diagnostics,
     ) -> None:
 
         remaining = stream.source[stream.index:]
