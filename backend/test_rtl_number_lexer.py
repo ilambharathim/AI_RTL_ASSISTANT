@@ -3,15 +3,27 @@ from app.parsers.rtl.lexer import RTLLexer
 
 lexer = RTLLexer()
 
-result = lexer.tokenize("12345")
+examples = [
+    "12345",
+    "8'hFF",
+    "16'd255",
+    "4'b1010",
+    "32'o777",
+    "'hABCD",
+    "'d10",
+    "'b101",
+]
 
-assert result.successful
+for example in examples:
 
-assert len(result.tokens) == 2
+    result = lexer.tokenize(example)
 
-assert result.tokens[0].token_type == RTLTokenType.NUMBER
-assert result.tokens[0].value == "12345"
+    assert result.successful
 
-assert result.tokens[1].token_type == RTLTokenType.END_OF_FILE
+    assert result.tokens[0].token_type == RTLTokenType.NUMBER
+
+    assert result.tokens[0].value == example
+
+    assert result.tokens[1].token_type == RTLTokenType.END_OF_FILE
 
 print("RTL number lexer test passed.")
