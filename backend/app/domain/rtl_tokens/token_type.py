@@ -7,6 +7,8 @@ class RTLTokenType(str, Enum):
     """
 
     IDENTIFIER = "IDENTIFIER"
+    SYSTEM_IDENTIFIER = "SYSTEM_IDENTIFIER"
+
     KEYWORD = "KEYWORD"
 
     NUMBER = "NUMBER"
@@ -16,6 +18,7 @@ class RTLTokenType(str, Enum):
     STRING = "STRING"
 
     DIRECTIVE = "DIRECTIVE"
+    ATTRIBUTE = "ATTRIBUTE"
 
     SYMBOL = "SYMBOL"
     OPERATOR = "OPERATOR"
