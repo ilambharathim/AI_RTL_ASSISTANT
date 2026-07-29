@@ -10,11 +10,14 @@ class NumberReader:
     """
     Reads SystemVerilog numeric literals.
 
-    Version 4:
-        - decimal integers
-        - based integers
-        - signed based integers
-        - deterministic diagnostics
+    Supports:
+
+        - integers
+        - based literals
+        - signed based literals
+        - real literals
+        - scientific notation
+        - time literals
     """
 
     _BASE_SPECIFIERS = {
@@ -22,6 +25,15 @@ class NumberReader:
         "o", "O",
         "d", "D",
         "h", "H",
+    }
+
+    _TIME_UNITS = {
+        "s",
+        "ms",
+        "us",
+        "ns",
+        "ps",
+        "fs",
     }
 
     @staticmethod
@@ -53,6 +65,9 @@ class NumberReader:
         ):
             characters.append(stream.advance())
 
+        #
+        # Based literal
+        #
         if (
             not stream.eof()
             and stream.peek() == "'"
@@ -95,8 +110,87 @@ class NumberReader:
             ):
                 characters.append(stream.advance())
 
+            return RTLToken(
+                token_type=RTLTokenType.NUMBER,
+                value="".join(characters),
+                source_location=location,
+            )
+
+        #
+        # Fraction
+        #
+        is_real = False
+
+        if (
+            not stream.eof()
+            and stream.peek() == "."
+        ):
+
+            is_real = True
+
+            characters.append(stream.advance())
+
+            while (
+                not stream.eof()
+                and stream.peek().isdigit()
+            ):
+                characters.append(stream.advance())
+
+        #
+        # Exponent
+        #
+        if (
+            not stream.eof()
+            and stream.peek() in ("e", "E")
+        ):
+
+            is_real = True
+
+            characters.append(stream.advance())
+
+            if (
+                not stream.eof()
+                and stream.peek() in ("+", "-")
+            ):
+                characters.append(stream.advance())
+
+            while (
+                not stream.eof()
+                and stream.peek().isdigit()
+            ):
+                characters.append(stream.advance())
+
+        #
+        # Time unit
+        #
+        unit = ""
+
+        while (
+            not stream.eof()
+            and stream.peek().isalpha()
+        ):
+            unit += stream.advance()
+
+        if unit:
+
+            characters.append(unit)
+
+            if unit in NumberReader._TIME_UNITS:
+
+                return RTLToken(
+                    token_type=RTLTokenType.TIME_LITERAL,
+                    value="".join(characters),
+                    source_location=location,
+                )
+
+        token_type = (
+            RTLTokenType.REAL_NUMBER
+            if is_real
+            else RTLTokenType.NUMBER
+        )
+
         return RTLToken(
-            token_type=RTLTokenType.NUMBER,
+            token_type=token_type,
             value="".join(characters),
             source_location=location,
         )
