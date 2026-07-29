@@ -15,6 +15,8 @@ class RTLTokenType(str, Enum):
 
     STRING = "STRING"
 
+    DIRECTIVE = "DIRECTIVE"
+
     SYMBOL = "SYMBOL"
     OPERATOR = "OPERATOR"
 
