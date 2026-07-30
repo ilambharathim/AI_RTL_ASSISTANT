@@ -10,6 +10,16 @@ from app.parsers.rtl.character_stream import CharacterStream
 
 class OperatorReader:
 
+    #
+    # Build one deterministic operator set used by matches()
+    #
+    _OPERATORS = (
+        set(OPERATORS_1)
+        | set(OPERATORS_2)
+        | set(OPERATORS_3)
+        | set(OPERATORS_4)
+    )
+
     @staticmethod
     def matches(
         stream: CharacterStream,
@@ -18,11 +28,21 @@ class OperatorReader:
         if stream.eof():
             return False
 
-        return stream.peek() in {
-            "+", "-", "*", "/", "%", "=",
-            "<", ">", "!", "&", "|",
-            "^", "~", "?", ":", "."
-        }
+        remaining = stream.source[stream.index:]
+
+        #
+        # Deterministically check whether ANY known operator
+        # starts at the current position.
+        #
+        for operator in sorted(
+            OperatorReader._OPERATORS,
+            key=len,
+            reverse=True,
+        ):
+            if remaining.startswith(operator):
+                return True
+
+        return False
 
     @staticmethod
     def read(
@@ -34,24 +54,22 @@ class OperatorReader:
 
         remaining = stream.source[stream.index:]
 
-        for table in (
-            OPERATORS_4,
-            OPERATORS_3,
-            OPERATORS_2,
-            OPERATORS_1,
+        for operator in sorted(
+            OperatorReader._OPERATORS,
+            key=len,
+            reverse=True,
         ):
-            for operator in table:
 
-                if remaining.startswith(operator):
+            if remaining.startswith(operator):
 
-                    for _ in operator:
-                        stream.advance()
+                for _ in operator:
+                    stream.advance()
 
-                    return RTLToken(
-                        token_type=RTLTokenType.OPERATOR,
-                        value=operator,
-                        source_location=location,
-                    )
+                return RTLToken(
+                    token_type=RTLTokenType.OPERATOR,
+                    value=operator,
+                    source_location=location,
+                )
 
         raise RuntimeError(
             "OperatorReader.matches() succeeded but no operator matched."
