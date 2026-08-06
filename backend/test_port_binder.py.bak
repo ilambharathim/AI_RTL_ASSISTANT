@@ -1,0 +1,87 @@
+from app.ast import (
+    CompilationUnit,
+    ModuleDeclaration,
+    ModuleInstance,
+    PortConnection,
+    PortDeclaration,
+)
+from app.ast.expression import IdentifierExpression
+
+from app.semantics.semantic_model import SemanticModel
+
+from app.elaboration.instances.instance_resolver import (
+    InstanceResolver,
+)
+
+from app.elaboration.ports.port_binder import (
+    PortBinder,
+)
+
+
+child = ModuleDeclaration(
+    name="child",
+    ports=(
+        PortDeclaration(
+            direction="input",
+            signal_type="logic",
+            packed_range=None,
+            name="clk",
+        ),
+    ),
+    members=(),
+)
+
+top = ModuleDeclaration(
+    name="top",
+    ports=(),
+    members=(
+        ModuleInstance(
+            module_name="child",
+            parameter_overrides=(),
+            instance_name="u0",
+            connections=(
+                PortConnection(
+                    port_name="clk",
+                    expression=IdentifierExpression(
+                        "clk",
+                    ),
+                ),
+            ),
+        ),
+    ),
+)
+
+tree = CompilationUnit(
+    declarations=(
+        child,
+        top,
+    ),
+)
+
+model = SemanticModel()
+
+InstanceResolver().resolve(
+    tree,
+    model,
+)
+
+PortBinder().bind(
+    model,
+)
+
+bindings = (
+    model.elaboration.port_bindings
+)
+
+assert "top" in bindings.modules
+
+assert (
+    bindings.modules["top"]
+    .instances[0]
+    .bindings[0]
+    .port_name
+    == "clk"
+)
+
+print("Typed PortBinder test passed.")
+

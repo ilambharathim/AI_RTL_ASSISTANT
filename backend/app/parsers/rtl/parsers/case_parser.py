@@ -107,7 +107,15 @@ class CaseParser(BaseParser):
                 )
             )
 
-        return CaseStatement(
+        node = CaseStatement(
             expression=" ".join(expression),
             items=tuple(items),
         )
+
+        object.__setattr__(
+            node,
+            "location",
+            token.source_location,
+        )
+
+        return node

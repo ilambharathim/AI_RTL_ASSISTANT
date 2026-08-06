@@ -1,0 +1,77 @@
+from app.ast.expression import IdentifierExpression
+
+from app.elaboration.model import (
+    ResolvedSignal,
+    ResolvedSignalHierarchy,
+    ResolvedSignalInstance,
+    ResolvedSignalModule,
+)
+
+from app.elaboration.rtl_graph.rtl_graph_builder import (
+    RTLGraphBuilder,
+)
+
+from app.semantics.semantic_model import SemanticModel
+
+
+model = SemanticModel()
+
+hierarchy = ResolvedSignalHierarchy()
+
+module = ResolvedSignalModule(
+    name="top",
+)
+
+instance = ResolvedSignalInstance(
+    instance_name="u0",
+    module_name="child",
+)
+
+instance.ports.append(
+
+    ResolvedSignal(
+
+        port_name="clk",
+
+        expression=IdentifierExpression(
+            "clk",
+        ),
+
+        symbol=None,
+
+    )
+
+)
+
+module.instances.append(
+    instance,
+)
+
+hierarchy.modules["top"] = module
+
+model.elaboration.resolved_signals = hierarchy
+
+RTLGraphBuilder().build(
+    model,
+)
+
+graph = model.elaboration.rtl_graph
+
+assert "top" in graph.modules
+
+assert (
+    graph.modules["top"]
+    .instances[0]
+    .name
+    == "u0"
+)
+
+assert (
+    graph.modules["top"]
+    .instances[0]
+    .module
+    == "child"
+)
+
+print("Typed RTLGraphBuilder test passed.")
+

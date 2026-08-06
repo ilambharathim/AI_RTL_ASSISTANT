@@ -24,6 +24,11 @@ class CompilationUnitParser(BaseParser):
 
         declarations = []
 
+        token = None
+
+        if not context.eof():
+            token = context.current()
+
         while not context.eof():
 
             if ModuleParser.matches(context):
@@ -36,6 +41,15 @@ class CompilationUnitParser(BaseParser):
 
             context.advance()
 
-        return CompilationUnit(
+        node = CompilationUnit(
             declarations=tuple(declarations),
         )
+
+        if token is not None:
+            object.__setattr__(
+                node,
+                "location",
+                token.source_location,
+            )
+
+        return node

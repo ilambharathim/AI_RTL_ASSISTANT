@@ -1,10 +1,13 @@
 """
 IEEE Std 1800-2023 reserved keyword database.
 
-This file is the single authoritative source for every reserved
-SystemVerilog keyword supported by RIVA.
-
-No parser or lexer should hardcode keywords.
+Automatically built from the canonical keyword taxonomy.
 """
-IEEE1800_2023_RESERVED_KEYWORDS: frozenset[str] = frozenset({
-})
+
+from app.language.systemverilog.keywords import (
+    SYSTEMVERILOG_KEYWORDS,
+)
+
+IEEE1800_2023_RESERVED_KEYWORDS: frozenset[str] = frozenset(
+    SYSTEMVERILOG_KEYWORDS.keys()
+)

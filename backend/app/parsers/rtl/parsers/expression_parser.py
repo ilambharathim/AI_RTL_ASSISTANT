@@ -1,17 +1,22 @@
 """
 SystemVerilog expression parser.
 
-Current implementation:
-- identifiers
+Supports
+
 - literals
-- + - * /
-with operator precedence.
+- identifiers
+- function calls
+- unary operators
+- binary operators
+- parentheses
 """
 
 from app.ast.expression import (
     IdentifierExpression,
     LiteralExpression,
+    UnaryExpression,
     BinaryExpression,
+    FunctionCallExpression,
 )
 
 from app.domain.rtl_tokens import RTLTokenType
@@ -22,37 +27,72 @@ from app.parsers.rtl.parsers.base_parser import BaseParser
 
 class ExpressionParser(BaseParser):
 
-    #
-    # Operator precedence
-    #
     _PRECEDENCE = {
-        "*": 20,
-        "/": 20,
-        "%": 20,
-        "+": 10,
-        "-": 10,
+
+        "*":110,
+        "/":110,
+        "%":110,
+
+        "+":100,
+        "-":100,
+
+        "<<":90,
+        ">>":90,
+        "<<<":90,
+        ">>>":90,
+
+        "<":80,
+        "<=":80,
+        ">":80,
+        ">=":80,
+
+        "==":70,
+        "!=":70,
+        "===":70,
+        "!==":70,
+
+        "&":60,
+
+        "^":50,
+        "^~":50,
+        "~^":50,
+
+        "|":40,
+
+        "&&":30,
+
+        "||":20,
+    }
+
+    _UNARY = {
+
+        "+",
+        "-",
+        "!",
+        "~",
+        "&",
+        "|",
+        "^",
+
     }
 
     @staticmethod
     def parse(
-        context: ParserContext,
+        context,
     ):
 
-        return ExpressionParser._parse_binary(
+        return ExpressionParser._binary(
             context,
             0,
         )
 
-    #
-    # Pratt-style precedence climbing
-    #
     @staticmethod
-    def _parse_binary(
+    def _binary(
         context,
-        min_precedence,
+        minimum,
     ):
 
-        left = ExpressionParser._parse_primary(
+        left = ExpressionParser._primary(
             context,
         )
 
@@ -70,14 +110,14 @@ class ExpressionParser(BaseParser):
                 token.value
             ]
 
-            if precedence < min_precedence:
+            if precedence < minimum:
                 break
 
             operator = token.value
 
             context.advance()
 
-            right = ExpressionParser._parse_binary(
+            right = ExpressionParser._binary(
                 context,
                 precedence + 1,
             )
@@ -88,36 +128,167 @@ class ExpressionParser(BaseParser):
                 right=right,
             )
 
+            object.__setattr__(
+                left,
+                "location",
+                token.source_location,
+            )
+
         return left
 
-    #
-    # Primary expressions
-    #
     @staticmethod
-    def _parse_primary(
+    def _parse_arguments(
+        context,
+    ):
+
+        arguments = []
+
+        #
+        # (
+        #
+        context.advance()
+
+        while not context.eof():
+
+            if (
+                context.current().token_type == RTLTokenType.SYMBOL
+                and context.current().value == ")"
+            ):
+
+                context.advance()
+
+                break
+
+            arguments.append(
+
+                ExpressionParser.parse(
+                    context,
+                )
+
+            )
+
+            if (
+                context.current().token_type == RTLTokenType.SYMBOL
+                and context.current().value == ","
+            ):
+
+                context.advance()
+
+                continue
+
+            if (
+                context.current().token_type == RTLTokenType.SYMBOL
+                and context.current().value == ")"
+            ):
+
+                context.advance()
+
+                break
+
+        return tuple(arguments)
+
+    @staticmethod
+    def _primary(
         context,
     ):
 
         if context.eof():
+
             raise RuntimeError(
-                "Unexpected EOF while parsing expression."
+                "Unexpected EOF."
             )
 
         token = context.current()
 
         #
-        # Identifier
+        # unary
         #
-        if token.token_type == RTLTokenType.IDENTIFIER:
+        if (
+            token.token_type == RTLTokenType.OPERATOR
+            and token.value in ExpressionParser._UNARY
+        ):
+
+            operator = token.value
 
             context.advance()
 
-            return IdentifierExpression(
-                token.value,
+            return UnaryExpression(
+
+                operator,
+
+                ExpressionParser._primary(
+                    context,
+                ),
+
             )
 
         #
-        # Literal
+        # (
+        #
+        if (
+            token.token_type == RTLTokenType.SYMBOL
+            and token.value == "("
+        ):
+
+            context.advance()
+
+            expression = ExpressionParser.parse(
+                context,
+            )
+
+            if (
+                context.eof()
+                or context.current().value != ")"
+            ):
+
+                raise RuntimeError(
+                    "Expected ')'"
+                )
+
+            context.advance()
+
+            return expression
+
+        #
+        # identifier / function call
+        #
+        if token.token_type in {
+
+            RTLTokenType.IDENTIFIER,
+            RTLTokenType.SYSTEM_IDENTIFIER,
+
+        }:
+
+            name = token.value
+
+            context.advance()
+
+            if (
+
+                not context.eof()
+
+                and context.current().token_type == RTLTokenType.SYMBOL
+
+                and context.current().value == "("
+
+            ):
+
+                return FunctionCallExpression(
+
+                    function_name=name,
+
+                    arguments=ExpressionParser._parse_arguments(
+                        context,
+                    ),
+
+                )
+
+            return IdentifierExpression(
+                name,
+            )
+
+        #
+        # literal
         #
         if token.token_type in {
 
@@ -129,10 +300,20 @@ class ExpressionParser(BaseParser):
 
             context.advance()
 
-            return LiteralExpression(
+            node = LiteralExpression(
                 token.value,
             )
 
+            object.__setattr__(
+                node,
+                "location",
+                token.source_location,
+            )
+
+            return node
+
         raise RuntimeError(
-            f"Unexpected token in expression: {token.value}"
+
+            f"Unexpected token '{token.value}'"
+
         )

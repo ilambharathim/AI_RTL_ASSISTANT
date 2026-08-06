@@ -1,0 +1,79 @@
+"""
+SystemVerilog parameter parser.
+"""
+
+from app.ast.parameter_declaration import ParameterDeclaration
+
+from app.domain.rtl_tokens import RTLTokenType
+
+from app.parsers.rtl.parser_context import ParserContext
+from app.parsers.rtl.parsers.base_parser import BaseParser
+from app.parsers.rtl.parsers.expression_parser import ExpressionParser
+
+
+class ParameterParser(BaseParser):
+
+    @staticmethod
+    def matches(
+        context: ParserContext,
+    ) -> bool:
+
+        if context.eof():
+            return False
+
+        token = context.current()
+
+        return (
+            token.token_type == RTLTokenType.KEYWORD
+            and token.value == "parameter"
+        )
+
+    @staticmethod
+    def parse(
+        context: ParserContext,
+    ) -> ParameterDeclaration:
+
+        #
+        # parameter
+        #
+        context.advance()
+
+        #
+        # name
+        #
+        name = context.advance().value
+
+        #
+        # =
+        #
+        context.advance()
+
+        #
+        # Expression AST
+        #
+        expression = ExpressionParser.parse(
+            context,
+        )
+
+        #
+        # ;
+        #
+        if (
+            not context.eof()
+            and context.current().token_type == RTLTokenType.SYMBOL
+            and context.current().value == ";"
+        ):
+            context.advance()
+
+        node = ParameterDeclaration(
+            name=name,
+            value=expression,
+        )
+
+        object.__setattr__(
+            node,
+            "location",
+            token.source_location,
+        )
+
+        return node

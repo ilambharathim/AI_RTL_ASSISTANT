@@ -3,6 +3,7 @@ from app.ast.module_declaration import ModuleDeclaration
 
 module = ModuleDeclaration(
     name="adder",
+    ports=(),
     members=(),
 )
 

@@ -50,6 +50,28 @@ class NumberReader:
         )
 
     @staticmethod
+    def _validate_underscore_usage(
+        value: str,
+    ) -> bool:
+        """
+        Validate underscore placement in numeric literals.
+        """
+
+        if not value:
+            return False
+
+        if value.startswith("_"):
+            return False
+
+        if value.endswith("_"):
+            return False
+
+        if "__" in value:
+            return False
+
+        return True
+
+    @staticmethod
     def read(
         stream: CharacterStream,
         diagnostics,

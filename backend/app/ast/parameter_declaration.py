@@ -12,12 +12,12 @@ class ParameterDeclaration(ASTNode):
 
     name: str
 
-    value: str
+    value: ASTNode
 
     def __init__(
         self,
         name: str,
-        value: str,
+        value: ASTNode,
     ):
 
         object.__setattr__(

@@ -6,11 +6,7 @@ from app.ast.always_block import AlwaysBlock
 from app.domain.rtl_tokens import RTLTokenType
 from app.parsers.rtl.parser_context import ParserContext
 from app.parsers.rtl.parsers.base_parser import BaseParser
-
-from app.parsers.rtl.parsers.signal_parser import SignalParser
 from app.parsers.rtl.parsers.statement_parser import StatementParser
-from app.parsers.rtl.parsers.if_parser import IfParser
-from app.parsers.rtl.parsers.case_parser import CaseParser
 
 
 class AlwaysParser(BaseParser):
@@ -23,7 +19,9 @@ class AlwaysParser(BaseParser):
     }
 
     @staticmethod
-    def matches(context):
+    def matches(
+        context: ParserContext,
+    ) -> bool:
 
         if context.eof():
             return False
@@ -36,7 +34,16 @@ class AlwaysParser(BaseParser):
         )
 
     @staticmethod
-    def parse(context):
+    def parse(
+        context: ParserContext,
+    ) -> AlwaysBlock:
+
+        #
+        # Lazy import to avoid circular dependency
+        #
+        from app.parsers.rtl.parsers.declaration_parser import (
+            DeclarationParser,
+        )
 
         block_type = context.advance().value
 
@@ -80,6 +87,7 @@ class AlwaysParser(BaseParser):
                 token.token_type == RTLTokenType.KEYWORD
                 and token.value == "begin"
             ):
+
                 context.advance()
                 break
 
@@ -92,64 +100,59 @@ class AlwaysParser(BaseParser):
             token = context.current()
 
             #
-            # end
+            # End of block
             #
             if (
                 token.token_type == RTLTokenType.KEYWORD
                 and token.value == "end"
             ):
+
                 context.advance()
                 break
 
-            #
-            # NEW:
-            # procedural declarations
-            #
-            if SignalParser.matches(context):
+            if DeclarationParser.matches(
+                context,
+            ):
 
                 statements.append(
-                    SignalParser.parse(context)
+                    DeclarationParser.parse(
+                        context,
+                    )
                 )
 
                 continue
 
-            #
-            # if
-            #
-            if IfParser.matches(context):
+            if StatementParser.matches(
+                context,
+            ):
 
                 statements.append(
-                    IfParser.parse(context)
-                )
-
-                continue
-
-            #
-            # case
-            #
-            if CaseParser.matches(context):
-
-                statements.append(
-                    CaseParser.parse(context)
-                )
-
-                continue
-
-            #
-            # assignment
-            #
-            if StatementParser.matches(context):
-
-                statements.append(
-                    StatementParser.parse(context)
+                    StatementParser.parse(
+                        context,
+                    )
                 )
 
                 continue
 
             context.advance()
 
-        return AlwaysBlock(
+        node = AlwaysBlock(
+
             block_type=block_type,
+
             sensitivity=sensitivity,
-            statements=tuple(statements),
+
+            statements=tuple(
+                statements,
+            ),
+
         )
+
+        object.__setattr__(
+            node,
+            "location",
+            token.source_location,
+        )
+
+        return node
+

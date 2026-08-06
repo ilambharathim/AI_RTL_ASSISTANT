@@ -65,6 +65,14 @@ class BeginEndParser(BaseParser):
 
             context.advance()
 
-        return StatementBlock(
+        node = StatementBlock(
             statements=tuple(statements),
         )
+
+        object.__setattr__(
+            node,
+            "location",
+            token.source_location,
+        )
+
+        return node

@@ -1,11 +1,14 @@
 """
-SystemVerilog parameter declaration parser.
+SystemVerilog parameter parser.
 """
 
 from app.ast.parameter_declaration import ParameterDeclaration
+
 from app.domain.rtl_tokens import RTLTokenType
+
 from app.parsers.rtl.parser_context import ParserContext
 from app.parsers.rtl.parsers.base_parser import BaseParser
+from app.parsers.rtl.parsers.expression_parser import ExpressionParser
 
 
 class ParameterParser(BaseParser):
@@ -14,6 +17,9 @@ class ParameterParser(BaseParser):
     def matches(
         context: ParserContext,
     ) -> bool:
+
+        if context.eof():
+            return False
 
         token = context.current()
 
@@ -30,44 +36,45 @@ class ParameterParser(BaseParser):
         #
         # parameter
         #
+        token = context.current()
         context.advance()
 
         #
-        # parameter name
+        # name
         #
-        name = context.advance()
+        name = context.advance().value
 
         #
-        # '='
+        # =
+        #
+        context.advance()
+
+        #
+        # Expression AST
+        #
+        expression = ExpressionParser.parse(
+            context,
+        )
+
+        #
+        # ;
         #
         if (
-            context.current().token_type == RTLTokenType.OPERATOR
-            and context.current().value == "="
+            not context.eof()
+            and context.current().token_type == RTLTokenType.SYMBOL
+            and context.current().value == ";"
         ):
             context.advance()
 
-        #
-        # parameter value
-        #
-        value = context.advance()
-
-        #
-        # skip until ';'
-        #
-        while not context.eof():
-
-            token = context.current()
-
-            if (
-                token.token_type == RTLTokenType.SYMBOL
-                and token.value == ";"
-            ):
-                context.advance()
-                break
-
-            context.advance()
-
-        return ParameterDeclaration(
-            name=name.value,
-            value=value.value,
+        node = ParameterDeclaration(
+            name=name,
+            value=expression,
         )
+
+        object.__setattr__(
+            node,
+            "location",
+            token.source_location,
+        )
+
+        return node

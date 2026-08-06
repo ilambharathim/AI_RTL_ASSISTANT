@@ -7,8 +7,7 @@ from app.ast.port_declaration import PortDeclaration
 from app.domain.rtl_tokens import RTLTokenType
 from app.parsers.rtl.parser_context import ParserContext
 from app.parsers.rtl.parsers.base_parser import BaseParser
-from app.parsers.rtl.parsers.parameter_parser import ParameterParser
-from app.parsers.rtl.parsers.signal_parser import SignalParser
+from app.parsers.rtl.parsers.declaration_parser import DeclarationParser
 from app.parsers.rtl.parsers.assign_parser import AssignParser
 from app.parsers.rtl.parsers.always_parser import AlwaysParser
 
@@ -79,18 +78,13 @@ class ModuleParser(BaseParser):
                 context.advance()
                 break
 
-            if ParameterParser.matches(context):
+            #
+            # All declarations are owned by DeclarationParser
+            #
+            if DeclarationParser.matches(context):
 
                 members.append(
-                    ParameterParser.parse(context)
-                )
-
-                continue
-
-            if SignalParser.matches(context):
-
-                members.append(
-                    SignalParser.parse(context)
+                    DeclarationParser.parse(context)
                 )
 
                 continue
@@ -113,8 +107,16 @@ class ModuleParser(BaseParser):
 
             context.advance()
 
-        return ModuleDeclaration(
+        node = ModuleDeclaration(
             name=module_name.value,
             ports=tuple(ports),
             members=tuple(members),
         )
+
+        object.__setattr__(
+            node,
+            "location",
+            token.source_location,
+        )
+
+        return node

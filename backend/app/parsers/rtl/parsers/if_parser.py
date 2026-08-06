@@ -95,8 +95,16 @@ class IfParser(BaseParser):
                     StatementParser.parse(context)
                 )
 
-        return IfStatement(
+        node = IfStatement(
             condition=" ".join(condition),
             then_branch=tuple(then_branch),
             else_branch=tuple(else_branch),
         )
+
+        object.__setattr__(
+            node,
+            "location",
+            token.source_location,
+        )
+
+        return node

@@ -18,6 +18,12 @@ from app.semantics.visitors.symbol_collector import SymbolCollector
 
 
 class ScopeBuilder:
+    """
+    First semantic pass.
+
+    Builds the complete scope hierarchy while collecting
+    declarations into their owning scopes.
+    """
 
     def __init__(self):
 
@@ -25,10 +31,25 @@ class ScopeBuilder:
 
         self.collector = SymbolCollector()
 
+
     def build(
         self,
         syntax_tree,
     ):
+        """
+        Backward-compatible API.
+        """
+        return self.analyze(
+            syntax_tree,
+        )
+
+    def analyze(
+        self,
+        syntax_tree,
+    ):
+        """
+        Execute semantic scope construction.
+        """
 
         for declaration in syntax_tree.declarations:
 
@@ -38,6 +59,9 @@ class ScopeBuilder:
 
         return self.scopes.global_scope
 
+    #
+    # Internal recursive traversal
+    #
     def visit(
         self,
         node,
@@ -90,7 +114,7 @@ class ScopeBuilder:
             return
 
         #
-        # always
+        # always block
         #
         if isinstance(
             node,
@@ -113,7 +137,7 @@ class ScopeBuilder:
             return
 
         #
-        # begin/end
+        # begin/end block
         #
         if isinstance(
             node,
@@ -136,7 +160,7 @@ class ScopeBuilder:
             return
 
         #
-        # if
+        # if statement
         #
         if isinstance(
             node,

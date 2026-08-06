@@ -2,10 +2,9 @@
 SystemVerilog procedural statement parser.
 """
 
-from app.ast.procedural_assignment import ProceduralAssignment
-from app.domain.rtl_tokens import RTLTokenType
 from app.parsers.rtl.parser_context import ParserContext
 from app.parsers.rtl.parsers.base_parser import BaseParser
+from app.parsers.rtl.parsers.assignment_parser import AssignmentParser
 
 
 class StatementParser(BaseParser):
@@ -23,9 +22,7 @@ class StatementParser(BaseParser):
         #
         from app.parsers.rtl.parsers.if_parser import IfParser
         from app.parsers.rtl.parsers.case_parser import CaseParser
-        from app.parsers.rtl.parsers.begin_end_parser import (
-            BeginEndParser,
-        )
+        from app.parsers.rtl.parsers.begin_end_parser import BeginEndParser
 
         if IfParser.matches(context):
             return True
@@ -36,10 +33,10 @@ class StatementParser(BaseParser):
         if BeginEndParser.matches(context):
             return True
 
-        return (
-            context.current().token_type
-            == RTLTokenType.IDENTIFIER
-        )
+        if AssignmentParser.matches(context):
+            return True
+
+        return False
 
     @staticmethod
     def parse(
@@ -48,9 +45,7 @@ class StatementParser(BaseParser):
 
         from app.parsers.rtl.parsers.if_parser import IfParser
         from app.parsers.rtl.parsers.case_parser import CaseParser
-        from app.parsers.rtl.parsers.begin_end_parser import (
-            BeginEndParser,
-        )
+        from app.parsers.rtl.parsers.begin_end_parser import BeginEndParser
 
         if IfParser.matches(context):
             return IfParser.parse(context)
@@ -61,32 +56,9 @@ class StatementParser(BaseParser):
         if BeginEndParser.matches(context):
             return BeginEndParser.parse(context)
 
-        #
-        # Assignment
-        #
-        target = context.advance()
+        if AssignmentParser.matches(context):
+            return AssignmentParser.parse(context)
 
-        operator = context.advance()
-
-        expression = []
-
-        while not context.eof():
-
-            token = context.current()
-
-            if (
-                token.token_type == RTLTokenType.SYMBOL
-                and token.value == ";"
-            ):
-                context.advance()
-                break
-
-            expression.append(token.value)
-
-            context.advance()
-
-        return ProceduralAssignment(
-            target=target.value,
-            operator=operator.value,
-            expression=" ".join(expression),
+        raise RuntimeError(
+            "Unsupported procedural statement."
         )

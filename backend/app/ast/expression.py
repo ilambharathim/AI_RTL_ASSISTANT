@@ -124,3 +124,35 @@ class BinaryExpression(ASTNode):
             "right",
             right,
         )
+
+
+@dataclass(frozen=True, slots=True)
+class FunctionCallExpression(ASTNode):
+
+    function_name: str
+
+    arguments: tuple[ASTNode, ...]
+
+    def __init__(
+        self,
+        function_name: str,
+        arguments: tuple[ASTNode, ...],
+    ):
+
+        object.__setattr__(
+            self,
+            "kind",
+            "FunctionCallExpression",
+        )
+
+        object.__setattr__(
+            self,
+            "function_name",
+            function_name,
+        )
+
+        object.__setattr__(
+            self,
+            "arguments",
+            arguments,
+        )

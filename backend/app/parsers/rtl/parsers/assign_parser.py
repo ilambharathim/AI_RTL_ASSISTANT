@@ -61,7 +61,15 @@ class AssignParser(BaseParser):
 
             context.advance()
 
-        return ContinuousAssign(
+        node = ContinuousAssign(
             target=target.value,
             expression=" ".join(expression_tokens),
         )
+
+        object.__setattr__(
+            node,
+            "location",
+            token.source_location,
+        )
+
+        return node

@@ -14,13 +14,13 @@ class ProceduralAssignment(ASTNode):
 
     operator: str
 
-    expression: str
+    expression: ASTNode
 
     def __init__(
         self,
         target: str,
         operator: str,
-        expression: str,
+        expression: ASTNode,
     ):
 
         object.__setattr__(

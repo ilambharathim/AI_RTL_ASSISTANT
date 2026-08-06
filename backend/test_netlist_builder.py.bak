@@ -1,0 +1,63 @@
+from app.ast.expression import IdentifierExpression
+
+from app.semantics.semantic_model import SemanticModel
+
+from app.elaboration.netlist.netlist_builder import (
+    NetlistBuilder,
+)
+
+
+model = SemanticModel()
+
+model.elaboration.rtl_graph = {
+
+    "top": {
+
+        "instances": [
+
+            {
+
+                "name": "u0",
+
+                "module": "child",
+
+                "ports": {
+
+                    "clk": {
+
+                        "expression": IdentifierExpression(
+                            "clk",
+                        ),
+
+                        "symbol": None,
+
+                    },
+
+                },
+
+            },
+
+        ],
+
+    },
+
+}
+
+NetlistBuilder().build(
+    model,
+)
+
+netlist = model.elaboration.netlist
+
+assert "top" in netlist.modules
+
+assert (
+    netlist.modules["top"]
+    .instances[0]
+    .nets[0]
+    .signal
+    == "clk"
+)
+
+print("Typed NetlistBuilder test passed.")
+

@@ -1,0 +1,199 @@
+"""
+SystemVerilog module instance parser.
+
+Supports:
+
+module_name instance_name(...);
+
+module_name #(
+    .WIDTH(32),
+    .DEPTH(16)
+) instance_name(...);
+"""
+
+from app.ast.module_instance import ModuleInstance
+
+from app.domain.rtl_tokens.token_type import RTLTokenType
+
+from app.parsers.rtl.parsers.base_parser import BaseParser
+from app.parsers.rtl.parsers.port_connection_parser import (
+    PortConnectionParser,
+)
+from app.parsers.rtl.parsers.parameter_override_parser import (
+    ParameterOverrideParser,
+)
+
+
+class ModuleInstanceParser(BaseParser):
+
+    @staticmethod
+    def matches(
+        context,
+    ):
+
+        if context.eof():
+            return False
+
+        return (
+            context.current().token_type
+            == RTLTokenType.IDENTIFIER
+        )
+
+    @staticmethod
+    def parse(
+        context,
+    ):
+
+        token = context.current()
+
+        #
+        # Module name
+        #
+        module_name = context.advance().value
+
+        #
+        # Optional parameter overrides
+        #
+        parameter_overrides = []
+
+        if (
+            not context.eof()
+            and context.current().value == "#"
+        ):
+
+            context.advance()
+
+            if (
+                context.eof()
+                or context.current().value != "("
+            ):
+                raise RuntimeError(
+                    "Expected '(' after '#'."
+                )
+
+            context.advance()
+
+            while not context.eof():
+
+                if context.current().value == ")":
+                    break
+
+                parameter_overrides.append(
+                    ParameterOverrideParser.parse(
+                        context,
+                    )
+                )
+
+                if (
+                    not context.eof()
+                    and context.current().value == ","
+                ):
+                    context.advance()
+
+            if (
+                context.eof()
+                or context.current().value != ")"
+            ):
+                raise RuntimeError(
+                    "Expected ')' after parameter overrides."
+                )
+
+            context.advance()
+
+        #
+        # Instance name
+        #
+        if (
+            context.eof()
+            or context.current().token_type
+            != RTLTokenType.IDENTIFIER
+        ):
+            print("\n===== ModuleInstanceParser DEBUG =====")
+            if not context.eof():
+                t = context.current()
+                print("Current token:", t.token_type, repr(t.value))
+            else:
+                print("EOF reached")
+            print("======================================\n")
+            raise RuntimeError(
+                "Expected instance name."
+            )
+
+        instance_name = context.advance().value
+
+        #
+        # (
+        #
+        if (
+            context.eof()
+            or context.current().value != "("
+        ):
+            raise RuntimeError(
+                "Expected '(' after instance name."
+            )
+
+        context.advance()
+
+        connections = []
+
+        while not context.eof():
+
+            if context.current().value == ")":
+                break
+
+            connections.append(
+                PortConnectionParser.parse(
+                    context,
+                )
+            )
+
+            if (
+                not context.eof()
+                and context.current().value == ","
+            ):
+                context.advance()
+
+        if (
+            context.eof()
+            or context.current().value != ")"
+        ):
+            raise RuntimeError(
+                "Expected ')'."
+            )
+
+        context.advance()
+
+        if (
+            context.eof()
+            or context.current().value != ";"
+        ):
+            raise RuntimeError(
+                "Expected ';'."
+            )
+
+        context.advance()
+
+        node = ModuleInstance(
+
+            module_name=module_name,
+
+            parameter_overrides=tuple(
+                parameter_overrides,
+            ),
+
+            instance_name=instance_name,
+
+            connections=tuple(
+                connections,
+            ),
+
+        )
+
+        object.__setattr__(
+            node,
+            "location",
+            token.source_location,
+        )
+
+        return node
+

@@ -1,0 +1,93 @@
+"""
+Port binder.
+
+Binds instance connections to module ports.
+"""
+
+from app.elaboration.model import (
+    BoundHierarchy,
+    BoundInstance,
+    BoundModule,
+    PortBinding,
+)
+
+
+class PortBinder:
+
+    def bind(
+        self,
+        semantic_model,
+    ):
+
+        hierarchy = BoundHierarchy()
+
+        resolved = (
+            semantic_model.elaboration.elaborated_modules
+        )
+
+        for resolved_module in (
+            resolved.values()
+        ):
+
+            bound_module = BoundModule(
+                name=resolved_module.name,
+            )
+
+            for instance in (
+                resolved_module.instances.values()
+            ):
+
+                bound_instance = BoundInstance(
+
+                    instance_name=instance.instance_name,
+
+                    module_name=instance.module_name,
+
+                )
+
+                ports = {}
+
+                if instance.module is not None:
+
+                    for port in instance.module.ports:
+
+                        ports[
+                            port.name
+                        ] = None
+
+                for connection in (
+                    instance.connections
+                ):
+
+                    ports[
+                        connection.port_name
+                    ] = connection.expression
+
+                for port_name, expression in (
+                    ports.items()
+                ):
+
+                    bound_instance.bindings.append(
+
+                        PortBinding(
+
+                            port_name=port_name,
+
+                            expression=expression,
+
+                        )
+
+                    )
+
+                bound_module.instances.append(
+                    bound_instance,
+                )
+
+            hierarchy.modules[
+                bound_module.name
+            ] = bound_module
+
+        semantic_model.elaboration.port_bindings = (
+            hierarchy
+        )
+
