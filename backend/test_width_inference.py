@@ -1,31 +1,36 @@
 from app.ast import (
     CompilationUnit,
+    ModuleDeclaration,
     SignalDeclaration,
 )
 
-from app.semantics.semantic_analyzer import SemanticAnalyzer
+from app.semantics.semantic_model import SemanticModel
+from app.semantics.passes.width_inference import WidthInference
 
-tree = CompilationUnit(
 
-    declarations=(
+def test_width_inference():
 
-        SignalDeclaration(
-
-            signal_type="logic",
-
-            packed_range=None,
-
-            name="clk",
-
+    tree = CompilationUnit(
+        declarations=(
+            ModuleDeclaration(
+                name="top",
+                ports=(),
+                members=(
+                    SignalDeclaration(
+                        signal_type="logic",
+                        packed_range=None,
+                        name="a",
+                    ),
+                ),
+            ),
         ),
+    )
 
-    ),
+    model = SemanticModel()
 
-)
+    WidthInference().infer(
+        tree,
+        model,
+    )
 
-model = SemanticAnalyzer().analyze(tree)
-
-assert model.symbols["clk"].width == 1
-
-print("WidthInference test passed.")
-
+    assert model.types["a"]["width"] == 1
