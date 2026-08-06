@@ -1,34 +1,38 @@
 from app.ast import (
     CompilationUnit,
+    ModuleDeclaration,
     SignalDeclaration,
 )
 
-from app.semantics.semantic_analyzer import SemanticAnalyzer
+from app.semantics.semantic_model import SemanticModel
+from app.semantics.passes.type_resolver import TypeResolver
 
 
 tree = CompilationUnit(
-
     declarations=(
-
-        SignalDeclaration(
-
-            signal_type="logic",
-
-            packed_range=None,
-
-            name="clk",
-
+        ModuleDeclaration(
+            name="top",
+            ports=(),
+            members=(
+                SignalDeclaration(
+                    signal_type="logic",
+                    packed_range=None,
+                    name="a",
+                ),
+            ),
         ),
-
     ),
-
 )
 
-model = SemanticAnalyzer().analyze(
+model = SemanticModel()
+
+TypeResolver().resolve(
     tree,
+    model,
 )
 
-assert model.types["clk"] == "logic"
+assert "a" in model.types
+assert model.types["a"]["type"] == "logic"
+assert model.types["a"]["packed_range"] is None
 
 print("TypeResolver test passed.")
-
