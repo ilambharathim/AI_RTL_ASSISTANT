@@ -1,8 +1,7 @@
 """
 Width Mismatch Detection.
 
-Detects assignments whose source width exceeds the
-destination width.
+Detects assignments whose source and destination widths differ.
 """
 
 from app.ast import (
@@ -27,11 +26,14 @@ from app.diagnostics.diagnostic import (
     Diagnostic,
 )
 
+from app.diagnostics.catalog.width_catalog import (
+    RIVA3001,
+)
+
 
 class WidthMismatchRule(DiagnosticRule):
 
-    code = "RIVA3001"
-
+    code = RIVA3001.code
     name = "Width Mismatch"
 
     def run(
@@ -143,20 +145,6 @@ class WidthMismatchRule(DiagnosticRule):
         assignment,
     ):
 
-        symbols = self.semantic_model.symbols
-
-        target = symbols.get(
-            assignment.target,
-        )
-
-        if target is None:
-            return
-
-        destination_width = target.width
-
-        if destination_width is None:
-            return
-
         expression = assignment.expression
 
         if not isinstance(
@@ -165,40 +153,64 @@ class WidthMismatchRule(DiagnosticRule):
         ):
             return
 
-        source = symbols.get(
-            expression.name,
+        target_name = assignment.target
+        source_name = expression.name
+
+        types = self.semantic_model.types
+
+        target_info = types.get(
+            target_name,
         )
 
-        if source is None:
+        source_info = types.get(
+            source_name,
+        )
+
+        if target_info is None:
             return
 
-        source_width = source.width
+        if source_info is None:
+            return
+
+        destination_width = target_info.get(
+            "width",
+        )
+
+        source_width = source_info.get(
+            "width",
+        )
+
+        if destination_width is None:
+            return
 
         if source_width is None:
             return
 
-        if source_width > destination_width:
+        if source_width == destination_width:
+            return
 
-            self.diagnostics.append(
+        self.diagnostics.append(
 
-                Diagnostic(
+            Diagnostic(
 
-                    severity="warning",
+                code=RIVA3001.code,
 
-                    code=self.code,
+                category=RIVA3001.category,
 
-                    message=(
-                        f"Width mismatch: "
-                        f"{assignment.target} "
-                        f"({destination_width} bits) <- "
-                        f"{expression.name} "
-                        f"({source_width} bits)"
-                    ),
+                severity=RIVA3001.severity,
 
-                    suggestion=(
-                        "Slice or resize the source signal."
-                    ),
+                message=(
+                    f"Width mismatch: "
+                    f"{target_name} "
+                    f"({destination_width} bits) <- "
+                    f"{source_name} "
+                    f"({source_width} bits)"
+                ),
 
-                )
+                explanation=RIVA3001.explanation,
+
+                suggestion=RIVA3001.suggestion,
 
             )
+
+        )

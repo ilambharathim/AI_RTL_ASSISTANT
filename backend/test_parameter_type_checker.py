@@ -41,22 +41,14 @@ def test_parameter_type_checker():
 
     assert len(model.diagnostics) == 1
 
-    assert (
-        model.diagnostics[0]["kind"]
-        == "UnknownParameterType"
+    diagnostic = model.diagnostics[0]
+
+    assert diagnostic.code == "RIVA1001"
+
+    assert diagnostic.category == "Semantic"
+
+    assert diagnostic.severity == "error"
+
+    assert diagnostic.message == (
+        "Identifier 'MISSING' is not declared."
     )
-
-    assert (
-        model.diagnostics[0]["parameter"]
-        == "WIDTH"
-    )
-
-    assert (
-        model.diagnostics[0]["identifier"]
-        == "MISSING"
-    )
-
-
-if __name__ == "__main__":
-    test_parameter_type_checker()
-    print("ParameterTypeChecker test passed.")

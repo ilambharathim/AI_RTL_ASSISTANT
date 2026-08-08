@@ -5,9 +5,13 @@ from app.ast import (
     ProceduralAssignment,
 )
 
-from app.ast.expression import IdentifierExpression
+from app.ast.expression import (
+    IdentifierExpression,
+)
 
-from app.semantics.semantic_model import SemanticModel
+from app.semantics.semantic_model import (
+    SemanticModel,
+)
 
 from app.semantics.passes.assignment_compatibility_checker import (
     AssignmentCompatibilityChecker,
@@ -35,7 +39,9 @@ def test_assignment_width_mismatch():
                     ProceduralAssignment(
                         target="a",
                         operator="=",
-                        expression=IdentifierExpression("b"),
+                        expression=IdentifierExpression(
+                            "b",
+                        ),
                     ),
                 ),
             ),
@@ -44,15 +50,16 @@ def test_assignment_width_mismatch():
 
     model = SemanticModel()
 
-    #
-    # Pretend previous semantic passes already inferred widths.
-    #
     model.types["a"] = {
+        "type": "logic",
         "width": 8,
+        "signed": False,
     }
 
     model.types["b"] = {
+        "type": "logic",
         "width": 4,
+        "signed": False,
     }
 
     AssignmentCompatibilityChecker().check(
@@ -62,10 +69,24 @@ def test_assignment_width_mismatch():
 
     assert len(model.diagnostics) == 1
 
-    diag = model.diagnostics[0]
+    diagnostic = model.diagnostics[0]
 
-    assert diag["kind"] == "WidthMismatch"
-    assert diag["lhs"] == "a"
-    assert diag["rhs"] == "b"
-    assert diag["lhs_width"] == 8
-    assert diag["rhs_width"] == 4
+    assert diagnostic.code == "RIVA3001"
+    assert diagnostic.category == "Width"
+    assert diagnostic.severity == "warning"
+
+    assert diagnostic.message == (
+        "Width mismatch: "
+        "a (8 bits) <- "
+        "b (4 bits)"
+    )
+
+    assert diagnostic.explanation == (
+        "The destination signal width differs from the "
+        "source expression width."
+    )
+
+    assert diagnostic.suggestion == (
+        "Resize the source or destination, or explicitly "
+        "slice or extend the value."
+    )

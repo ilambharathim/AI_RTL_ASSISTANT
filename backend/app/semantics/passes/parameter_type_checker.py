@@ -10,7 +10,14 @@ from app.ast import (
     ParameterDeclaration,
 )
 
-from app.ast.expression import IdentifierExpression
+from app.ast.expression import (
+    IdentifierExpression,
+    BinaryExpression,
+    UnaryExpression,
+)
+
+from app.diagnostics.diagnostic import Diagnostic
+from app.diagnostics.catalog.semantic_catalog import RIVA1001
 
 
 class ParameterTypeChecker:
@@ -21,9 +28,13 @@ class ParameterTypeChecker:
         model,
     ):
 
-        if isinstance(tree, CompilationUnit):
+        if isinstance(
+            tree,
+            CompilationUnit,
+        ):
 
             for declaration in tree.declarations:
+
                 self.check(
                     declaration,
                     model,
@@ -31,9 +42,13 @@ class ParameterTypeChecker:
 
             return
 
-        if isinstance(tree, ModuleDeclaration):
+        if isinstance(
+            tree,
+            ModuleDeclaration,
+        ):
 
             for member in tree.members:
+
                 self.check(
                     member,
                     model,
@@ -41,24 +56,82 @@ class ParameterTypeChecker:
 
             return
 
-        if isinstance(tree, ParameterDeclaration):
+        if isinstance(
+            tree,
+            ParameterDeclaration,
+        ):
 
-            value = tree.value
+            self._check_expression(
+                tree.value,
+                model,
+            )
 
-            if isinstance(
-                value,
-                IdentifierExpression,
+    def _check_expression(
+        self,
+        expression,
+        model,
+    ):
+
+        if isinstance(
+            expression,
+            IdentifierExpression,
+        ):
+
+            if (
+                expression.name not in model.types
+                and expression.name not in model.constant_values
             ):
 
-                if (
-                    value.name not in model.types
-                    and value.name not in model.constant_values
-                ):
+                model.diagnostics.append(
 
-                    model.diagnostics.append(
-                        {
-                            "kind": "UnknownParameterType",
-                            "parameter": tree.name,
-                            "identifier": value.name,
-                        }
+                    Diagnostic(
+
+                        code=RIVA1001.code,
+
+                        category=RIVA1001.category,
+
+                        severity=RIVA1001.severity,
+
+                        message=(
+                            f"Identifier '{expression.name}' "
+                            "is not declared."
+                        ),
+
+                        explanation=RIVA1001.explanation,
+
+                        suggestion=RIVA1001.suggestion,
+
                     )
+
+                )
+
+            return
+
+        if isinstance(
+            expression,
+            BinaryExpression,
+        ):
+
+            self._check_expression(
+                expression.left,
+                model,
+            )
+
+            self._check_expression(
+                expression.right,
+                model,
+            )
+
+            return
+
+        if isinstance(
+            expression,
+            UnaryExpression,
+        ):
+
+            self._check_expression(
+                expression.operand,
+                model,
+            )
+
+            return

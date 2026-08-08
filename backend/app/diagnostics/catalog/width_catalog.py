@@ -21,7 +21,7 @@ RIVA3001 = DiagnosticDefinition(
 
     category=DiagnosticCategory.WIDTH,
 
-    severity=DiagnosticSeverity.ERROR,
+    severity=DiagnosticSeverity.WARNING,
 
     title="Width Mismatch",
 

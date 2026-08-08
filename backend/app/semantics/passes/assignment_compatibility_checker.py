@@ -10,6 +10,13 @@ from app.ast import (
     ProceduralAssignment,
 )
 
+from app.ast.expression import (
+    IdentifierExpression,
+)
+
+from app.diagnostics.diagnostic import Diagnostic
+from app.diagnostics.catalog.width_catalog import RIVA3001
+
 
 class AssignmentCompatibilityChecker:
 
@@ -19,53 +26,105 @@ class AssignmentCompatibilityChecker:
         model,
     ):
 
-        if isinstance(tree, CompilationUnit):
+        if isinstance(
+            tree,
+            CompilationUnit,
+        ):
 
             for declaration in tree.declarations:
-                self.check(declaration, model)
+
+                self.check(
+                    declaration,
+                    model,
+                )
 
             return
 
-        if isinstance(tree, ModuleDeclaration):
+        if isinstance(
+            tree,
+            ModuleDeclaration,
+        ):
 
             for member in tree.members:
-                self.check(member, model)
+
+                self.check(
+                    member,
+                    model,
+                )
 
             return
 
-        if isinstance(tree, ProceduralAssignment):
+        if isinstance(
+            tree,
+            ProceduralAssignment,
+        ):
 
-            lhs = tree.target
-
-            rhs = getattr(
-                tree.expression,
-                "name",
-                None,
+            self._check_assignment(
+                tree,
+                model,
             )
 
-            if rhs is None:
-                return
+    def _check_assignment(
+        self,
+        assignment,
+        model,
+    ):
 
-            if lhs not in model.types:
-                return
+        lhs = assignment.target
 
-            if rhs not in model.types:
-                return
+        if lhs not in model.types:
+            return
 
-            lhs_width = model.types[lhs].get("width")
-            rhs_width = model.types[rhs].get("width")
+        expression = assignment.expression
 
-            if (
-                lhs_width is not None
-                and rhs_width is not None
-                and lhs_width != rhs_width
-            ):
-                model.diagnostics.append(
-                    {
-                        "kind": "WidthMismatch",
-                        "lhs": lhs,
-                        "rhs": rhs,
-                        "lhs_width": lhs_width,
-                        "rhs_width": rhs_width,
-                    }
-                )
+        if not isinstance(
+            expression,
+            IdentifierExpression,
+        ):
+            return
+
+        rhs = expression.name
+
+        if rhs not in model.types:
+            return
+
+        lhs_width = model.types[lhs].get(
+            "width",
+        )
+
+        rhs_width = model.types[rhs].get(
+            "width",
+        )
+
+        if (
+            lhs_width is None
+            or rhs_width is None
+        ):
+            return
+
+        if lhs_width == rhs_width:
+            return
+
+        model.diagnostics.append(
+
+            Diagnostic(
+
+                code=RIVA3001.code,
+
+                category=RIVA3001.category,
+
+                severity=RIVA3001.severity,
+
+                message=(
+                    f"Width mismatch: "
+                    f"{lhs} ({lhs_width} bits) <- "
+                    f"{rhs} ({rhs_width} bits)"
+                ),
+
+                explanation=RIVA3001.explanation,
+
+                suggestion=RIVA3001.suggestion,
+
+            )
+
+        )
