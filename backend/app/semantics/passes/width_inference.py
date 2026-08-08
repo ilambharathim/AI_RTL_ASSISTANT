@@ -4,6 +4,10 @@ Width inference pass.
 Computes effective bit widths of signals.
 """
 
+from app.semantics.passes.expression_evaluator import (
+    ExpressionEvaluator,
+)
+
 from app.ast import (
     CompilationUnit,
     ModuleDeclaration,
@@ -47,10 +51,19 @@ class WidthInference:
             width = 1
 
             #
-            # packed_range support comes next
+            # Packed range width
             #
             if tree.packed_range is not None:
-                width = None
+
+                left = ExpressionEvaluator.evaluate(
+                    tree.packed_range.left,
+                )
+
+                right = ExpressionEvaluator.evaluate(
+                    tree.packed_range.right,
+                )
+
+                width = abs(left - right) + 1
 
             model.types.setdefault(
                 tree.name,
