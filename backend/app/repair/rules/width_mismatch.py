@@ -79,4 +79,6 @@ class WidthMismatchRepair(RepairRule):
                 "Width inferred from source and destination signals."
             ),
 
+            location=getattr(diagnostic, "location", None),
+
         )

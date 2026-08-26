@@ -10,6 +10,11 @@ class PortNode(RTLNode):
     """
 
     name: str = ""
+
     direction: str = ""
+
     datatype: str = "logic"
+
     width: int = 1
+
+    signed: bool = False

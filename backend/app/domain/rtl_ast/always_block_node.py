@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from app.domain.rtl_ast.rtl_node import RTLNode
 
@@ -9,4 +9,10 @@ class AlwaysBlockNode(RTLNode):
     Represents an always block in the RTL AST.
     """
 
+    block_type: str = ""
+
     sensitivity: str = ""
+
+    statements: list[RTLNode] = field(
+        default_factory=list,
+    )

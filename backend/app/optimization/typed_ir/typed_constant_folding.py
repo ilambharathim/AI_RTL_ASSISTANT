@@ -1,7 +1,6 @@
 """
 Typed IR Constant Folding.
-
-Evaluates constant expressions in the Typed IR.
+Folds compile-time constant binary and unary expressions into IRLiteral nodes.
 """
 
 from app.ir.ir_expression import (
@@ -9,7 +8,6 @@ from app.ir.ir_expression import (
     IRBinary,
     IRUnary,
 )
-
 from app.optimization.model.pass_result import PassResult
 
 
@@ -22,122 +20,109 @@ class TypedConstantFolding:
         semantic_model,
         context,
     ):
+        result = PassResult()
+        elaboration = getattr(semantic_model, "elaboration", None)
+        if not elaboration:
+            return result
 
-        changed = False
+        ir_modules = elaboration.get("ir", {}) if isinstance(elaboration, dict) else getattr(elaboration, "ir", {})
+        for module in ir_modules.values():
+            if hasattr(module, "statements"):
+                for statement in module.statements:
+                    if hasattr(statement, "expression") and statement.expression is not None:
+                        new_expr, local_change = self._fold(statement.expression)
+                        if local_change:
+                            statement.expression = new_expr
+                            result.changed = True
 
-        for module in semantic_model.elaboration.ir.values():
+        return result
 
-            for statement in module.statements:
+    def _fold(self, expr):
+        if expr is None:
+            return None, False
 
-                if hasattr(statement, "expression"):
+        if isinstance(expr, IRBinary):
+            left, c1 = self._fold(expr.left)
+            right, c2 = self._fold(expr.right)
+            changed = c1 or c2
 
-                    new_expression, local_change = self._fold(
-                        statement.expression,
-                    )
+            if isinstance(left, IRLiteral) and isinstance(right, IRLiteral):
+                try:
+                    v1 = int(str(left.value), 0)
+                    v2 = int(str(right.value), 0)
+                    res = None
+                    op = expr.operator
+                    if op == "+":
+                        res = v1 + v2
+                    elif op == "-":
+                        res = v1 - v2
+                    elif op == "*":
+                        res = v1 * v2
+                    elif op in ("/", "div"):
+                        res = v1 // v2 if v2 != 0 else None
+                    elif op == "&":
+                        res = v1 & v2
+                    elif op == "|":
+                        res = v1 | v2
+                    elif op == "^":
+                        res = v1 ^ v2
+                    elif op == "==":
+                        res = int(v1 == v2)
+                    elif op == "!=":
+                        res = int(v1 != v2)
+                    elif op == "<":
+                        res = int(v1 < v2)
+                    elif op == "<=":
+                        res = int(v1 <= v2)
+                    elif op == ">":
+                        res = int(v1 > v2)
+                    elif op == ">=":
+                        res = int(v1 >= v2)
 
-                    statement.expression = new_expression
+                    if res is not None:
+                        lit = IRLiteral(str(res))
+                        lit.width = getattr(expr, "width", None)
+                        lit.location = getattr(expr, "location", None)
+                        return lit, True
+                except (ValueError, TypeError):
+                    pass
 
-                    changed |= local_change
+            if changed:
+                folded = IRBinary(expr.operator, left, right)
+                folded.width = getattr(expr, "width", None)
+                folded.location = getattr(expr, "location", None)
+                return folded, True
+            return expr, False
 
-        return PassResult(
-            changed=changed,
-        )
+        if isinstance(expr, IRUnary):
+            operand, changed = self._fold(expr.operand)
+            if isinstance(operand, IRLiteral):
+                try:
+                    val = int(str(operand.value), 0)
+                    res = None
+                    op = expr.operator
+                    if op == "-":
+                        res = -val
+                    elif op == "+":
+                        res = val
+                    elif op == "~":
+                        res = ~val
+                    elif op == "!":
+                        res = int(not val)
 
-    def _fold(
-        self,
-        expression,
-    ):
+                    if res is not None:
+                        lit = IRLiteral(str(res))
+                        lit.width = getattr(expr, "width", None)
+                        lit.location = getattr(expr, "location", None)
+                        return lit, True
+                except (ValueError, TypeError):
+                    pass
 
-        if isinstance(expression, IRLiteral):
+            if changed:
+                folded = IRUnary(expr.operator, operand)
+                folded.width = getattr(expr, "width", None)
+                folded.location = getattr(expr, "location", None)
+                return folded, True
+            return expr, False
 
-            return expression, False
-
-        if isinstance(expression, IRUnary):
-
-            operand, changed = self._fold(
-                expression.operand,
-            )
-
-            expression.operand = operand
-
-            if isinstance(
-                operand,
-                IRLiteral,
-            ):
-
-                value = int(
-                    operand.value,
-                )
-
-                if expression.operator == "-":
-
-                    return IRLiteral(
-                        str(-value),
-                    ), True
-
-                if expression.operator == "+":
-
-                    return IRLiteral(
-                        str(value),
-                    ), True
-
-            return expression, changed
-
-        if isinstance(expression, IRBinary):
-
-            left, left_changed = self._fold(
-                expression.left,
-            )
-
-            right, right_changed = self._fold(
-                expression.right,
-            )
-
-            expression.left = left
-            expression.right = right
-
-            if (
-                isinstance(left, IRLiteral)
-                and isinstance(right, IRLiteral)
-            ):
-
-                a = int(left.value)
-                b = int(right.value)
-
-                if expression.operator == "+":
-                    value = a + b
-
-                elif expression.operator == "-":
-                    value = a - b
-
-                elif expression.operator == "*":
-                    value = a * b
-
-                elif expression.operator == "/":
-
-                    if b == 0:
-
-                        return expression, (
-                            left_changed
-                            or right_changed
-                        )
-
-                    value = a // b
-
-                else:
-
-                    return expression, (
-                        left_changed
-                        or right_changed
-                    )
-
-                return IRLiteral(
-                    str(value),
-                ), True
-
-            return expression, (
-                left_changed
-                or right_changed
-            )
-
-        return expression, False
+        return expr, False

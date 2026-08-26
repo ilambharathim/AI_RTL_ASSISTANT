@@ -68,4 +68,6 @@ class UndefinedIdentifierRepair(RepairRule):
                 "Width inferred from existing declarations."
             ),
 
+            location=getattr(diagnostic, "location", None),
+
         )

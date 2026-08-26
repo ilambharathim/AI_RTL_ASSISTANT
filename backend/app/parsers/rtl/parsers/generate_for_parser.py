@@ -1,43 +1,33 @@
 """
 SystemVerilog generate-for parser.
-
-Parses:
-
-for(genvar i=0; i<N; i=i+1)
-    ...
 """
 
-from app.ast import GenerateFor
+from app.ast.generate_for import GenerateFor
 
-from app.domain.rtl_tokens.token_type import RTLTokenType
+from app.domain.rtl_tokens import RTLTokenType
 
 from app.parsers.rtl.parsers.base_parser import BaseParser
 from app.parsers.rtl.parsers.expression_parser import ExpressionParser
-from app.parsers.rtl.parsers.module_instance_parser import (
-    ModuleInstanceParser,
-)
+from app.parsers.rtl.parsers.generate_body_parser import GenerateBodyParser
 
 
 class GenerateForParser(BaseParser):
 
     @staticmethod
-    def matches(
-        context,
-    ):
+    def matches(context):
 
         if context.eof():
             return False
 
+        token = context.current()
+
         return (
-            context.current().token_type
-            == RTLTokenType.KEYWORD
-            and context.current().value == "for"
+            token.token_type == RTLTokenType.KEYWORD
+            and token.value == "for"
         )
 
     @staticmethod
-    def parse(
-        context,
-    ):
+    def parse(context):
 
         token = context.current()
 
@@ -71,7 +61,7 @@ class GenerateForParser(BaseParser):
             context.advance()
 
         #
-        # Variable
+        # Loop variable
         #
         if (
             context.eof()
@@ -87,13 +77,19 @@ class GenerateForParser(BaseParser):
         #
         # =
         #
-        if context.current().value != "=":
+        if (
+            context.eof()
+            or context.current().value != "="
+        ):
             raise RuntimeError(
                 "Expected '='."
             )
 
         context.advance()
 
+        #
+        # Initializer
+        #
         initializer = ExpressionParser.parse(
             context,
         )
@@ -101,9 +97,12 @@ class GenerateForParser(BaseParser):
         #
         # ;
         #
-        if context.current().value != ";":
+        if (
+            context.eof()
+            or context.current().value != ";"
+        ):
             raise RuntimeError(
-                "Expected ';'."
+                "Expected ';' after initializer."
             )
 
         context.advance()
@@ -118,9 +117,12 @@ class GenerateForParser(BaseParser):
         #
         # ;
         #
-        if context.current().value != ";":
+        if (
+            context.eof()
+            or context.current().value != ";"
+        ):
             raise RuntimeError(
-                "Expected ';'."
+                "Expected ';' after condition."
             )
 
         context.advance()
@@ -128,46 +130,79 @@ class GenerateForParser(BaseParser):
         #
         # Update
         #
-        update = ExpressionParser.parse(
+        #
+        # Generate-for update is an assignment:
+        #
+        #     i = i + 1
+        #
+        # Do not send the entire clause through
+        # ExpressionParser because '=' is not a
+        # binary expression operator.
+        #
+
+        if (
+            context.eof()
+            or context.current().token_type
+            != RTLTokenType.IDENTIFIER
+        ):
+            raise RuntimeError(
+                "Expected update variable."
+            )
+
+        update_target = context.advance().value
+
+        if (
+            context.eof()
+            or context.current().value != "="
+        ):
+            raise RuntimeError(
+                "Expected '=' in update."
+            )
+
+        context.advance()
+
+        update_expression = ExpressionParser.parse(
             context,
+        )
+
+        #
+        # Represent update as a procedural-style
+        # assignment AST node.
+        #
+        from app.ast.procedural_assignment import (
+            ProceduralAssignment,
+        )
+
+        update = ProceduralAssignment(
+            target=update_target,
+            operator="=",
+            expression=update_expression,
         )
 
         #
         # )
         #
-        if context.current().value != ")":
+        if (
+            context.eof()
+            or context.current().value != ")"
+        ):
             raise RuntimeError(
                 "Expected ')'."
             )
 
         context.advance()
 
-        members = []
-
-        if ModuleInstanceParser.matches(
-            context,
-        ):
-
-            members.append(
-                ModuleInstanceParser.parse(
-                    context,
-                )
-            )
+        #
+        # Body
+        #
+        members = GenerateBodyParser.parse(context)
 
         node = GenerateFor(
-
             variable=variable,
-
             initializer=initializer,
-
             condition=condition,
-
             update=update,
-
-            members=tuple(
-                members,
-            ),
-
+            members=tuple(members),
         )
 
         object.__setattr__(
@@ -177,4 +212,3 @@ class GenerateForParser(BaseParser):
         )
 
         return node
-

@@ -20,6 +20,23 @@ class SourceLocation:
     line: int = 0
     column: int = 0
 
+    def __init__(
+        self,
+        source_file: str = "",
+        line: int = 0,
+        column: int = 0,
+        file: str = "",
+    ) -> None:
+        sf = source_file if source_file else file
+        object.__setattr__(self, "source_file", sf)
+        object.__setattr__(self, "line", line)
+        object.__setattr__(self, "column", column)
+        self.__post_init__()
+
+    @property
+    def file(self) -> str:
+        return self.source_file
+
     def __post_init__(self) -> None:
         if not isinstance(self.source_file, str):
             raise TypeError("source_file must be a string.")

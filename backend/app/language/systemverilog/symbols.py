@@ -16,5 +16,6 @@ SYSTEMVERILOG_SYMBOLS = frozenset(
         ",",
         ":",
         ".",
+        "#",
     }
 )

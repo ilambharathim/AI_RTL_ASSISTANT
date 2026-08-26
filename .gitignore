@@ -27,17 +27,22 @@ dist/
 *.egg-info/
 .eggs/
 
+# Frontend build artifacts and dependencies
+node_modules/
+frontend/dist/
+
 # Environment variables and local secrets
 .env
 .env.*
 !.env.example
 
-# IDE and editor settings
+# IDE, editor settings, and backup files
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
+*.bak
 
 # RIVA runtime uploads
 backend/uploads/

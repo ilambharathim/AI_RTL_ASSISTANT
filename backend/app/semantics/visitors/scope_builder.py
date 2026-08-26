@@ -50,6 +50,8 @@ class ScopeBuilder:
         """
         Execute semantic scope construction.
         """
+        self.scopes = ScopeStack()
+        self.collector = SymbolCollector()
 
         for declaration in syntax_tree.declarations:
 
@@ -58,6 +60,7 @@ class ScopeBuilder:
             )
 
         return self.scopes.global_scope
+
 
     #
     # Internal recursive traversal

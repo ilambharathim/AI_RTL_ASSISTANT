@@ -28,21 +28,26 @@ class PatchGenerator:
                 continue
 
             #
-            # Temporary insertion point.
+            # Resolve actual line/column from the diagnostic location.
             #
-            # Later this will come from AST source locations.
-            #
+            line = 1
+            column = 1
+            if repair.location is not None:
+                line = repair.location.line
+                column = repair.location.column
+
             patch = SourcePatch(
 
                 operation="insert",
 
-                line=1,
+                line=line,
 
-                column=1,
+                column=column,
 
                 text=repair.replacement + "\n",
 
             )
+
 
             patches.append(
                 patch,

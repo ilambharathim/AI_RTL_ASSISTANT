@@ -1,43 +1,19 @@
-from dataclasses import dataclass
+"""
+Compatibility module for the RTL parser result.
 
-from app.domain.rtl_ast import RTLCompilationUnit
-from app.engines.diagnostics.diagnostic import Diagnostic
+The canonical RTL parser result is RTLParserResult from
+parser_result.py.
+
+This module remains available for compatibility with any external
+imports that may still reference app.parsers.rtl.parse_result.
+"""
+
+from app.parsers.rtl.parser_result import RTLParserResult
 
 
-@dataclass(slots=True, frozen=True)
-class RTLParseResult:
-    """
-    Immutable result produced by the deterministic RTL parser.
-    """
+RTLParseResult = RTLParserResult
 
-    compilation_unit: RTLCompilationUnit
-    diagnostics: tuple[Diagnostic, ...]
 
-    def __post_init__(self) -> None:
-        if not isinstance(
-            self.compilation_unit,
-            RTLCompilationUnit,
-        ):
-            raise TypeError(
-                "compilation_unit must be an RTLCompilationUnit."
-            )
-
-        if not isinstance(
-            self.diagnostics,
-            tuple,
-        ):
-            raise TypeError(
-                "diagnostics must be a tuple."
-            )
-
-        if not all(
-            isinstance(diagnostic, Diagnostic)
-            for diagnostic in self.diagnostics
-        ):
-            raise TypeError(
-                "diagnostics must contain only Diagnostic objects."
-            )
-
-    @property
-    def successful(self) -> bool:
-        return len(self.diagnostics) == 0
+__all__ = [
+    "RTLParseResult",
+]

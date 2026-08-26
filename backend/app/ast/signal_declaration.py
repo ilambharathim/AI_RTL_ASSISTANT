@@ -47,3 +47,9 @@ class SignalDeclaration(ASTNode):
             name,
         )
 
+        object.__setattr__(
+            self,
+            "location",
+            None,
+        )
+

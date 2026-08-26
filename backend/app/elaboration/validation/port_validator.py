@@ -7,6 +7,9 @@ Checks:
 - Duplicate ports
 - Missing ports
 - Width compatibility
+
+Canonical semantic types are preferred for width resolution,
+while SymbolInfo.width remains a compatibility fallback.
 """
 
 from app.ast import (
@@ -55,28 +58,6 @@ class PortValidator:
                 continue
 
             #
-            # Local symbol widths
-            #
-            local_widths = {}
-
-            for member in declaration.members:
-
-                if isinstance(
-                    member,
-                    SignalDeclaration,
-                ):
-
-                    symbol = semantic_model.symbols.get(
-                        member.name,
-                    )
-
-                    if symbol is not None:
-
-                        local_widths[
-                            member.name
-                        ] = symbol.width
-
-            #
             # Validate module instances
             #
             for member in declaration.members:
@@ -109,12 +90,10 @@ class PortValidator:
                     if connection.port_name in connected:
 
                         diagnostics.append(
-
                             f"Duplicate connection to port "
                             f"'{connection.port_name}' "
                             f"in instance "
                             f"'{member.instance_name}'."
-
                         )
 
                     connected.add(
@@ -127,12 +106,10 @@ class PortValidator:
                     if connection.port_name not in declared_ports:
 
                         diagnostics.append(
-
                             f"Unknown port "
                             f"'{connection.port_name}' "
                             f"for module "
                             f"'{member.module_name}'."
-
                         )
 
                         continue
@@ -148,39 +125,33 @@ class PortValidator:
                     ):
                         continue
 
-                    signal_symbol = semantic_model.symbols.get(
+                    signal_width = self._lookup_width(
                         expression.name,
+                        semantic_model,
                     )
 
-                    port_symbol = semantic_model.symbols.get(
+                    port_width = self._lookup_width(
                         connection.port_name,
+                        semantic_model,
                     )
 
                     if (
-                        signal_symbol is None
-                        or port_symbol is None
+                        signal_width is None
+                        or port_width is None
                     ):
                         continue
 
-                    if (
-                        signal_symbol.width is not None
-                        and port_symbol.width is not None
-                        and signal_symbol.width != port_symbol.width
-                    ):
+                    if signal_width != port_width:
 
                         diagnostics.append(
-
                             f"Width mismatch on port "
                             f"'{connection.port_name}' "
                             f"in instance "
                             f"'{member.instance_name}': "
-
                             f"expected "
-                            f"{port_symbol.width}, "
-
+                            f"{port_width}, "
                             f"got "
-                            f"{signal_symbol.width}."
-
+                            f"{signal_width}."
                         )
 
                 #
@@ -191,13 +162,127 @@ class PortValidator:
                     if port_name not in connected:
 
                         diagnostics.append(
-
                             f"Missing connection for port "
                             f"'{port_name}' "
                             f"in instance "
                             f"'{member.instance_name}'."
-
                         )
 
         return diagnostics
 
+    def _lookup_width(
+        self,
+        name,
+        semantic_model,
+    ):
+        """
+        Resolve width from canonical semantic types first.
+
+        Resolution order:
+
+            semantic_types
+                ↓
+            symbols
+                ↓
+            legacy types
+        """
+
+        #
+        # Canonical semantic type repository.
+        #
+        semantic_types = getattr(
+            semantic_model,
+            "semantic_types",
+            {},
+        )
+
+        semantic_type = semantic_types.get(
+            name,
+        )
+
+        if semantic_type is not None:
+
+            width = getattr(
+                semantic_type,
+                "width",
+                None,
+            )
+
+            if width is not None:
+                return width
+
+        #
+        # Symbol compatibility fallback.
+        #
+        symbols = getattr(
+            semantic_model,
+            "symbols",
+            {},
+        )
+
+        symbol = symbols.get(
+            name,
+        )
+
+        if symbol is not None:
+
+            width = getattr(
+                symbol,
+                "width",
+                None,
+            )
+
+            if width is not None:
+                return width
+
+            #
+            # SymbolInfo may itself carry the canonical
+            # semantic type.
+            #
+            symbol_type = getattr(
+                symbol,
+                "semantic_type",
+                None,
+            )
+
+            if symbol_type is not None:
+
+                width = getattr(
+                    symbol_type,
+                    "width",
+                    None,
+                )
+
+                if width is not None:
+                    return width
+
+        #
+        # Legacy type compatibility fallback.
+        #
+        types = getattr(
+            semantic_model,
+            "types",
+            {},
+        )
+
+        type_info = types.get(
+            name,
+        )
+
+        if type_info is not None:
+
+            if isinstance(
+                type_info,
+                dict,
+            ):
+                return type_info.get(
+                    "width",
+                )
+
+            return getattr(
+                type_info,
+                "width",
+                None,
+            )
+
+        return None

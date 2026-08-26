@@ -1,118 +1,106 @@
 """
-SystemVerilog generate parser.
+SystemVerilog generate construct dispatcher.
 
-Dispatches generate constructs.
+Dispatches:
+
+generate
+    if (...)
+        ...
+endgenerate
+
+and generate-for constructs.
 """
 
-from app.domain.rtl_tokens.token_type import RTLTokenType
-
+from app.domain.rtl_tokens import RTLTokenType
 from app.parsers.rtl.parsers.base_parser import BaseParser
-
-from app.parsers.rtl.parsers.generate_if_parser import (
-    GenerateIfParser,
-)
-
-from app.parsers.rtl.parsers.generate_for_parser import (
-    GenerateForParser,
-)
+from app.parsers.rtl.parsers.generate_if_parser import GenerateIfParser
+from app.parsers.rtl.parsers.generate_for_parser import GenerateForParser
 
 
 class GenerateParser(BaseParser):
 
     @staticmethod
-    def matches(
-        context,
-    ):
+    def matches(context) -> bool:
 
         if context.eof():
             return False
 
-        return (
-            context.current().token_type
-            == RTLTokenType.KEYWORD
-            and context.current().value
-            == "generate"
-        )
-
-    @staticmethod
-    def parse(
-        context,
-    ):
-
         token = context.current()
 
         #
-        # generate
-        #
-        context.advance()
-
-        members = []
-
-        while not context.eof():
-
-            if (
-                context.current().token_type
-                == RTLTokenType.KEYWORD
-                and context.current().value
-                == "endgenerate"
-            ):
-                break
-
-            if GenerateIfParser.matches(
-                context,
-            ):
-
-                members.append(
-                    GenerateIfParser.parse(
-                        context,
-                    )
-                )
-
-                continue
-
-            if GenerateForParser.matches(
-                context,
-            ):
-
-                members.append(
-                    GenerateForParser.parse(
-                        context,
-                    )
-                )
-
-                continue
-
-            raise RuntimeError(
-                "Unsupported generate construct."
-            )
-
-        #
-        # endgenerate
+        # Explicit generate keyword.
         #
         if (
-            context.eof()
-            or context.current().value
-            != "endgenerate"
+            token.token_type == RTLTokenType.KEYWORD
+            and token.value == "generate"
         ):
-            raise RuntimeError(
-                "Expected 'endgenerate'."
-            )
+            return True
 
-        context.advance()
+        #
+        # Some SystemVerilog forms may omit the explicit
+        # generate/endgenerate wrapper.
+        #
+        if GenerateIfParser.matches(context):
+            return True
 
-        from app.ast import GenerateBlock
+        if GenerateForParser.matches(context):
+            return True
 
-        node = GenerateBlock(
-            tuple(
-                members,
-            )
-        )
+        return False
 
-        object.__setattr__(
-            node,
-            "location",
-            token.source_location,
-        )
+    @staticmethod
+    def parse(context):
+
+        #
+        # Optional explicit "generate" wrapper.
+        #
+        explicit_generate = False
+
+        if (
+            not context.eof()
+            and context.current().token_type == RTLTokenType.KEYWORD
+            and context.current().value == "generate"
+        ):
+            explicit_generate = True
+            context.advance()
+
+        #
+        # Parse the construct inside generate.
+        #
+        if GenerateIfParser.matches(context):
+
+            node = GenerateIfParser.parse(context)
+
+        elif GenerateForParser.matches(context):
+
+            node = GenerateForParser.parse(context)
+
+        else:
+
+            #
+            # Unknown/empty generate construct.
+            #
+            while (
+                not context.eof()
+                and not (
+                    context.current().token_type
+                    == RTLTokenType.KEYWORD
+                    and context.current().value == "endgenerate"
+                )
+            ):
+                context.advance()
+
+            node = None
+
+        #
+        # Consume optional endgenerate.
+        #
+        if (
+            explicit_generate
+            and not context.eof()
+            and context.current().token_type == RTLTokenType.KEYWORD
+            and context.current().value == "endgenerate"
+        ):
+            context.advance()
 
         return node
-

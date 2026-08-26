@@ -1,7 +1,7 @@
 """
-RTL semantic type.
+RIVA RTL semantic type.
 
-Extends the generic semantic Type with
+RTLType extends the generic semantic Type with
 hardware-specific properties.
 """
 
@@ -13,7 +13,16 @@ from app.semantics.types.base.type import Type
 @dataclass(frozen=True, slots=True)
 class RTLType(Type):
     """
-    Base class for every RTL semantic type.
+    Semantic type for RTL values.
+
+    width:
+        Effective number of bits.
+
+    signed:
+        Whether the value is signed.
+
+    packed:
+        Whether the value is represented as a packed vector.
     """
 
     width: int = 1

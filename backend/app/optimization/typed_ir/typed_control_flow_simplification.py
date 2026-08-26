@@ -28,9 +28,14 @@ class TypedControlFlowSimplification:
         context,
     ):
 
+        elaboration = getattr(semantic_model, "elaboration", None)
+        if not elaboration:
+            return PassResult()
+
         changed = False
 
-        for module in semantic_model.elaboration.ir.values():
+        ir_modules = elaboration.get("ir", {}) if isinstance(elaboration, dict) else getattr(elaboration, "ir", {})
+        for module in ir_modules.values():
 
             new_statements = []
 

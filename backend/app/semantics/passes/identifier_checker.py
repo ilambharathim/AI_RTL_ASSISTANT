@@ -10,6 +10,7 @@ from app.ast import (
     SignalDeclaration,
     ParameterDeclaration,
     ProceduralAssignment,
+    ContinuousAssign,
 )
 
 from app.ast.expression import (
@@ -61,11 +62,43 @@ class IdentifierChecker:
 
             return
 
+        if isinstance(tree, ContinuousAssign):
+
+            self._check_expression(
+                tree.expression,
+                model,
+            )
+
+            return
+
     def _check_expression(
         self,
         expression,
         model,
     ):
+
+        if isinstance(expression, str):
+            if (
+                expression not in model.types
+                and expression not in model.semantic_types
+                and expression not in model.constant_values
+                and expression not in model.symbols
+            ):
+                model.diagnostics.append(
+                    Diagnostic(
+                        code=RIVA1001.code,
+                        category=RIVA1001.category,
+                        severity=RIVA1001.severity,
+                        message=(
+                            f"Identifier '{expression}' "
+                            "is not declared."
+                        ),
+                        explanation=RIVA1001.explanation,
+                        suggestion=RIVA1001.suggestion,
+                        location=getattr(expression, "location", None),
+                    )
+                )
+            return
 
         if isinstance(
             expression,
@@ -74,9 +107,10 @@ class IdentifierChecker:
 
             if (
                 expression.name not in model.types
+                and expression.name not in model.semantic_types
                 and expression.name not in model.constant_values
+                and expression.name not in model.symbols
             ):
-
                 model.diagnostics.append(
                     Diagnostic(
                         code=RIVA1001.code,
@@ -88,8 +122,10 @@ class IdentifierChecker:
                         ),
                         explanation=RIVA1001.explanation,
                         suggestion=RIVA1001.suggestion,
+                        location=getattr(expression, "location", None),
                     )
                 )
+
 
             return
 

@@ -1,15 +1,32 @@
 """
 SystemVerilog case statement parser.
+
+Supports:
+
+    case (...)
+    casez (...)
+    casex (...)
+
+including:
+
+    label: statement;
+    label: begin ... end
+    default: statement;
 """
 
 from app.ast.case_statement import CaseItem, CaseStatement
 from app.domain.rtl_tokens import RTLTokenType
 from app.parsers.rtl.parser_context import ParserContext
 from app.parsers.rtl.parsers.base_parser import BaseParser
-from app.parsers.rtl.parsers.statement_parser import StatementParser
 
 
 class CaseParser(BaseParser):
+
+    _CASE_KEYWORDS = {
+        "case",
+        "casez",
+        "casex",
+    }
 
     @staticmethod
     def matches(
@@ -23,7 +40,7 @@ class CaseParser(BaseParser):
 
         return (
             token.token_type == RTLTokenType.KEYWORD
-            and token.value == "case"
+            and token.value in CaseParser._CASE_KEYWORDS
         )
 
     @staticmethod
@@ -31,20 +48,32 @@ class CaseParser(BaseParser):
         context: ParserContext,
     ) -> CaseStatement:
 
+        from app.parsers.rtl.parsers.statement_parser import (
+            StatementParser,
+        )
+
         #
-        # case
+        # case / casez / casex
         #
-        context.advance()
+        case_token = context.advance()
 
         #
         # (
         #
         if (
-            context.current().token_type == RTLTokenType.SYMBOL
-            and context.current().value == "("
+            context.eof()
+            or context.current().token_type != RTLTokenType.SYMBOL
+            or context.current().value != "("
         ):
-            context.advance()
+            raise RuntimeError(
+                f"Expected '(' after '{case_token.value}'."
+            )
 
+        context.advance()
+
+        #
+        # Case expression
+        #
         expression = []
 
         while not context.eof():
@@ -62,12 +91,18 @@ class CaseParser(BaseParser):
 
             context.advance()
 
+        #
+        # Case items
+        #
         items = []
 
         while not context.eof():
 
             token = context.current()
 
+            #
+            # endcase
+            #
             if (
                 token.token_type == RTLTokenType.KEYWORD
                 and token.value == "endcase"
@@ -76,33 +111,56 @@ class CaseParser(BaseParser):
                 break
 
             #
-            # label
+            # Read label until ':'
             #
-            label = token.value
+            label = []
 
-            context.advance()
+            while not context.eof():
 
-            #
-            # :
-            #
-            if (
-                not context.eof()
-                and context.current().token_type == RTLTokenType.SYMBOL
-                and context.current().value == ":"
-            ):
+                token = context.current()
+
+                if (
+                    token.token_type == RTLTokenType.SYMBOL
+                    and token.value == ":"
+                ):
+                    context.advance()
+                    break
+
+                #
+                # A malformed case item should not consume
+                # the entire remainder of the block.
+                #
+                if (
+                    token.token_type == RTLTokenType.KEYWORD
+                    and token.value == "endcase"
+                ):
+                    break
+
+                label.append(token.value)
                 context.advance()
 
+            #
+            # Parse the statement belonging to this case item.
+            #
             statements = []
 
-            if StatementParser.matches(context):
-
+            if (
+                not context.eof()
+                and StatementParser.matches(context)
+            ):
                 statements.append(
                     StatementParser.parse(context)
                 )
 
+            #
+            # If no statement was parsed, avoid an infinite loop.
+            #
+            if not statements and not context.eof():
+                context.advance()
+
             items.append(
                 CaseItem(
-                    label=label,
+                    label=" ".join(label),
                     statements=tuple(statements),
                 )
             )
@@ -115,7 +173,7 @@ class CaseParser(BaseParser):
         object.__setattr__(
             node,
             "location",
-            token.source_location,
+            case_token.source_location,
         )
 
         return node

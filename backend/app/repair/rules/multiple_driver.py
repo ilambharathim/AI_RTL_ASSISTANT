@@ -56,4 +56,6 @@ Remove every other assignment driving '{signal}'.
                 "Multiple procedural or continuous assignments detected."
             ),
 
+            location=getattr(diagnostic, "location", None),
+
         )

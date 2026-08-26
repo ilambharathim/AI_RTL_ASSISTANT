@@ -8,6 +8,10 @@ from app.diagnostics.rules.width_mismatch import (
     WidthMismatchRule,
 )
 
+from app.diagnostics.rules.signedness_mismatch import (
+    SignednessMismatchRule,
+)
+
 
 class WidthRules:
 
@@ -17,6 +21,7 @@ class WidthRules:
 
         self.rules = (
             WidthMismatchRule(),
+            SignednessMismatchRule(),
         )
 
     def run(

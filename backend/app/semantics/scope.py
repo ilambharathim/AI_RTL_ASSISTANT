@@ -10,6 +10,9 @@ from app.semantics.symbol import Symbol
 
 @dataclass(slots=True)
 class Scope:
+    """
+    Lexical scope containing symbol declarations.
+    """
 
     name: str
 
@@ -17,21 +20,32 @@ class Scope:
 
     parent: "Scope | None" = None
 
-    children: list["Scope"] = field(default_factory=list)
+    children: list["Scope"] = field(
+        default_factory=list,
+    )
 
-    symbols: dict[str, Symbol] = field(default_factory=dict)
+    symbols: dict[str, Symbol] = field(
+        default_factory=dict,
+    )
 
     def add_child(
         self,
         child: "Scope",
     ):
+        """
+        Attach a child scope.
+        """
 
-        self.children.append(child)
+        if child not in self.children:
+            self.children.append(child)
 
     def lookup_local(
         self,
         name: str,
     ):
+        """
+        Look up a symbol only in this scope.
+        """
 
         return self.symbols.get(name)
 
@@ -39,11 +53,14 @@ class Scope:
         self,
         name: str,
     ):
+        """
+        Resolve a symbol from this scope outward
+        through its parent scopes.
+        """
 
         scope = self
 
         while scope is not None:
-
             symbol = scope.lookup_local(name)
 
             if symbol is not None:
@@ -57,11 +74,13 @@ class Scope:
         self,
         name: str,
     ):
+        """
+        Resolve a symbol only in parent scopes.
+        """
 
         scope = self.parent
 
         while scope is not None:
-
             symbol = scope.lookup_local(name)
 
             if symbol is not None:
@@ -75,11 +94,17 @@ class Scope:
         self,
         symbol: Symbol,
     ):
+        """
+        Define a symbol in this scope.
+
+        Duplicate declarations are rejected.
+        """
 
         if symbol.name in self.symbols:
-
             raise RuntimeError(
-                f"Duplicate symbol '{symbol.name}' in scope '{self.name}'."
+                f"Duplicate symbol "
+                f"'{symbol.name}' "
+                f"in scope '{self.name}'."
             )
 
         self.symbols[symbol.name] = symbol

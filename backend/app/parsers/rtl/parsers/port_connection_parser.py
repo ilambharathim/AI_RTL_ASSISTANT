@@ -18,6 +18,7 @@ class PortConnectionParser(BaseParser):
 
     @staticmethod
     def parse(context):
+        token = context.current()
 
         #
         # .

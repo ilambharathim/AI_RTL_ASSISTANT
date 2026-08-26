@@ -1,7 +1,6 @@
 """
 Typed IR Constant Propagation.
-
-Propagates compile-time constants through the Typed IR.
+Propagates constant values into identifiers and nested expression trees.
 """
 
 from app.ir.ir_expression import (
@@ -10,7 +9,6 @@ from app.ir.ir_expression import (
     IRBinary,
     IRUnary,
 )
-
 from app.optimization.model.pass_result import PassResult
 
 
@@ -23,92 +21,55 @@ class TypedConstantPropagation:
         semantic_model,
         context,
     ):
+        result = PassResult()
+        elaboration = getattr(semantic_model, "elaboration", None)
+        if not elaboration:
+            return result
 
-        changed = False
+        constants = getattr(semantic_model, "constant_values", {})
+        ir_modules = elaboration.get("ir", {}) if isinstance(elaboration, dict) else getattr(elaboration, "ir", {})
 
-        constants = dict(
-            semantic_model.constant_values,
-        )
+        for module in ir_modules.values():
+            if hasattr(module, "statements"):
+                for statement in module.statements:
+                    if hasattr(statement, "expression") and statement.expression is not None:
+                        new_expr, changed = self._propagate(statement.expression, constants)
+                        if changed:
+                            statement.expression = new_expr
+                            result.changed = True
 
-        for module in (
-            semantic_model.elaboration.ir.values()
-        ):
+        return result
 
-            for statement in module.statements:
+    def _propagate(self, expr, constants):
+        if expr is None:
+            return None, False
 
-                if hasattr(
-                    statement,
-                    "expression",
-                ):
+        if isinstance(expr, IRIdentifier):
+            if expr.name in constants:
+                val_str = str(constants[expr.name])
+                lit = IRLiteral(val_str)
+                lit.width = getattr(expr, "width", None)
+                lit.location = getattr(expr, "location", None)
+                return lit, True
+            return expr, False
 
-                    new_expression = self._propagate(
+        if isinstance(expr, IRBinary):
+            left, c1 = self._propagate(expr.left, constants)
+            right, c2 = self._propagate(expr.right, constants)
+            if c1 or c2:
+                new_bin = IRBinary(expr.operator, left, right)
+                new_bin.width = getattr(expr, "width", None)
+                new_bin.location = getattr(expr, "location", None)
+                return new_bin, True
+            return expr, False
 
-                        statement.expression,
+        if isinstance(expr, IRUnary):
+            operand, c1 = self._propagate(expr.operand, constants)
+            if c1:
+                new_un = IRUnary(expr.operator, operand)
+                new_un.width = getattr(expr, "width", None)
+                new_un.location = getattr(expr, "location", None)
+                return new_un, True
+            return expr, False
 
-                        constants,
-
-                    )
-
-                    if new_expression is not statement.expression:
-
-                        statement.expression = new_expression
-
-                        changed = True
-
-        return PassResult(
-            changed=changed,
-        )
-
-    def _propagate(
-        self,
-        expression,
-        constants,
-    ):
-
-        if isinstance(
-            expression,
-            IRIdentifier,
-        ):
-
-            if expression.name in constants:
-
-                return IRLiteral(
-                    str(
-                        constants[
-                            expression.name
-                        ]
-                    )
-                )
-
-            return expression
-
-        if isinstance(
-            expression,
-            IRUnary,
-        ):
-
-            expression.operand = self._propagate(
-                expression.operand,
-                constants,
-            )
-
-            return expression
-
-        if isinstance(
-            expression,
-            IRBinary,
-        ):
-
-            expression.left = self._propagate(
-                expression.left,
-                constants,
-            )
-
-            expression.right = self._propagate(
-                expression.right,
-                constants,
-            )
-
-            return expression
-
-        return expression
+        return expr, False

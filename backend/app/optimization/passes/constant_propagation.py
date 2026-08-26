@@ -20,26 +20,18 @@ class ConstantPropagation(
 
         result = PassResult()
 
-        constants = semantic_model.constant_values
+        if not hasattr(semantic_model, "elaboration") or not semantic_model.elaboration or not hasattr(semantic_model.elaboration, "netlist"):
+            return result
 
-        for module in (
-            semantic_model.elaboration.netlist.modules.values()
-        ):
-
-            for instance in module.instances:
-
-                for net in instance.nets:
-
-                    if (
-                        net.signal in constants
-                        and net.constant != constants[net.signal]
-                    ):
-
-                        net.constant = constants[
-                            net.signal
-                        ]
-
-                        result.changed = True
+        constants = getattr(semantic_model, "constant_values", {})
+        modules = getattr(semantic_model.elaboration.netlist, "modules", {})
+        for module in modules.values():
+            if hasattr(module, "instances"):
+                for instance in module.instances:
+                    if hasattr(instance, "nets"):
+                        for net in instance.nets:
+                            if hasattr(net, "signal") and net.signal in constants and net.constant != constants[net.signal]:
+                                net.constant = constants[net.signal]
+                                result.changed = True
 
         return result
-

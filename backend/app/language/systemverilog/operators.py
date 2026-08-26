@@ -27,6 +27,7 @@ OPERATORS_1 = frozenset(
         "^",
         "~",
         "?",
+        "@",
     }
 )
 

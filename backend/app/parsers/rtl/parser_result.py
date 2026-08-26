@@ -12,6 +12,8 @@ class RTLParserResult:
 
     syntax_tree: object | None
 
+    rtl_ast: object | None
+
     diagnostics: tuple[Diagnostic, ...]
 
     @property

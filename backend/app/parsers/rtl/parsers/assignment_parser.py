@@ -1,13 +1,16 @@
 """
 SystemVerilog procedural assignment parser.
+
+Supports:
+
+    q <= d;
+    q = d;
+    q <= a + b;
 """
 
 from app.ast.procedural_assignment import ProceduralAssignment
-
 from app.domain.rtl_tokens import RTLTokenType
-
 from app.parsers.rtl.parser_context import ParserContext
-
 from app.parsers.rtl.parsers.base_parser import BaseParser
 from app.parsers.rtl.parsers.expression_parser import ExpressionParser
 
@@ -22,9 +25,17 @@ class AssignmentParser(BaseParser):
         if context.eof():
             return False
 
+        if context.current().token_type != RTLTokenType.IDENTIFIER:
+            return False
+
+        if context.index + 1 >= len(context.tokens):
+            return False
+
+        operator = context.tokens[context.index + 1]
+
         return (
-            context.current().token_type
-            == RTLTokenType.IDENTIFIER
+            operator.token_type == RTLTokenType.OPERATOR
+            and operator.value in {"=", "<="}
         )
 
     @staticmethod
@@ -32,28 +43,14 @@ class AssignmentParser(BaseParser):
         context: ParserContext,
     ) -> ProceduralAssignment:
 
-        #
-        # target
-        #
         target = context.advance()
 
-        token = target
-
-        #
-        # assignment operator
-        #
         operator = context.advance()
 
-        #
-        # Parse Expression AST
-        #
         expression = ExpressionParser.parse(
             context,
         )
 
-        #
-        # Consume ';'
-        #
         if (
             not context.eof()
             and context.current().token_type == RTLTokenType.SYMBOL
@@ -70,7 +67,7 @@ class AssignmentParser(BaseParser):
         object.__setattr__(
             node,
             "location",
-            token.source_location,
+            target.source_location,
         )
 
         return node

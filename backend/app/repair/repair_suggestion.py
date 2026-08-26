@@ -3,6 +3,8 @@ Repair Suggestion.
 """
 
 from dataclasses import dataclass
+from typing import Any
+
 
 
 @dataclass(slots=True)
@@ -21,3 +23,5 @@ class RepairSuggestion:
     reason: str = ""
 
     auto_apply: bool = False
+
+    location: Any = None

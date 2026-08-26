@@ -9,6 +9,7 @@ from app.ast import (
     ProceduralAssignment,
     StatementBlock,
     AlwaysBlock,
+    IfStatement,
 )
 
 from app.ast.expression import (
@@ -107,8 +108,36 @@ class DeadAssignmentCollector:
             return
 
         #
-        # recurse
+        # IfStatement — branches are mutually exclusive; analyse each
+        # branch independently so an assignment in then-branch is never
+        # flagged as dead because of an assignment in else-branch.
         #
+        if isinstance(node, IfStatement):
+
+            # Visit then-branch with a copy so it can't pollute else-branch.
+            then_state = dict(last_assignment)
+            self._visit(getattr(node, "then_branch", None), then_state, dead)
+
+            else_state = dict(last_assignment)
+            self._visit(getattr(node, "else_branch", None), else_state, dead)
+
+            # After an if/else the set of "live" assignments is the
+            # intersection of both branches — only signals assigned in
+            # *both* branches can be considered definitely written.
+            for signal in set(then_state) | set(else_state):
+                node_a = then_state.get(signal)
+                node_b = else_state.get(signal)
+                # If assigned in both branches, keep the else-branch version
+                # as the "last" writer so downstream can detect overwrite.
+                if node_a is not None and node_b is not None:
+                    last_assignment[signal] = node_b
+                elif signal in last_assignment:
+                    # Conditionally assigned — don't count the pre-branch
+                    # assignment as dead because we may not execute this branch.
+                    pass
+
+            return
+
         if hasattr(
             node,
             "__dict__",

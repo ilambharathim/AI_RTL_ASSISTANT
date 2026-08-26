@@ -8,9 +8,9 @@ from dataclasses import dataclass, field
 @dataclass(slots=True)
 class ControlFlowGraph:
 
-    entry = None
+    entry: object = None
 
-    exit = None
+    exit: object = None
 
     blocks: list = field(
         default_factory=list,

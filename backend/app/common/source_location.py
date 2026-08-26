@@ -1,15 +1,3 @@
-"""
-Source Location.
-"""
+from app.shared.source_location import SourceLocation
 
-from dataclasses import dataclass
-
-
-@dataclass(frozen=True, slots=True)
-class SourceLocation:
-
-    line: int
-
-    column: int
-
-    file: str = ""
+__all__ = ["SourceLocation"]

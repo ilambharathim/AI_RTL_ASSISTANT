@@ -2,7 +2,8 @@
 RIVA Diagnostic Engine.
 
 Runs every diagnostic rule and stores the resulting
-diagnostics inside the semantic model.
+diagnostics inside the semantic model, performing deterministic
+deduplication based on diagnostic identity (code, message, location).
 """
 
 from app.diagnostics.rules.width_rules import (
@@ -43,11 +44,11 @@ class DiagnosticEngine:
         semantic_model,
     ):
 
-        diagnostics = []
+        all_diags = list(getattr(semantic_model, "diagnostics", []))
 
         for rule in self.rules:
 
-            diagnostics.extend(
+            all_diags.extend(
 
                 rule.run(
                     semantic_model,
@@ -55,6 +56,25 @@ class DiagnosticEngine:
 
             )
 
-        semantic_model.diagnostics = diagnostics
+        deduped = []
+        seen = set()
 
-        return diagnostics
+        for d in all_diags:
+            key = self._diagnostic_key(d)
+            if key not in seen:
+                seen.add(key)
+                deduped.append(d)
+
+        semantic_model.diagnostics = deduped
+
+        return deduped
+
+    @staticmethod
+    def _diagnostic_key(d):
+        loc = getattr(d, "location", None)
+        source_file = getattr(loc, "source_file", "") if loc else ""
+        line = getattr(loc, "line", 0) if loc else 0
+        column = getattr(loc, "column", 0) if loc else 0
+        code = getattr(d, "code", "")
+        message = getattr(d, "message", "")
+        return (code, message, source_file, line, column)

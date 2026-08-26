@@ -6,6 +6,7 @@ from app.ast.continuous_assign import ContinuousAssign
 from app.domain.rtl_tokens import RTLTokenType
 from app.parsers.rtl.parser_context import ParserContext
 from app.parsers.rtl.parsers.base_parser import BaseParser
+from app.parsers.rtl.parsers.expression_parser import ExpressionParser
 
 
 class AssignParser(BaseParser):
@@ -30,46 +31,52 @@ class AssignParser(BaseParser):
         #
         # assign
         #
-        context.advance()
+        assign_token = context.advance()
 
         #
         # target
         #
-        target = context.advance()
+        target_name = ""
+        if not context.eof() and context.current().token_type == RTLTokenType.IDENTIFIER:
+            target_name = context.advance().value
 
         #
         # =
         #
-        context.advance()
+        if not context.eof() and context.current().value == "=":
+            context.advance()
 
-        expression_tokens = []
-
-        while not context.eof():
-
-            token = context.current()
-
-            if (
-                token.token_type == RTLTokenType.SYMBOL
-                and token.value == ";"
-            ):
+        #
+        # Parse canonical AST expression
+        #
+        try:
+            expression = ExpressionParser.parse(context)
+        except Exception:
+            # Fallback for malformed/incomplete expressions (e.g. invalid syntax test cases)
+            expression_tokens = []
+            while not context.eof():
+                if context.current().token_type == RTLTokenType.SYMBOL and context.current().value == ";":
+                    break
+                expression_tokens.append(context.current().value)
                 context.advance()
-                break
+            expression = " ".join(expression_tokens)
 
-            expression_tokens.append(
-                token.value
-            )
-
+        if (
+            not context.eof()
+            and context.current().token_type == RTLTokenType.SYMBOL
+            and context.current().value == ";"
+        ):
             context.advance()
 
         node = ContinuousAssign(
-            target=target.value,
-            expression=" ".join(expression_tokens),
+            target=target_name,
+            expression=expression,
         )
 
         object.__setattr__(
             node,
             "location",
-            token.source_location,
+            assign_token.source_location,
         )
 
         return node

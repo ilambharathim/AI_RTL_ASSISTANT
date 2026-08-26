@@ -1,0 +1,2206 @@
+============================================================
+                 RIVA FULL SYSTEM AUDIT
+============================================================
+Root: /home/ilam066/RIVA
+Date: Thu Aug 20 10:00:30 AM IST 2026
+Python: Python 3.12.3
+Node: v22.23.2
+npm: 10.9.8
+
+============================================================
+1. ROOT STRUCTURE
+============================================================
+/home/ilam066/RIVA/audit/RIVA_REPOSITORY_AUDIT.txt
+/home/ilam066/RIVA/backend/requirements-dev.txt
+/home/ilam066/RIVA/backend/requirements.txt
+/home/ilam066/RIVA/backend/RIVA_RULES.md
+/home/ilam066/RIVA/backend/test_ai_evidence_and_reporting.py
+/home/ilam066/RIVA/backend/test_always_block_ast.py
+/home/ilam066/RIVA/backend/test_assignment_compatibility_checker.py
+/home/ilam066/RIVA/backend/test_ast_nodes.py
+/home/ilam066/RIVA/backend/test_ast.py
+/home/ilam066/RIVA/backend/test_canonical_semantic_types.py
+/home/ilam066/RIVA/backend/test_case_statement_ast.py
+/home/ilam066/RIVA/backend/test_cfg_dataflow_diagnostics.py
+/home/ilam066/RIVA/backend/test_classifier.py
+/home/ilam066/RIVA/backend/test_constant_evaluator.py
+/home/ilam066/RIVA/backend/test_constant_folding.py
+/home/ilam066/RIVA/backend/test_constant_propagation.py
+/home/ilam066/RIVA/backend/test_dead_instance_elimination.py
+/home/ilam066/RIVA/backend/test_dead_signal_elimination.py
+/home/ilam066/RIVA/backend/test_diagnostic_factory.py
+/home/ilam066/RIVA/backend/test_diagnostic.py
+/home/ilam066/RIVA/backend/test_diagnostic_reporting.py
+/home/ilam066/RIVA/backend/test_duplicate_symbols.py
+/home/ilam066/RIVA/backend/test_elaboration_model.py
+/home/ilam066/RIVA/backend/test_elaborator_pipeline.py
+/home/ilam066/RIVA/backend/test_expression_ast.py
+/home/ilam066/RIVA/backend/test_expression_evaluator.py
+/home/ilam066/RIVA/backend/test_expression_location.py
+/home/ilam066/RIVA/backend/test_expression_parser.py
+/home/ilam066/RIVA/backend/test_expression_semantics_extended.py
+/home/ilam066/RIVA/backend/test_expression_type_checker.py
+/home/ilam066/RIVA/backend/test_expression_width_semantics.py
+/home/ilam066/RIVA/backend/test_file_storage.py
+/home/ilam066/RIVA/backend/test_file_validator.py
+/home/ilam066/RIVA/backend/test_generate_block_ast.py
+/home/ilam066/RIVA/backend/test_generate_for_ast.py
+/home/ilam066/RIVA/backend/test_generate_for_clone.py
+/home/ilam066/RIVA/backend/test_generate_for_elaboration.py
+/home/ilam066/RIVA/backend/test_generate_if_ast.py
+/home/ilam066/RIVA/backend/test_generate_if_elaboration.py
+/home/ilam066/RIVA/backend/test_generate_substitution.py
+/home/ilam066/RIVA/backend/test_hierarchy_elaborator.py
+/home/ilam066/RIVA/backend/test_hierarchy_end_to_end.py
+/home/ilam066/RIVA/backend/test_hierarchy_node.py
+/home/ilam066/RIVA/backend/test_identifier_checker.py
+/home/ilam066/RIVA/backend/test_identifier_diagnostic_catalog.py
+/home/ilam066/RIVA/backend/test_identifier_resolution.py
+/home/ilam066/RIVA/backend/test_if_statement_ast.py
+/home/ilam066/RIVA/backend/test_implicit_net_detector.py
+/home/ilam066/RIVA/backend/test_implicit_net_expression.py
+/home/ilam066/RIVA/backend/test_instance_resolver.py
+/home/ilam066/RIVA/backend/test_instance_validator.py
+/home/ilam066/RIVA/backend/test_lexer.py
+/home/ilam066/RIVA/backend/test_lexer_result.py
+/home/ilam066/RIVA/backend/test_line_reader.py
+/home/ilam066/RIVA/backend/test_metadata_contract.py
+/home/ilam066/RIVA/backend/test_metadata.py
+/home/ilam066/RIVA/backend/test_module_elaborator.py
+/home/ilam066/RIVA/backend/test_module_instance_ast.py
+/home/ilam066/RIVA/backend/test_module_instance_connections.py
+/home/ilam066/RIVA/backend/test_netlist_builder.py
+/home/ilam066/RIVA/backend/test_normalizer.py
+/home/ilam066/RIVA/backend/test_optimizer.py
+/home/ilam066/RIVA/backend/test_parameter_ast.py
+/home/ilam066/RIVA/backend/test_parameter_elaborator.py
+/home/ilam066/RIVA/backend/test_parameter_override_ast.py
+/home/ilam066/RIVA/backend/test_parameter_override_parser.py
+/home/ilam066/RIVA/backend/test_parameter_type_checker.py
+/home/ilam066/RIVA/backend/test_parser_diagnostic_code.py
+/home/ilam066/RIVA/backend/test_parser_error_codes.py
+/home/ilam066/RIVA/backend/test_parse_result.py
+/home/ilam066/RIVA/backend/test_parser.py
+/home/ilam066/RIVA/backend/test_parser_recovery.py
+/home/ilam066/RIVA/backend/test_pass_manager.py
+/home/ilam066/RIVA/backend/test_port_ast.py
+/home/ilam066/RIVA/backend/test_port_binder.py
+/home/ilam066/RIVA/backend/test_port_compatibility_checker.py
+/home/ilam066/RIVA/backend/test_port_connection_ast.py
+/home/ilam066/RIVA/backend/test_port.py
+/home/ilam066/RIVA/backend/test_port_validator.py
+/home/ilam066/RIVA/backend/test_procedural_assignment_ast.py
+/home/ilam066/RIVA/backend/test_reader.py
+/home/ilam066/RIVA/backend/test_requirement.py
+/home/ilam066/RIVA/backend/test_requirement_tracer.py
+/home/ilam066/RIVA/backend/test_rtl_attribute_lexer.py
+/home/ilam066/RIVA/backend/test_rtl_character_stream.py
+/home/ilam066/RIVA/backend/test_rtl_comment_lexer.py
+/home/ilam066/RIVA/backend/test_rtl_define_preprocessor.py
+/home/ilam066/RIVA/backend/test_rtl_directive_lexer.py
+/home/ilam066/RIVA/backend/test_rtl_graph_builder.py
+/home/ilam066/RIVA/backend/test_rtl_identifier_lexer.py
+/home/ilam066/RIVA/backend/test_rtl_ifdef_preprocessor.py
+/home/ilam066/RIVA/backend/test_rtl_lexer.py
+/home/ilam066/RIVA/backend/test_rtl_macro_expansion.py
+/home/ilam066/RIVA/backend/test_rtl_number_lexer.py
+/home/ilam066/RIVA/backend/test_rtl_number_validation.py
+/home/ilam066/RIVA/backend/test_rtl_operator_lexer.py
+/home/ilam066/RIVA/backend/test_rtl_parser.py
+/home/ilam066/RIVA/backend/test_rtl_preprocessor.py
+/home/ilam066/RIVA/backend/test_rtl_string_escape_lexer.py
+/home/ilam066/RIVA/backend/test_rtl_string_lexer.py
+/home/ilam066/RIVA/backend/test_rtl_symbol_lexer.py
+/home/ilam066/RIVA/backend/test_rtl_system_identifier_lexer.py
+/home/ilam066/RIVA/backend/test_rtl_unknown_character.py
+/home/ilam066/RIVA/backend/test_scanner.py
+/home/ilam066/RIVA/backend/test_scope_builder.py
+/home/ilam066/RIVA/backend/test_scope_stack.py
+/home/ilam066/RIVA/backend/test_semantic_analyzer_canonical_types.py
+/home/ilam066/RIVA/backend/test_semantic_analyzer_diagnostics.py
+/home/ilam066/RIVA/backend/test_semantic_analyzer_signedness.py
+/home/ilam066/RIVA/backend/test_semantic_builder_core.py
+/home/ilam066/RIVA/backend/test_semantic_builder_diagnostics.py
+/home/ilam066/RIVA/backend/test_semantic_contracts.py
+/home/ilam066/RIVA/backend/test_semantic_source_traceability.py
+/home/ilam066/RIVA/backend/test_shadowing.py
+/home/ilam066/RIVA/backend/test_signal_ast.py
+/home/ilam066/RIVA/backend/test_signal_resolver.py
+/home/ilam066/RIVA/backend/test_signedness_mismatch.py
+/home/ilam066/RIVA/backend/test_signedness_resolver.py
+/home/ilam066/RIVA/backend/test_simulation_waveform.py
+/home/ilam066/RIVA/backend/test_source_location.py
+/home/ilam066/RIVA/backend/test_specification_ir.py
+/home/ilam066/RIVA/backend/test_specification_pipeline.py
+/home/ilam066/RIVA/backend/test_specification_validation_rules.py
+/home/ilam066/RIVA/backend/test_statement_block_ast.py
+/home/ilam066/RIVA/backend/test_symbol_collection.py
+/home/ilam066/RIVA/backend/test_symbol_info.py
+/home/ilam066/RIVA/backend/test_symbol_table.py
+/home/ilam066/RIVA/backend/test_token_builder.py
+/home/ilam066/RIVA/backend/test_token.py
+/home/ilam066/RIVA/backend/test_token_types.py
+/home/ilam066/RIVA/backend/test_type_resolver.py
+/home/ilam066/RIVA/backend/test_upload_api.py
+/home/ilam066/RIVA/backend/test_upload_service.py
+/home/ilam066/RIVA/backend/test_validated_specification_pipeline.py
+/home/ilam066/RIVA/backend/test_validation_diagnostic_code.py
+/home/ilam066/RIVA/backend/test_validation_engine.py
+/home/ilam066/RIVA/backend/test_validation_rule_contracts.py
+/home/ilam066/RIVA/backend/test_width_diagnostic_engine.py
+/home/ilam066/RIVA/backend/test_width_inference.py
+/home/ilam066/RIVA/backend/test_width_mismatch_expressions.py
+/home/ilam066/RIVA/docs/RIVA_PROJECT_CONTEXT.md
+/home/ilam066/RIVA/docs/SYSTEMVERILOG_SUBSET.md
+/home/ilam066/RIVA/examples/design.sv
+/home/ilam066/RIVA/examples/specification.txt
+/home/ilam066/RIVA/examples/tb_mux2to1.sv
+/home/ilam066/RIVA/frontend/eslint.config.js
+/home/ilam066/RIVA/frontend/.gitignore
+/home/ilam066/RIVA/frontend/index.html
+/home/ilam066/RIVA/frontend/package.json
+/home/ilam066/RIVA/frontend/package-lock.json
+/home/ilam066/RIVA/frontend/README.md
+/home/ilam066/RIVA/frontend/tsconfig.app.json
+/home/ilam066/RIVA/frontend/tsconfig.json
+/home/ilam066/RIVA/frontend/tsconfig.node.json
+/home/ilam066/RIVA/frontend/vite.config.ts
+/home/ilam066/RIVA/.gitignore
+/home/ilam066/RIVA/RIVA_FULL_AUDIT_RESULT.txt
+/home/ilam066/RIVA/riva_full_audit.sh
+
+============================================================
+2. DIRECTORY STRUCTURE
+============================================================
+/home/ilam066/RIVA
+/home/ilam066/RIVA/audit
+/home/ilam066/RIVA/backend
+/home/ilam066/RIVA/backend/app
+/home/ilam066/RIVA/backend/app/ai
+/home/ilam066/RIVA/backend/app/analysis
+/home/ilam066/RIVA/backend/app/api
+/home/ilam066/RIVA/backend/app/ast
+/home/ilam066/RIVA/backend/app/common
+/home/ilam066/RIVA/backend/app/compiler
+/home/ilam066/RIVA/backend/app/config
+/home/ilam066/RIVA/backend/app/diagnostics
+/home/ilam066/RIVA/backend/app/domain
+/home/ilam066/RIVA/backend/app/elaboration
+/home/ilam066/RIVA/backend/app/engines
+/home/ilam066/RIVA/backend/app/infrastructure
+/home/ilam066/RIVA/backend/app/ir
+/home/ilam066/RIVA/backend/app/knowledge
+/home/ilam066/RIVA/backend/app/language
+/home/ilam066/RIVA/backend/app/optimization
+/home/ilam066/RIVA/backend/app/parsers
+/home/ilam066/RIVA/backend/app/preprocessors
+/home/ilam066/RIVA/backend/app/__pycache__
+/home/ilam066/RIVA/backend/app/repair
+/home/ilam066/RIVA/backend/app/reporting
+/home/ilam066/RIVA/backend/app/schemas
+/home/ilam066/RIVA/backend/app/semantics
+/home/ilam066/RIVA/backend/app/shared
+/home/ilam066/RIVA/backend/app/simulation
+/home/ilam066/RIVA/backend/app/storage
+/home/ilam066/RIVA/backend/app/tests
+/home/ilam066/RIVA/backend/docs
+/home/ilam066/RIVA/backend/docs/architecture
+/home/ilam066/RIVA/backend/__pycache__
+/home/ilam066/RIVA/backend/test
+/home/ilam066/RIVA/backend/test/language
+/home/ilam066/RIVA/backend/tests
+/home/ilam066/RIVA/backend/tests/extended
+/home/ilam066/RIVA/backend/tests/rtl
+/home/ilam066/RIVA/backend/tools
+/home/ilam066/RIVA/backend/tools/__pycache__
+/home/ilam066/RIVA/backend/uploads
+/home/ilam066/RIVA/backend/uploads/rtl
+/home/ilam066/RIVA/backend/uploads/specifications
+/home/ilam066/RIVA/backend/uploads/testbench
+/home/ilam066/RIVA/docs
+/home/ilam066/RIVA/docs/architecture
+/home/ilam066/RIVA/examples
+/home/ilam066/RIVA/frontend
+/home/ilam066/RIVA/frontend/public
+/home/ilam066/RIVA/frontend/src
+/home/ilam066/RIVA/.local
+/home/ilam066/RIVA/.local/patches
+/home/ilam066/RIVA/tools
+
+============================================================
+3. GIT STATUS
+============================================================
+ M backend/app/analysis/cfg/cfg_builder.py
+ M backend/app/analysis/cfg/control_flow_graph.py
+ M backend/app/ast/expression.py
+ M backend/app/common/source_location.py
+ M backend/app/diagnostics/catalog/width_catalog.py
+ M backend/app/diagnostics/rules/width_mismatch.py
+ M backend/app/diagnostics/rules/width_rules.py
+ M backend/app/domain/rtl_ast/always_block_node.py
+ M backend/app/domain/rtl_ast/assign_node.py
+ M backend/app/domain/rtl_ast/instance_node.py
+ M backend/app/domain/rtl_ast/module_node.py
+ M backend/app/domain/rtl_ast/port_node.py
+ M backend/app/elaboration/validation/port_validator.py
+ M backend/app/language/systemverilog/operators.py
+ M backend/app/language/systemverilog/symbols.py
+ M backend/app/main.py
+ M backend/app/parsers/rtl/parse_result.py
+ M backend/app/parsers/rtl/parser.py
+ M backend/app/parsers/rtl/parser_result.py
+ M backend/app/parsers/rtl/parsers/always_parser.py
+ M backend/app/parsers/rtl/parsers/assignment_parser.py
+ M backend/app/parsers/rtl/parsers/case_parser.py
+ M backend/app/parsers/rtl/parsers/generate_for_parser.py
+ M backend/app/parsers/rtl/parsers/generate_if_parser.py
+ M backend/app/parsers/rtl/parsers/generate_parser.py
+ M backend/app/parsers/rtl/parsers/module_parser.py
+ M backend/app/parsers/rtl/parsers/module_parser.py.bak
+ M backend/app/parsers/rtl/parsers/packed_range_parser.py
+ M backend/app/parsers/rtl/parsers/port_connection_parser.py
+ M backend/app/parsers/rtl/parsers/port_parser.py
+ M backend/app/semantics/passes/assignment_compatibility_checker.py
+ M backend/app/semantics/passes/expression_evaluator.py
+ M backend/app/semantics/passes/expression_type_checker.py
+ M backend/app/semantics/passes/parameter_type_checker.py
+ M backend/app/semantics/passes/signedness_resolver.py
+ D backend/app/semantics/passes/type_resolver.py
+ M backend/app/semantics/passes/width_inference.py
+ M backend/app/semantics/scope.py
+ M backend/app/semantics/semantic_analyzer.py
+ M backend/app/semantics/semantic_model.py
+ M backend/app/semantics/symbol.py
+ M backend/app/semantics/symbols/symbol_info.py
+ M backend/app/semantics/type_checking/type_resolver.py
+ M backend/app/semantics/types/base/type.py
+ M backend/app/semantics/types/rtl/rtl_type.py
+ M backend/app/semantics/width/width_inference.py
+ M backend/app/shared/source_location.py
+ M backend/test_assignment_compatibility_checker.py
+ D backend/test_instance_resolver.py.bak
+ D backend/test_netlist_builder.py.bak
+ M backend/test_parameter_type_checker.py
+ D backend/test_port_binder.py.bak
+ M backend/test_port_validator.py
+ D backend/test_rtl_graph_builder.py.bak
+ M backend/test_rtl_unknown_character.py
+ D backend/test_signal_resolver.py.bak
+ M backend/test_signedness_resolver.py
+ M backend/test_type_resolver.py
+ M backend/test_width_inference.py
+?? RIVA_FULL_AUDIT_RESULT.txt
+?? backend/app/ai/ai_reasoning_engine.py
+?? backend/app/ai/evidence_store.py
+?? backend/app/analysis/traceability/
+?? backend/app/api/routes/analyze.py
+?? backend/app/diagnostics/rules/signedness_mismatch.py
+?? backend/app/elaboration/hierarchy_builder.py
+?? backend/app/elaboration/validation/port_validator.py.bak
+?? backend/app/parsers/rtl/adapters/
+?? backend/app/parsers/rtl/parsers/generate_body_parser.py
+?? backend/app/parsers/rtl/parsers/port_parser.py.bak
+?? backend/app/reporting/
+?? backend/app/semantics/passes/assignment_compatibility_checker.py.bak
+?? backend/app/semantics/passes/signedness_resolver.py.bak
+?? backend/app/simulation/
+?? backend/test_ai_evidence_and_reporting.py
+?? backend/test_canonical_semantic_types.py
+?? backend/test_cfg_dataflow_diagnostics.py
+?? backend/test_expression_location.py
+?? backend/test_expression_semantics_extended.py
+?? backend/test_hierarchy_end_to_end.py
+?? backend/test_requirement_tracer.py
+?? backend/test_semantic_analyzer_canonical_types.py
+?? backend/test_semantic_analyzer_diagnostics.py
+?? backend/test_semantic_analyzer_signedness.py
+?? backend/test_signedness_mismatch.py
+?? backend/test_simulation_waveform.py
+?? backend/test_width_mismatch_expressions.py
+?? backend/tests/
+?? docs/SYSTEMVERILOG_SUBSET.md
+?? frontend/
+?? riva_full_audit.sh
+
+--- Branch ---
+architecture-v2
+
+--- Last commits ---
+7c423ac feat: integrate width diagnostics
+00ea9b5 chore: export PackedRange from AST
+a506901 feat: strengthen semantic diagnostics and analysis
+cc1b75e feat(semantics): add WidthInference semantic pass
+738236f feat(semantics): add initial TypeResolver pass
+caeac9d feat: complete architecture v2 migration
+2303498 docs: add RIVA development workflow and engineering rules
+dae965e Sprint 5 complete: parser, AST, semantic foundation
+09c582e feat(lexer): support SystemVerilog string escape sequences
+3be4d99 feat(lexer): add SystemVerilog attribute block support
+
+============================================================
+4. PYTHON ENVIRONMENT
+============================================================
+Virtual environment: FOUND
+Python executable:
+/home/ilam066/RIVA/.venv/bin/python
+
+Python version:
+Python 3.12.3
+
+Pytest:
+pytest 9.1.1
+
+Installed packages:
+Package           Version
+----------------- ---------
+annotated-doc     0.0.4
+annotated-types   0.7.0
+anyio             4.14.2
+certifi           2026.7.22
+click             8.4.2
+fastapi           0.139.2
+h11               0.16.0
+httpcore          1.0.9
+httpcore2         2.9.1
+httpx             0.28.1
+httpx2            2.9.1
+idna              3.18
+iniconfig         2.3.0
+loguru            0.7.3
+packaging         26.2
+pip               24.0
+pluggy            1.6.0
+pydantic          2.13.4
+pydantic_core     2.46.4
+Pygments          2.20.0
+pytest            9.1.1
+python-dotenv     1.2.2
+python-multipart  0.0.32
+PyYAML            6.0.3
+starlette         1.3.1
+truststore        0.10.4
+typing_extensions 4.16.0
+typing-inspection 0.4.2
+uvicorn           0.51.0
+
+============================================================
+5. BACKEND SOURCE INVENTORY
+============================================================
+Python source files:
+/home/ilam066/RIVA/backend/app/ai/ai_reasoning_engine.py
+/home/ilam066/RIVA/backend/app/ai/evidence_store.py
+/home/ilam066/RIVA/backend/app/ai/__init__.py
+/home/ilam066/RIVA/backend/app/analysis/cfg/basic_block.py
+/home/ilam066/RIVA/backend/app/analysis/cfg/cfg_builder.py
+/home/ilam066/RIVA/backend/app/analysis/cfg/control_flow_graph.py
+/home/ilam066/RIVA/backend/app/analysis/cfg/__init__.py
+/home/ilam066/RIVA/backend/app/analysis/dataflow/analyses/__init__.py
+/home/ilam066/RIVA/backend/app/analysis/dataflow/analyses/live_variables.py
+/home/ilam066/RIVA/backend/app/analysis/dataflow/dataflow_analysis.py
+/home/ilam066/RIVA/backend/app/analysis/dataflow/dataflow_result.py
+/home/ilam066/RIVA/backend/app/analysis/dataflow/__init__.py
+/home/ilam066/RIVA/backend/app/analysis/dataflow/runtime/dataflow_runner.py
+/home/ilam066/RIVA/backend/app/analysis/dataflow/worklist_solver.py
+/home/ilam066/RIVA/backend/app/analysis/traceability/requirement_tracer.py
+/home/ilam066/RIVA/backend/app/api/dependencies/__init__.py
+/home/ilam066/RIVA/backend/app/api/__init__.py
+/home/ilam066/RIVA/backend/app/api/routes/analyze.py
+/home/ilam066/RIVA/backend/app/api/routes/__init__.py
+/home/ilam066/RIVA/backend/app/api/routes/upload.py
+/home/ilam066/RIVA/backend/app/ast/always_block.py
+/home/ilam066/RIVA/backend/app/ast/case_statement.py
+/home/ilam066/RIVA/backend/app/ast/compilation_unit.py
+/home/ilam066/RIVA/backend/app/ast/continuous_assign.py
+/home/ilam066/RIVA/backend/app/ast/expression.py
+/home/ilam066/RIVA/backend/app/ast/generate_block.py
+/home/ilam066/RIVA/backend/app/ast/generate_for.py
+/home/ilam066/RIVA/backend/app/ast/generate_if.py
+/home/ilam066/RIVA/backend/app/ast/if_statement.py
+/home/ilam066/RIVA/backend/app/ast/__init__.py
+/home/ilam066/RIVA/backend/app/ast/module_declaration.py
+/home/ilam066/RIVA/backend/app/ast/module_instance.py
+/home/ilam066/RIVA/backend/app/ast/node.py
+/home/ilam066/RIVA/backend/app/ast/packed_range.py
+/home/ilam066/RIVA/backend/app/ast/parameter_declaration.py
+/home/ilam066/RIVA/backend/app/ast/parameter_override.py
+/home/ilam066/RIVA/backend/app/ast/port_connection.py
+/home/ilam066/RIVA/backend/app/ast/port_declaration.py
+/home/ilam066/RIVA/backend/app/ast/procedural_assignment.py
+/home/ilam066/RIVA/backend/app/ast/signal_declaration.py
+/home/ilam066/RIVA/backend/app/ast/statement_block.py
+/home/ilam066/RIVA/backend/app/ast/visitors/__init__.py
+/home/ilam066/RIVA/backend/app/common/source_location.py
+/home/ilam066/RIVA/backend/app/compiler/driver/compiler_driver.py
+/home/ilam066/RIVA/backend/app/compiler/driver/__init__.py
+/home/ilam066/RIVA/backend/app/compiler/pass_manager.py
+/home/ilam066/RIVA/backend/app/config/__init__.py
+/home/ilam066/RIVA/backend/app/config/settings.py
+/home/ilam066/RIVA/backend/app/diagnostics/analysis/constant_condition_collector.py
+/home/ilam066/RIVA/backend/app/diagnostics/analysis/dead_assignment_collector.py
+/home/ilam066/RIVA/backend/app/diagnostics/analysis/driver_collector.py
+/home/ilam066/RIVA/backend/app/diagnostics/analysis/usage_collector.py
+/home/ilam066/RIVA/backend/app/diagnostics/base/diagnostic_rule.py
+/home/ilam066/RIVA/backend/app/diagnostics/catalog/diagnostic_catalog.py
+/home/ilam066/RIVA/backend/app/diagnostics/catalog/elaboration_catalog.py
+/home/ilam066/RIVA/backend/app/diagnostics/catalog/__init__.py
+/home/ilam066/RIVA/backend/app/diagnostics/catalog/lint_catalog.py
+/home/ilam066/RIVA/backend/app/diagnostics/catalog/semantic_catalog.py
+/home/ilam066/RIVA/backend/app/diagnostics/catalog/syntax_catalog.py
+/home/ilam066/RIVA/backend/app/diagnostics/catalog/width_catalog.py
+/home/ilam066/RIVA/backend/app/diagnostics/diagnostic_engine.py
+/home/ilam066/RIVA/backend/app/diagnostics/diagnostic.py
+/home/ilam066/RIVA/backend/app/diagnostics/formatter/diagnostic_formatter.py
+/home/ilam066/RIVA/backend/app/diagnostics/__init__.py
+/home/ilam066/RIVA/backend/app/diagnostics/model/categories.py
+/home/ilam066/RIVA/backend/app/diagnostics/model/severity.py
+/home/ilam066/RIVA/backend/app/diagnostics/rules/combinational_loop.py
+/home/ilam066/RIVA/backend/app/diagnostics/rules/elaboration_rules.py
+/home/ilam066/RIVA/backend/app/diagnostics/rules/__init__.py
+/home/ilam066/RIVA/backend/app/diagnostics/rules/lint_rules.py
+/home/ilam066/RIVA/backend/app/diagnostics/rules/multiple_driver.py
+/home/ilam066/RIVA/backend/app/diagnostics/rules/semantic_rules.py
+/home/ilam066/RIVA/backend/app/diagnostics/rules/signedness_mismatch.py
+/home/ilam066/RIVA/backend/app/diagnostics/rules/undefined_signal.py
+/home/ilam066/RIVA/backend/app/diagnostics/rules/unused_signal.py
+/home/ilam066/RIVA/backend/app/diagnostics/rules/width_mismatch.py
+/home/ilam066/RIVA/backend/app/diagnostics/rules/width_rules.py
+/home/ilam066/RIVA/backend/app/domain/__init__.py
+/home/ilam066/RIVA/backend/app/domain/metadata.py
+/home/ilam066/RIVA/backend/app/domain/port.py
+/home/ilam066/RIVA/backend/app/domain/requirement.py
+/home/ilam066/RIVA/backend/app/domain/rtl_ast/always_block_node.py
+/home/ilam066/RIVA/backend/app/domain/rtl_ast/assign_node.py
+/home/ilam066/RIVA/backend/app/domain/rtl_ast/generate_node.py
+/home/ilam066/RIVA/backend/app/domain/rtl_ast/__init__.py
+/home/ilam066/RIVA/backend/app/domain/rtl_ast/instance_node.py
+/home/ilam066/RIVA/backend/app/domain/rtl_ast/module_node.py
+/home/ilam066/RIVA/backend/app/domain/rtl_ast/parameter_node.py
+/home/ilam066/RIVA/backend/app/domain/rtl_ast/port_node.py
+/home/ilam066/RIVA/backend/app/domain/rtl_ast/rtl_compilation_unit.py
+/home/ilam066/RIVA/backend/app/domain/rtl_ast/rtl_node.py
+/home/ilam066/RIVA/backend/app/domain/rtl_ast/signal_node.py
+/home/ilam066/RIVA/backend/app/domain/rtl_tokens/__init__.py
+/home/ilam066/RIVA/backend/app/domain/rtl_tokens/token.py
+/home/ilam066/RIVA/backend/app/domain/rtl_tokens/token_type.py
+/home/ilam066/RIVA/backend/app/domain/specification_ast/ast_node.py
+/home/ilam066/RIVA/backend/app/domain/specification_ast/document_node.py
+/home/ilam066/RIVA/backend/app/domain/specification_ast/__init__.py
+/home/ilam066/RIVA/backend/app/domain/specification_ast/keyvalue_node.py
+/home/ilam066/RIVA/backend/app/domain/specification_ast/listitem_node.py
+/home/ilam066/RIVA/backend/app/domain/specification_ast/section_node.py
+/home/ilam066/RIVA/backend/app/domain/specification_ast/text_node.py
+/home/ilam066/RIVA/backend/app/domain/specification_ir.py
+/home/ilam066/RIVA/backend/app/elaboration/cfg/cfg_elaborator.py
+/home/ilam066/RIVA/backend/app/elaboration/cfg/__init__.py
+/home/ilam066/RIVA/backend/app/elaboration/elaborator.py
+/home/ilam066/RIVA/backend/app/elaboration/generate/generate_elaborator.py
+/home/ilam066/RIVA/backend/app/elaboration/generate/__init__.py
+/home/ilam066/RIVA/backend/app/elaboration/hierarchy_builder.py
+/home/ilam066/RIVA/backend/app/elaboration/hierarchy/hierarchy_elaborator.py
+/home/ilam066/RIVA/backend/app/elaboration/hierarchy/__init__.py
+/home/ilam066/RIVA/backend/app/elaboration/hierarchy_node.py
+/home/ilam066/RIVA/backend/app/elaboration/__init__.py
+/home/ilam066/RIVA/backend/app/elaboration/instances/__init__.py
+/home/ilam066/RIVA/backend/app/elaboration/instances/instance_resolver.py
+/home/ilam066/RIVA/backend/app/elaboration/model/bound_hierarchy.py
+/home/ilam066/RIVA/backend/app/elaboration/model/bound_instance.py
+/home/ilam066/RIVA/backend/app/elaboration/model/bound_module.py
+/home/ilam066/RIVA/backend/app/elaboration/model/elaboration_model.py
+/home/ilam066/RIVA/backend/app/elaboration/model/__init__.py
+/home/ilam066/RIVA/backend/app/elaboration/model/port_binding.py
+/home/ilam066/RIVA/backend/app/elaboration/model/resolved_hierarchy.py
+/home/ilam066/RIVA/backend/app/elaboration/model/resolved_instance.py
+/home/ilam066/RIVA/backend/app/elaboration/model/resolved_module.py
+/home/ilam066/RIVA/backend/app/elaboration/model/resolved_signal_hierarchy.py
+/home/ilam066/RIVA/backend/app/elaboration/model/resolved_signal_instance.py
+/home/ilam066/RIVA/backend/app/elaboration/model/resolved_signal_module.py
+/home/ilam066/RIVA/backend/app/elaboration/model/resolved_signal.py
+/home/ilam066/RIVA/backend/app/elaboration/module_elaborator.py
+/home/ilam066/RIVA/backend/app/elaboration/modules/__init__.py
+/home/ilam066/RIVA/backend/app/elaboration/modules/module_resolver.py
+/home/ilam066/RIVA/backend/app/elaboration/netlist/__init__.py
+/home/ilam066/RIVA/backend/app/elaboration/netlist/netlist_builder.py
+/home/ilam066/RIVA/backend/app/elaboration/parameters/__init__.py
+/home/ilam066/RIVA/backend/app/elaboration/parameters/parameter_elaborator.py
+/home/ilam066/RIVA/backend/app/elaboration/ports/__init__.py
+/home/ilam066/RIVA/backend/app/elaboration/ports/port_binder.py
+/home/ilam066/RIVA/backend/app/elaboration/rtl_graph/__init__.py
+/home/ilam066/RIVA/backend/app/elaboration/rtl_graph/rtl_graph_builder.py
+/home/ilam066/RIVA/backend/app/elaboration/signals/__init__.py
+/home/ilam066/RIVA/backend/app/elaboration/signals/signal_resolver.py
+/home/ilam066/RIVA/backend/app/elaboration/utils/ast_cloner.py
+/home/ilam066/RIVA/backend/app/elaboration/utils/generate_substituter.py
+/home/ilam066/RIVA/backend/app/elaboration/validation/__init__.py
+/home/ilam066/RIVA/backend/app/elaboration/validation/instance_validator.py
+/home/ilam066/RIVA/backend/app/elaboration/validation/port_validator.py
+/home/ilam066/RIVA/backend/app/engines/diagnostics/diagnostic_factory.py
+/home/ilam066/RIVA/backend/app/engines/diagnostics/diagnostic.py
+/home/ilam066/RIVA/backend/app/engines/diagnostics/diagnostic_severity.py
+/home/ilam066/RIVA/backend/app/engines/diagnostics/__init__.py
+/home/ilam066/RIVA/backend/app/engines/__init__.py
+/home/ilam066/RIVA/backend/app/engines/reporting/diagnostic_json_renderer.py
+/home/ilam066/RIVA/backend/app/engines/reporting/diagnostic_report.py
+/home/ilam066/RIVA/backend/app/engines/reporting/diagnostic_text_renderer.py
+/home/ilam066/RIVA/backend/app/engines/reporting/__init__.py
+/home/ilam066/RIVA/backend/app/engines/rule_engine/__init__.py
+/home/ilam066/RIVA/backend/app/engines/rule_engine/specification_validation_rules.py
+/home/ilam066/RIVA/backend/app/engines/rule_engine/validation_diagnostic_code.py
+/home/ilam066/RIVA/backend/app/engines/rule_engine/validation_engine.py
+/home/ilam066/RIVA/backend/app/engines/rule_engine/validation_engine_result.py
+/home/ilam066/RIVA/backend/app/engines/rule_engine/validation_result.py
+/home/ilam066/RIVA/backend/app/engines/rule_engine/validation_rule.py
+/home/ilam066/RIVA/backend/app/engines/verification/__init__.py
+/home/ilam066/RIVA/backend/app/infrastructure/__init__.py
+/home/ilam066/RIVA/backend/app/infrastructure/uploads/file_validator.py
+/home/ilam066/RIVA/backend/app/infrastructure/uploads/__init__.py
+/home/ilam066/RIVA/backend/app/infrastructure/uploads/upload_service.py
+/home/ilam066/RIVA/backend/app/__init__.py
+/home/ilam066/RIVA/backend/app/ir/__init__.py
+/home/ilam066/RIVA/backend/app/ir/ir_expression.py
+/home/ilam066/RIVA/backend/app/ir/ir_module.py
+/home/ilam066/RIVA/backend/app/ir/ir_node.py
+/home/ilam066/RIVA/backend/app/ir/ir_statement.py
+/home/ilam066/RIVA/backend/app/ir/netlist_instance.py
+/home/ilam066/RIVA/backend/app/ir/netlist_module.py
+/home/ilam066/RIVA/backend/app/ir/netlist.py
+/home/ilam066/RIVA/backend/app/ir/net.py
+/home/ilam066/RIVA/backend/app/ir/rtl/__init__.py
+/home/ilam066/RIVA/backend/app/ir/rtl/rtl_graph.py
+/home/ilam066/RIVA/backend/app/ir/rtl/rtl_instance.py
+/home/ilam066/RIVA/backend/app/ir/rtl/rtl_module.py
+/home/ilam066/RIVA/backend/app/ir/typed_ir_builder.py
+/home/ilam066/RIVA/backend/app/knowledge/__init__.py
+/home/ilam066/RIVA/backend/app/language/common/__init__.py
+/home/ilam066/RIVA/backend/app/language/common/language_category.py
+/home/ilam066/RIVA/backend/app/language/common/language_item.py
+/home/ilam066/RIVA/backend/app/language/systemverilog/builtin_types.py
+/home/ilam066/RIVA/backend/app/language/systemverilog/compiler_directives.py
+/home/ilam066/RIVA/backend/app/language/systemverilog/gate_primitives.py
+/home/ilam066/RIVA/backend/app/language/systemverilog/grammar_version.py
+/home/ilam066/RIVA/backend/app/language/systemverilog/ieee1800_2023_keywords.py
+/home/ilam066/RIVA/backend/app/language/systemverilog/__init__.py
+/home/ilam066/RIVA/backend/app/language/systemverilog/keyword_categories/assertions.py
+/home/ilam066/RIVA/backend/app/language/systemverilog/keyword_categories/data_types.py
+/home/ilam066/RIVA/backend/app/language/systemverilog/keyword_categories/declarations.py
+/home/ilam066/RIVA/backend/app/language/systemverilog/keyword_categories/design_units.py
+/home/ilam066/RIVA/backend/app/language/systemverilog/keyword_categories/__init__.py
+/home/ilam066/RIVA/backend/app/language/systemverilog/keyword_categories/oop.py
+/home/ilam066/RIVA/backend/app/language/systemverilog/keyword_categories/procedural.py
+/home/ilam066/RIVA/backend/app/language/systemverilog/keywords.py
+/home/ilam066/RIVA/backend/app/language/systemverilog/net_types.py
+/home/ilam066/RIVA/backend/app/language/systemverilog/operators.py
+/home/ilam066/RIVA/backend/app/language/systemverilog/strengths.py
+/home/ilam066/RIVA/backend/app/language/systemverilog/symbols.py
+/home/ilam066/RIVA/backend/app/language/systemverilog/system_identifiers.py
+/home/ilam066/RIVA/backend/app/main.py
+/home/ilam066/RIVA/backend/app/optimization/base_pass.py
+/home/ilam066/RIVA/backend/app/optimization/__init__.py
+/home/ilam066/RIVA/backend/app/optimization/model/optimization_context.py
+/home/ilam066/RIVA/backend/app/optimization/model/pass_result.py
+/home/ilam066/RIVA/backend/app/optimization/optimizer.py
+/home/ilam066/RIVA/backend/app/optimization/passes/constant_folding.py
+/home/ilam066/RIVA/backend/app/optimization/passes/constant_propagation.py
+/home/ilam066/RIVA/backend/app/optimization/passes/dead_instance_elimination.py
+/home/ilam066/RIVA/backend/app/optimization/passes/dead_signal_elimination.py
+/home/ilam066/RIVA/backend/app/optimization/passes/__init__.py
+/home/ilam066/RIVA/backend/app/optimization/typed_ir/typed_constant_folding.py
+/home/ilam066/RIVA/backend/app/optimization/typed_ir/typed_constant_propagation.py
+/home/ilam066/RIVA/backend/app/optimization/typed_ir/typed_control_flow_simplification.py
+/home/ilam066/RIVA/backend/app/optimization/typed_ir/typed_dead_assignment_elimination.py
+/home/ilam066/RIVA/backend/app/parsers/__init__.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/adapters/__init__.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/adapters/legacy_to_rtl_ast.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/character_stream.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/__init__.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/lexer.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/lexer_result.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parser_context.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parse_result.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parser_registry.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parser_result.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/always_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/assignment_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/assign_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/base_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/begin_end_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/case_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/compilation_unit_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/declaration_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/expression_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/generate_body_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/generate_for_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/generate_if_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/generate_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/if_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/module_instance_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/module_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/packed_range_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/parameter_override_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/parameter_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/port_connection_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/port_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/signal_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/statement_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/attribute_reader.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/base_reader.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/comment_reader.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/directive_reader.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/identifier_reader.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/__init__.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/number_reader.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/operator_reader.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/reader_registry.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/string_reader.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/symbol_reader.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/system_identifier_reader.py
+/home/ilam066/RIVA/backend/app/parsers/specification/classifier.py
+/home/ilam066/RIVA/backend/app/parsers/specification/exceptions.py
+/home/ilam066/RIVA/backend/app/parsers/specification/__init__.py
+/home/ilam066/RIVA/backend/app/parsers/specification/lexer.py
+/home/ilam066/RIVA/backend/app/parsers/specification/lexer_rules.py
+/home/ilam066/RIVA/backend/app/parsers/specification/line_reader.py
+/home/ilam066/RIVA/backend/app/parsers/specification/normalizer.py
+/home/ilam066/RIVA/backend/app/parsers/specification/parser_diagnostic_code.py
+/home/ilam066/RIVA/backend/app/parsers/specification/parse_result.py
+/home/ilam066/RIVA/backend/app/parsers/specification/parser.py
+/home/ilam066/RIVA/backend/app/parsers/specification/pipeline.py
+/home/ilam066/RIVA/backend/app/parsers/specification/pipeline_result.py
+/home/ilam066/RIVA/backend/app/parsers/specification/reader.py
+/home/ilam066/RIVA/backend/app/parsers/specification/scanner.py
+/home/ilam066/RIVA/backend/app/parsers/specification/semantic_builder.py
+/home/ilam066/RIVA/backend/app/parsers/specification/semantic_diagnostic_code.py
+/home/ilam066/RIVA/backend/app/parsers/specification/semantic_result.py
+/home/ilam066/RIVA/backend/app/parsers/specification/token_builder.py
+/home/ilam066/RIVA/backend/app/parsers/specification/tokens.py
+/home/ilam066/RIVA/backend/app/parsers/specification/token_types.py
+/home/ilam066/RIVA/backend/app/preprocessors/rtl/directive.py
+/home/ilam066/RIVA/backend/app/preprocessors/rtl/directive_type.py
+/home/ilam066/RIVA/backend/app/preprocessors/rtl/handler_registry.py
+/home/ilam066/RIVA/backend/app/preprocessors/rtl/handlers/base_handler.py
+/home/ilam066/RIVA/backend/app/preprocessors/rtl/handlers/define_handler.py
+/home/ilam066/RIVA/backend/app/preprocessors/rtl/handlers/else_handler.py
+/home/ilam066/RIVA/backend/app/preprocessors/rtl/handlers/endif_handler.py
+/home/ilam066/RIVA/backend/app/preprocessors/rtl/handlers/ifdef_handler.py
+/home/ilam066/RIVA/backend/app/preprocessors/rtl/handlers/ifndef_handler.py
+/home/ilam066/RIVA/backend/app/preprocessors/rtl/macro_table.py
+/home/ilam066/RIVA/backend/app/preprocessors/rtl/preprocessor.py
+/home/ilam066/RIVA/backend/app/preprocessors/rtl/preprocessor_result.py
+/home/ilam066/RIVA/backend/app/repair/base/repair_rule.py
+/home/ilam066/RIVA/backend/app/repair/confidence_evaluator.py
+/home/ilam066/RIVA/backend/app/repair/patches/patch_generator.py
+/home/ilam066/RIVA/backend/app/repair/patches/source_patch.py
+/home/ilam066/RIVA/backend/app/repair/repair_engine.py
+/home/ilam066/RIVA/backend/app/repair/repair_suggestion.py
+/home/ilam066/RIVA/backend/app/repair/rules/multiple_driver.py
+/home/ilam066/RIVA/backend/app/repair/rules/undefined_identifier.py
+/home/ilam066/RIVA/backend/app/repair/rules/width_mismatch.py
+/home/ilam066/RIVA/backend/app/reporting/report_generator.py
+/home/ilam066/RIVA/backend/app/schemas/__init__.py
+/home/ilam066/RIVA/backend/app/schemas/upload_response.py
+/home/ilam066/RIVA/backend/app/semantics/evaluation/constant_evaluator.py
+/home/ilam066/RIVA/backend/app/semantics/evaluation/__init__.py
+/home/ilam066/RIVA/backend/app/semantics/passes/assignment_compatibility_checker.py
+/home/ilam066/RIVA/backend/app/semantics/passes/constant_folding.py
+/home/ilam066/RIVA/backend/app/semantics/passes/constant_propagation.py
+/home/ilam066/RIVA/backend/app/semantics/passes/expression_evaluator.py
+/home/ilam066/RIVA/backend/app/semantics/passes/expression_type_checker.py
+/home/ilam066/RIVA/backend/app/semantics/passes/identifier_checker.py
+/home/ilam066/RIVA/backend/app/semantics/passes/implicit_net_detector.py
+/home/ilam066/RIVA/backend/app/semantics/passes/__init__.py
+/home/ilam066/RIVA/backend/app/semantics/passes/parameter_type_checker.py
+/home/ilam066/RIVA/backend/app/semantics/passes/port_compatibility_checker.py
+/home/ilam066/RIVA/backend/app/semantics/passes/signedness_resolver.py
+/home/ilam066/RIVA/backend/app/semantics/passes/width_inference.py
+/home/ilam066/RIVA/backend/app/semantics/scope_kind.py
+/home/ilam066/RIVA/backend/app/semantics/scope.py
+/home/ilam066/RIVA/backend/app/semantics/scope_stack.py
+/home/ilam066/RIVA/backend/app/semantics/semantic_analyzer.py
+/home/ilam066/RIVA/backend/app/semantics/semantic_diagnostic.py
+/home/ilam066/RIVA/backend/app/semantics/semantic_model.py
+/home/ilam066/RIVA/backend/app/semantics/symbol_kind.py
+/home/ilam066/RIVA/backend/app/semantics/symbol.py
+/home/ilam066/RIVA/backend/app/semantics/symbols/__init__.py
+/home/ilam066/RIVA/backend/app/semantics/symbols/symbol_info.py
+/home/ilam066/RIVA/backend/app/semantics/type_checking/__init__.py
+/home/ilam066/RIVA/backend/app/semantics/type_checking/type_resolver.py
+/home/ilam066/RIVA/backend/app/semantics/types/base/__init__.py
+/home/ilam066/RIVA/backend/app/semantics/types/base/type.py
+/home/ilam066/RIVA/backend/app/semantics/types/__init__.py
+/home/ilam066/RIVA/backend/app/semantics/types/rtl/__init__.py
+/home/ilam066/RIVA/backend/app/semantics/types/rtl/rtl_type.py
+/home/ilam066/RIVA/backend/app/semantics/visitors/base/ast_visitor.py
+/home/ilam066/RIVA/backend/app/semantics/visitors/identifier_resolver.py
+/home/ilam066/RIVA/backend/app/semantics/visitors/scope_builder.py
+/home/ilam066/RIVA/backend/app/semantics/visitors/symbol_collector.py
+/home/ilam066/RIVA/backend/app/semantics/width/__init__.py
+/home/ilam066/RIVA/backend/app/semantics/width/width_inference.py
+/home/ilam066/RIVA/backend/app/shared/__init__.py
+/home/ilam066/RIVA/backend/app/shared/source_location.py
+/home/ilam066/RIVA/backend/app/simulation/simulation_adapter.py
+/home/ilam066/RIVA/backend/app/simulation/waveform_analyzer.py
+/home/ilam066/RIVA/backend/app/storage/file_storage.py
+/home/ilam066/RIVA/backend/app/storage/__init__.py
+/home/ilam066/RIVA/backend/app/tests/__init__.py
+
+Python source count:
+355
+
+============================================================
+6. BACKEND ARCHITECTURE DIRECTORIES
+============================================================
+[PRESENT]   app/ai
+[PRESENT]   app/analysis
+[PRESENT]   app/api
+[PRESENT]   app/ast
+[PRESENT]   app/common
+[PRESENT]   app/compiler
+[PRESENT]   app/config
+[PRESENT]   app/diagnostics
+[PRESENT]   app/domain
+[PRESENT]   app/elaboration
+[PRESENT]   app/engines
+[PRESENT]   app/infrastructure
+[PRESENT]   app/ir
+[PRESENT]   app/knowledge
+[PRESENT]   app/language
+[PRESENT]   app/optimization
+[PRESENT]   app/parsers
+[PRESENT]   app/preprocessors
+[PRESENT]   app/repair
+[PRESENT]   app/reporting
+[PRESENT]   app/schemas
+[PRESENT]   app/semantics
+[PRESENT]   app/shared
+[PRESENT]   app/simulation
+[PRESENT]   app/storage
+
+============================================================
+7. TEST INVENTORY
+============================================================
+Test files:
+/home/ilam066/RIVA/backend/test_ai_evidence_and_reporting.py
+/home/ilam066/RIVA/backend/test_always_block_ast.py
+/home/ilam066/RIVA/backend/test_assignment_compatibility_checker.py
+/home/ilam066/RIVA/backend/test_ast_nodes.py
+/home/ilam066/RIVA/backend/test_ast.py
+/home/ilam066/RIVA/backend/test_canonical_semantic_types.py
+/home/ilam066/RIVA/backend/test_case_statement_ast.py
+/home/ilam066/RIVA/backend/test_cfg_dataflow_diagnostics.py
+/home/ilam066/RIVA/backend/test_classifier.py
+/home/ilam066/RIVA/backend/test_constant_evaluator.py
+/home/ilam066/RIVA/backend/test_constant_folding.py
+/home/ilam066/RIVA/backend/test_constant_propagation.py
+/home/ilam066/RIVA/backend/test_dead_instance_elimination.py
+/home/ilam066/RIVA/backend/test_dead_signal_elimination.py
+/home/ilam066/RIVA/backend/test_diagnostic_factory.py
+/home/ilam066/RIVA/backend/test_diagnostic.py
+/home/ilam066/RIVA/backend/test_diagnostic_reporting.py
+/home/ilam066/RIVA/backend/test_duplicate_symbols.py
+/home/ilam066/RIVA/backend/test_elaboration_model.py
+/home/ilam066/RIVA/backend/test_elaborator_pipeline.py
+/home/ilam066/RIVA/backend/test_expression_ast.py
+/home/ilam066/RIVA/backend/test_expression_evaluator.py
+/home/ilam066/RIVA/backend/test_expression_location.py
+/home/ilam066/RIVA/backend/test_expression_parser.py
+/home/ilam066/RIVA/backend/test_expression_semantics_extended.py
+/home/ilam066/RIVA/backend/test_expression_type_checker.py
+/home/ilam066/RIVA/backend/test_expression_width_semantics.py
+/home/ilam066/RIVA/backend/test_file_storage.py
+/home/ilam066/RIVA/backend/test_file_validator.py
+/home/ilam066/RIVA/backend/test_generate_block_ast.py
+/home/ilam066/RIVA/backend/test_generate_for_ast.py
+/home/ilam066/RIVA/backend/test_generate_for_clone.py
+/home/ilam066/RIVA/backend/test_generate_for_elaboration.py
+/home/ilam066/RIVA/backend/test_generate_if_ast.py
+/home/ilam066/RIVA/backend/test_generate_if_elaboration.py
+/home/ilam066/RIVA/backend/test_generate_substitution.py
+/home/ilam066/RIVA/backend/test_hierarchy_elaborator.py
+/home/ilam066/RIVA/backend/test_hierarchy_end_to_end.py
+/home/ilam066/RIVA/backend/test_hierarchy_node.py
+/home/ilam066/RIVA/backend/test_identifier_checker.py
+/home/ilam066/RIVA/backend/test_identifier_diagnostic_catalog.py
+/home/ilam066/RIVA/backend/test_identifier_resolution.py
+/home/ilam066/RIVA/backend/test_if_statement_ast.py
+/home/ilam066/RIVA/backend/test_implicit_net_detector.py
+/home/ilam066/RIVA/backend/test_implicit_net_expression.py
+/home/ilam066/RIVA/backend/test_instance_resolver.py
+/home/ilam066/RIVA/backend/test_instance_validator.py
+/home/ilam066/RIVA/backend/test/language/test_keyword_database.py
+/home/ilam066/RIVA/backend/test_lexer.py
+/home/ilam066/RIVA/backend/test_lexer_result.py
+/home/ilam066/RIVA/backend/test_line_reader.py
+/home/ilam066/RIVA/backend/test_metadata_contract.py
+/home/ilam066/RIVA/backend/test_metadata.py
+/home/ilam066/RIVA/backend/test_module_elaborator.py
+/home/ilam066/RIVA/backend/test_module_instance_ast.py
+/home/ilam066/RIVA/backend/test_module_instance_connections.py
+/home/ilam066/RIVA/backend/test_netlist_builder.py
+/home/ilam066/RIVA/backend/test_normalizer.py
+/home/ilam066/RIVA/backend/test_optimizer.py
+/home/ilam066/RIVA/backend/test_parameter_ast.py
+/home/ilam066/RIVA/backend/test_parameter_elaborator.py
+/home/ilam066/RIVA/backend/test_parameter_override_ast.py
+/home/ilam066/RIVA/backend/test_parameter_override_parser.py
+/home/ilam066/RIVA/backend/test_parameter_type_checker.py
+/home/ilam066/RIVA/backend/test_parser_diagnostic_code.py
+/home/ilam066/RIVA/backend/test_parser_error_codes.py
+/home/ilam066/RIVA/backend/test_parse_result.py
+/home/ilam066/RIVA/backend/test_parser.py
+/home/ilam066/RIVA/backend/test_parser_recovery.py
+/home/ilam066/RIVA/backend/test_pass_manager.py
+/home/ilam066/RIVA/backend/test_port_ast.py
+/home/ilam066/RIVA/backend/test_port_binder.py
+/home/ilam066/RIVA/backend/test_port_compatibility_checker.py
+/home/ilam066/RIVA/backend/test_port_connection_ast.py
+/home/ilam066/RIVA/backend/test_port.py
+/home/ilam066/RIVA/backend/test_port_validator.py
+/home/ilam066/RIVA/backend/test_procedural_assignment_ast.py
+/home/ilam066/RIVA/backend/test_reader.py
+/home/ilam066/RIVA/backend/test_requirement.py
+/home/ilam066/RIVA/backend/test_requirement_tracer.py
+/home/ilam066/RIVA/backend/test_rtl_attribute_lexer.py
+/home/ilam066/RIVA/backend/test_rtl_character_stream.py
+/home/ilam066/RIVA/backend/test_rtl_comment_lexer.py
+/home/ilam066/RIVA/backend/test_rtl_define_preprocessor.py
+/home/ilam066/RIVA/backend/test_rtl_directive_lexer.py
+/home/ilam066/RIVA/backend/test_rtl_graph_builder.py
+/home/ilam066/RIVA/backend/test_rtl_identifier_lexer.py
+/home/ilam066/RIVA/backend/test_rtl_ifdef_preprocessor.py
+/home/ilam066/RIVA/backend/test_rtl_lexer.py
+/home/ilam066/RIVA/backend/test_rtl_macro_expansion.py
+/home/ilam066/RIVA/backend/test_rtl_number_lexer.py
+/home/ilam066/RIVA/backend/test_rtl_number_validation.py
+/home/ilam066/RIVA/backend/test_rtl_operator_lexer.py
+/home/ilam066/RIVA/backend/test_rtl_parser.py
+/home/ilam066/RIVA/backend/test_rtl_preprocessor.py
+/home/ilam066/RIVA/backend/test_rtl_string_escape_lexer.py
+/home/ilam066/RIVA/backend/test_rtl_string_lexer.py
+/home/ilam066/RIVA/backend/test_rtl_symbol_lexer.py
+/home/ilam066/RIVA/backend/test_rtl_system_identifier_lexer.py
+/home/ilam066/RIVA/backend/test_rtl_unknown_character.py
+/home/ilam066/RIVA/backend/test_scanner.py
+/home/ilam066/RIVA/backend/test_scope_builder.py
+/home/ilam066/RIVA/backend/test_scope_stack.py
+/home/ilam066/RIVA/backend/test_semantic_analyzer_canonical_types.py
+/home/ilam066/RIVA/backend/test_semantic_analyzer_diagnostics.py
+/home/ilam066/RIVA/backend/test_semantic_analyzer_signedness.py
+/home/ilam066/RIVA/backend/test_semantic_builder_core.py
+/home/ilam066/RIVA/backend/test_semantic_builder_diagnostics.py
+/home/ilam066/RIVA/backend/test_semantic_contracts.py
+/home/ilam066/RIVA/backend/test_semantic_source_traceability.py
+/home/ilam066/RIVA/backend/tests/extended/test_ai_grounding_suite.py
+/home/ilam066/RIVA/backend/tests/extended/test_cat10_diagnostics_reporting.py
+/home/ilam066/RIVA/backend/tests/extended/test_cat11_traceability.py
+/home/ilam066/RIVA/backend/tests/extended/test_cat12_waveform_simulation.py
+/home/ilam066/RIVA/backend/tests/extended/test_cat13_api_storage.py
+/home/ilam066/RIVA/backend/tests/extended/test_cat14_end_to_end.py
+/home/ilam066/RIVA/backend/tests/extended/test_cat1_input_preprocessing.py
+/home/ilam066/RIVA/backend/tests/extended/test_cat2_specification_grammar.py
+/home/ilam066/RIVA/backend/tests/extended/test_cat3_ast_traceability.py
+/home/ilam066/RIVA/backend/tests/extended/test_cat4_semantic_analysis.py
+/home/ilam066/RIVA/backend/tests/extended/test_cat5_width_expressions.py
+/home/ilam066/RIVA/backend/tests/extended/test_cat6_compatibility.py
+/home/ilam066/RIVA/backend/tests/extended/test_cat7_rtl_parsing.py
+/home/ilam066/RIVA/backend/tests/extended/test_cat8_generate_hierarchy.py
+/home/ilam066/RIVA/backend/tests/extended/test_cat9_cfg_dataflow.py
+/home/ilam066/RIVA/backend/tests/extended/test_hierarchy_and_optimization_invariants.py
+/home/ilam066/RIVA/backend/tests/extended/test_preprocessor_pipeline_integration.py
+/home/ilam066/RIVA/backend/test_shadowing.py
+/home/ilam066/RIVA/backend/test_signal_ast.py
+/home/ilam066/RIVA/backend/test_signal_resolver.py
+/home/ilam066/RIVA/backend/test_signedness_mismatch.py
+/home/ilam066/RIVA/backend/test_signedness_resolver.py
+/home/ilam066/RIVA/backend/test_simulation_waveform.py
+/home/ilam066/RIVA/backend/test_source_location.py
+/home/ilam066/RIVA/backend/test_specification_ir.py
+/home/ilam066/RIVA/backend/test_specification_pipeline.py
+/home/ilam066/RIVA/backend/test_specification_validation_rules.py
+/home/ilam066/RIVA/backend/tests/rtl/test_case_parser.py
+/home/ilam066/RIVA/backend/tests/rtl/test_generate_body_parser.py
+/home/ilam066/RIVA/backend/tests/rtl/test_generate_for_parser.py
+/home/ilam066/RIVA/backend/tests/rtl/test_generate_if_parser.py
+/home/ilam066/RIVA/backend/tests/rtl/test_generate_multiple_members.py
+/home/ilam066/RIVA/backend/tests/rtl/test_legacy_to_rtl_ast_adapter.py
+/home/ilam066/RIVA/backend/tests/rtl/test_nested_generate_parser.py
+/home/ilam066/RIVA/backend/tests/rtl/test_procedural_parser.py
+/home/ilam066/RIVA/backend/tests/rtl/test_rtl_parser_smoke.py
+/home/ilam066/RIVA/backend/test_statement_block_ast.py
+/home/ilam066/RIVA/backend/test_symbol_collection.py
+/home/ilam066/RIVA/backend/test_symbol_info.py
+/home/ilam066/RIVA/backend/test_symbol_table.py
+/home/ilam066/RIVA/backend/test_token_builder.py
+/home/ilam066/RIVA/backend/test_token.py
+/home/ilam066/RIVA/backend/test_token_types.py
+/home/ilam066/RIVA/backend/test_type_resolver.py
+/home/ilam066/RIVA/backend/test_upload_api.py
+/home/ilam066/RIVA/backend/test_upload_service.py
+/home/ilam066/RIVA/backend/test_validated_specification_pipeline.py
+/home/ilam066/RIVA/backend/test_validation_diagnostic_code.py
+/home/ilam066/RIVA/backend/test_validation_engine.py
+/home/ilam066/RIVA/backend/test_validation_rule_contracts.py
+/home/ilam066/RIVA/backend/test_width_diagnostic_engine.py
+/home/ilam066/RIVA/backend/test_width_inference.py
+/home/ilam066/RIVA/backend/test_width_mismatch_expressions.py
+
+Test file count:
+163
+
+============================================================
+8. FULL PYTEST COLLECTION
+============================================================
+test/language/test_keyword_database.py::test_keyword_database_exists
+test/language/test_keyword_database.py::test_keyword_database_unique
+test_ai_evidence_and_reporting.py::test_full_pipeline_to_report
+test_assignment_compatibility_checker.py::test_assignment_width_mismatch
+test_assignment_compatibility_checker.py::test_assignment_width_mismatch_from_binary_expression
+test_assignment_compatibility_checker.py::test_assignment_width_mismatch_from_literal_expression
+test_assignment_compatibility_checker.py::test_assignment_width_match_from_identifier
+test_assignment_compatibility_checker.py::test_assignment_width_match_from_binary_expression
+test_ast.py::test_complete_document_structure
+test_ast.py::test_mutable_collections_are_not_shared
+test_ast.py::test_node_validation
+test_ast.py::test_document_validation
+test_ast.py::test_section_validation
+test_ast.py::test_entry_validation
+test_canonical_semantic_types.py::test_expression_checker_uses_canonical_rtl_type
+test_canonical_semantic_types.py::test_expression_checker_uses_canonical_signed_type
+test_canonical_semantic_types.py::test_binary_expression_uses_canonical_types
+test_canonical_semantic_types.py::test_legacy_types_remain_supported
+test_cfg_dataflow_diagnostics.py::test_cfg_builder_and_live_variables
+test_diagnostic.py::test_severity_values_are_stable
+test_diagnostic.py::test_complete_diagnostic_contract
+test_diagnostic.py::test_optional_source_locations
+test_diagnostic.py::test_diagnostic_is_immutable
+test_diagnostic.py::test_required_text_fields_are_validated
+test_diagnostic.py::test_types_and_locations_are_validated
+test_diagnostic_reporting.py::test_report_contract_counts_and_immutability
+test_diagnostic_reporting.py::test_report_constructor_and_factory_validate_inputs
+test_diagnostic_reporting.py::test_empty_report_is_successful
+test_diagnostic_reporting.py::test_text_renderer_is_exact_and_deterministic
+test_diagnostic_reporting.py::test_json_renderer_is_versioned_ordered_and_deterministic
+test_diagnostic_reporting.py::test_renderers_validate_report_input
+test_expression_semantics_extended.py::test_unary_plus_preserves_operand_type
+test_expression_semantics_extended.py::test_unary_minus_preserves_operand_type
+test_expression_semantics_extended.py::test_unary_bitwise_not_preserves_operand_type
+test_expression_semantics_extended.py::test_unsupported_unary_operator_returns_none
+test_expression_semantics_extended.py::test_nested_unary_expression
+test_expression_semantics_extended.py::test_binary_expression_width_uses_maximum
+test_expression_semantics_extended.py::test_binary_expression_signedness_propagates
+test_expression_semantics_extended.py::test_literal_is_signed_32_bit_integer
+test_expression_semantics_extended.py::test_sized_hex_literal
+test_expression_semantics_extended.py::test_sized_signed_hex_literal
+test_expression_semantics_extended.py::test_sized_binary_literal
+test_expression_semantics_extended.py::test_sized_signed_binary_literal
+test_expression_semantics_extended.py::test_unsized_decimal_literal_remains_32_bit_signed
+test_expression_type_checker.py::test_expression_type_checker
+test_expression_width_semantics.py::test_binary_expression_uses_max_width
+test_expression_width_semantics.py::test_literal_expression_has_32_bit_width
+test_expression_width_semantics.py::test_binary_expression_propagates_signedness
+test_file_storage.py::test_save_file
+test_file_storage.py::test_duplicate_filenames_do_not_overwrite
+test_file_storage.py::test_delete_file
+test_file_storage.py::test_unknown_category_is_rejected
+test_file_storage.py::test_directory_filename_is_rejected
+test_file_storage.py::test_delete_outside_upload_directory_is_rejected
+test_file_validator.py::test_valid_specification_file
+test_file_validator.py::test_valid_rtl_file
+test_file_validator.py::test_valid_testbench_file
+test_file_validator.py::test_extension_is_case_insensitive
+test_file_validator.py::test_invalid_extension
+test_file_validator.py::test_directory_path_is_rejected
+test_file_validator.py::test_unknown_category
+test_hierarchy_end_to_end.py::test_end_to_end_hierarchy_elaboration
+test_hierarchy_end_to_end.py::test_parameterized_hierarchy_elaboration
+test_identifier_checker.py::test_identifier_checker
+test_identifier_diagnostic_catalog.py::test_identifier_checker_records_unknown_identifier
+test_implicit_net_detector.py::test_implicit_net_detector
+test_implicit_net_detector.py::test_declared_signal_is_not_implicit
+test_implicit_net_expression.py::test_implicit_net_inside_binary_expression
+test_lexer.py::test_complete_structural_token_stream
+test_lexer.py::test_indented_key_value_locations
+test_lexer.py::test_section_context_changes_deterministically
+test_lexer.py::test_blank_lines_emit_newline_tokens
+test_lexer.py::test_crlf_input_preserves_line_tracking
+test_lexer.py::test_final_line_without_physical_newline
+test_lexer.py::test_value_preserves_additional_colons
+test_lexer.py::test_empty_document_contains_only_eof
+test_lexer.py::test_tokenize_is_repeatable
+test_lexer.py::test_tokenize_has_no_debug_output
+test_lexer.py::test_invalid_constructor_arguments_are_rejected
+test_metadata_contract.py::test_default_metadata_is_deterministic
+test_metadata_contract.py::test_legacy_construction_remains_compatible
+test_metadata_contract.py::test_explicit_timestamp_is_preserved
+test_metadata_contract.py::test_tags_have_independent_defaults
+test_metadata_contract.py::test_invalid_timestamp_is_rejected
+test_metadata_contract.py::test_construction_has_no_debug_output
+test_parameter_type_checker.py::test_parameter_type_checker
+test_parameter_type_checker.py::test_parameter_type_checker_accepts_canonical_semantic_type
+test_parse_result.py::test_empty_result_is_successful
+test_parse_result.py::test_diagnostic_counts_are_correct
+test_parse_result.py::test_diagnostic_order_is_preserved
+test_parse_result.py::test_warning_only_result_is_successful
+test_parse_result.py::test_result_container_is_immutable
+test_parse_result.py::test_document_type_is_validated
+test_parse_result.py::test_diagnostics_container_is_validated
+test_parse_result.py::test_diagnostic_members_are_validated
+test_parser.py::test_complete_document_is_parsed
+test_parser.py::test_empty_document_is_parsed
+test_parser.py::test_entries_follow_active_section
+test_parser.py::test_parse_is_repeatable_and_independent
+test_parser.py::test_parse_has_no_debug_output
+test_parser.py::test_constructor_rejects_invalid_token_container
+test_parser.py::test_token_stream_requires_tokens_and_one_final_eof
+test_parser.py::test_token_stream_rejects_invalid_members
+test_parser.py::test_missing_colon_reports_source_location
+test_parser.py::test_missing_newline_is_rejected
+test_parser.py::test_unexpected_reserved_token_is_rejected
+test_parser.py::test_empty_structural_values_are_rejected
+test_parser_diagnostic_code.py::test_complete_code_contract_is_stable
+test_parser_diagnostic_code.py::test_code_values_are_unique
+test_parser_diagnostic_code.py::test_code_values_are_contiguous
+test_parser_diagnostic_code.py::test_codes_are_string_compatible
+test_parser_diagnostic_code.py::test_name_lookup_is_stable
+test_parser_diagnostic_code.py::test_value_lookup_is_stable
+test_parser_diagnostic_code.py::test_unknown_name_is_rejected
+test_parser_diagnostic_code.py::test_unknown_value_is_rejected
+test_parser_error_codes.py::test_unexpected_token_code
+test_parser_error_codes.py::test_section_error_codes
+test_parser_error_codes.py::test_key_value_error_codes
+test_parser_error_codes.py::test_list_item_error_codes
+test_parser_error_codes.py::test_text_error_codes
+test_parser_error_codes.py::test_error_preserves_source_location_and_text
+test_parser_error_codes.py::test_legacy_constructor_remains_compatible
+test_parser_error_codes.py::test_error_rejects_invalid_code_type
+test_parser_recovery.py::test_valid_stream_matches_strict_parse
+test_parser_recovery.py::test_multiple_errors_are_aggregated_in_order
+test_parser_recovery.py::test_diagnostics_preserve_complete_source_contract
+test_parser_recovery.py::test_malformed_section_does_not_become_active
+test_parser_recovery.py::test_missing_newline_preserves_later_source_line
+test_parser_recovery.py::test_recovery_at_eof_returns_valid_partial_document
+test_parser_recovery.py::test_synchronization_discards_failed_line_and_progresses
+test_parser_recovery.py::test_recovery_is_repeatable_independent_and_silent
+test_parser_recovery.py::test_strict_parse_remains_fail_fast
+test_port_compatibility_checker.py::test_port_compatibility_unknown_port
+test_port_validator.py::test_port_validator_prefers_canonical_semantic_types
+test_reader.py::test_read_utf8_text_file
+test_reader.py::test_utf8_byte_order_mark_is_removed
+test_reader.py::test_extension_matching_is_case_insensitive
+test_reader.py::test_missing_file_is_rejected
+test_reader.py::test_directory_path_is_rejected
+test_reader.py::test_unsupported_format_is_rejected
+test_reader.py::test_invalid_utf8_is_rejected
+test_reader.py::test_custom_backend_registration
+test_requirement_tracer.py::test_requirement_tracer_matching
+test_rtl_character_stream.py::test_initial_state
+test_rtl_character_stream.py::test_advance_updates_position
+test_rtl_character_stream.py::test_eof_detection
+test_rtl_lexer.py::test_empty_source_produces_only_eof
+test_rtl_lexer.py::test_whitespace_only_source_produces_only_eof
+test_semantic_analyzer_canonical_types.py::test_semantic_analyzer_populates_canonical_signal_type
+test_semantic_analyzer_canonical_types.py::test_semantic_analyzer_keeps_legacy_types_synchronized
+test_semantic_analyzer_diagnostics.py::test_semantic_analyzer_runs_diagnostic_engine
+test_semantic_analyzer_signedness.py::test_semantic_analyzer_resolves_signedness
+test_semantic_builder_core.py::test_builder_requires_document_node
+test_semantic_builder_core.py::test_sample_document_maps_to_specification_ir
+test_semantic_builder_core.py::test_repeated_builds_are_equal_and_independent
+test_semantic_builder_core.py::test_missing_module_name_is_reported
+test_semantic_builder_diagnostics.py::test_diagnostics_are_complete_and_source_ordered
+test_semantic_builder_diagnostics.py::test_first_metadata_value_is_preserved
+test_semantic_builder_diagnostics.py::test_invalid_and_duplicate_ports_are_not_emitted
+test_semantic_builder_diagnostics.py::test_empty_requirement_is_not_emitted
+test_semantic_builder_diagnostics.py::test_repeated_diagnostic_builds_are_deterministic
+test_semantic_contracts.py::test_semantic_codes_are_stable_and_unique
+test_semantic_contracts.py::test_empty_result_is_successful
+test_semantic_contracts.py::test_result_counts_ordered_diagnostics
+test_semantic_contracts.py::test_result_requires_specification_ir
+test_semantic_contracts.py::test_diagnostics_must_be_exact_tuple
+test_semantic_contracts.py::test_each_diagnostic_is_validated
+test_semantic_contracts.py::test_result_container_is_immutable
+test_semantic_contracts.py::test_default_diagnostic_tuple_is_shared_safely
+test_semantic_source_traceability.py::test_legacy_port_construction_remains_compatible
+test_semantic_source_traceability.py::test_port_preserves_explicit_source_location
+test_semantic_source_traceability.py::test_legacy_requirement_construction_remains_compatible
+test_semantic_source_traceability.py::test_requirement_preserves_explicit_source_location
+test_semantic_source_traceability.py::test_default_source_locations_are_independent
+test_semantic_source_traceability.py::test_invalid_port_source_location_is_rejected
+test_semantic_source_traceability.py::test_invalid_requirement_source_location_is_rejected
+test_semantic_source_traceability.py::test_construction_has_no_debug_output
+test_signedness_mismatch.py::test_signedness_mismatch
+test_signedness_mismatch.py::test_matching_signedness_has_no_diagnostic
+test_signedness_mismatch.py::test_signedness_mismatch_from_binary_expression
+test_signedness_mismatch.py::test_signedness_mismatch_from_literal_expression
+test_signedness_mismatch.py::test_binary_expression_with_signed_operand_is_signed
+test_signedness_resolver.py::test_signedness_resolver
+test_signedness_resolver.py::test_signedness_resolver_updates_canonical_types
+test_simulation_waveform.py::test_simulation_log_parsing
+test_simulation_waveform.py::test_vcd_waveform_analysis
+test_source_location.py::test_default_location_is_unknown_memory_location
+test_source_location.py::test_complete_source_location_is_preserved
+test_source_location.py::test_partial_locations_have_stable_formatting
+test_source_location.py::test_locations_are_value_comparable_and_hashable
+test_source_location.py::test_locations_are_immutable
+test_source_location.py::test_invalid_source_file_is_rejected
+test_source_location.py::test_invalid_line_values_are_rejected
+test_source_location.py::test_invalid_column_values_are_rejected
+test_source_location.py::test_construction_has_no_debug_output
+test_specification_pipeline.py::test_complete_pipeline_maps_realistic_specification
+test_specification_pipeline.py::test_pipeline_preserves_source_traceability
+test_specification_pipeline.py::test_pipeline_is_deterministic_and_independent
+test_specification_validation_rules.py::test_rule_metadata_and_default_order_are_stable
+test_specification_validation_rules.py::test_valid_specification_produces_no_diagnostics
+test_specification_validation_rules.py::test_missing_top_level_information_is_reported_in_rule_order
+test_specification_validation_rules.py::test_port_rule_diagnostics_preserve_source_order_and_location
+test_specification_validation_rules.py::test_requirement_rule_diagnostics_preserve_source_order_and_location
+test_specification_validation_rules.py::test_default_rule_factory_and_runs_are_independent
+test_type_resolver.py::test_type_resolver_populates_legacy_and_canonical_types
+test_type_resolver.py::test_type_resolver_handles_unsigned_scalar
+test_type_resolver.py::test_type_resolver_handles_signed_packed_signal
+test_upload_api.py::test_root_endpoint
+test_upload_api.py::test_successful_upload_endpoint
+test_upload_api.py::test_invalid_rtl_extension_returns_400
+test_upload_service.py::test_successful_upload
+test_upload_service.py::test_invalid_file_is_rejected_before_storage
+test_upload_service.py::test_storage_failure_rolls_back_previous_files
+test_validated_specification_pipeline.py::test_valid_pipeline_result_maps_and_validates_specification
+test_validated_specification_pipeline.py::test_pipeline_aggregates_diagnostics_in_phase_order
+test_validated_specification_pipeline.py::test_validation_receives_semantic_builder_specification
+test_validated_specification_pipeline.py::test_repeated_pipeline_runs_are_deterministic_and_independent
+test_validated_specification_pipeline.py::test_pipeline_accepts_an_explicit_empty_rule_set
+test_validation_diagnostic_code.py::test_validation_diagnostic_codes_are_stable
+test_validation_diagnostic_code.py::test_validation_diagnostic_codes_are_unique
+test_validation_diagnostic_code.py::test_validation_diagnostic_codes_are_strings
+test_validation_diagnostic_code.py::test_validation_diagnostic_code_iteration_order_is_stable
+test_validation_engine.py::test_engine_constructor_validates_rules
+test_validation_engine.py::test_engine_preserves_rule_and_diagnostic_order
+test_validation_engine.py::test_engine_result_counts_are_aggregated
+test_validation_engine.py::test_empty_engine_is_successful
+test_validation_engine.py::test_engine_run_validates_input
+test_validation_engine.py::test_repeated_engine_runs_are_deterministic_and_independent
+test_validation_rule_contracts.py::test_concrete_rule_metadata_is_required
+test_validation_rule_contracts.py::test_rule_run_validates_input_and_returns_result
+test_validation_rule_contracts.py::test_rule_result_counts_and_immutability
+test_validation_rule_contracts.py::test_rule_output_contract_is_enforced
+test_validation_rule_contracts.py::test_repeated_rule_runs_are_deterministic
+test_width_diagnostic_engine.py::test_width_mismatch_flows_through_diagnostic_engine
+test_width_inference.py::test_width_inference_updates_legacy_and_canonical_types
+test_width_mismatch_expressions.py::test_binary_expression_width_mismatch
+test_width_mismatch_expressions.py::test_unary_expression_width_mismatch
+test_width_mismatch_expressions.py::test_binary_expression_matching_width_has_no_diagnostic
+test_width_mismatch_expressions.py::test_canonical_semantic_type_width_is_used
+tests/extended/test_ai_grounding_suite.py::test_AI_01_correct_evidence_retrieval
+tests/extended/test_ai_grounding_suite.py::test_AI_02_ai_uses_only_supplied_riva_evidence
+tests/extended/test_ai_grounding_suite.py::test_AI_03_ai_cannot_invent_unproduced_diagnostic
+tests/extended/test_ai_grounding_suite.py::test_AI_04_ai_correctly_explains_width_mismatch
+tests/extended/test_ai_grounding_suite.py::test_AI_05_ai_correctly_explains_signedness_mismatch
+tests/extended/test_ai_grounding_suite.py::test_AI_06_ai_correctly_explains_hierarchy_traceability_result
+tests/extended/test_ai_grounding_suite.py::test_AI_07_ai_correctly_handles_no_error_case
+tests/extended/test_ai_grounding_suite.py::test_AI_08_ai_correctly_handles_insufficient_evidence
+tests/extended/test_ai_grounding_suite.py::test_AI_09_ai_explanation_points_back_to_source_evidence
+tests/extended/test_ai_grounding_suite.py::test_AI_10_repeated_identical_analysis_produces_deterministic_evidence
+tests/extended/test_ai_grounding_suite.py::test_AI_11_ai_failure_does_not_break_core_compiler_analysis
+tests/extended/test_ai_grounding_suite.py::test_AI_12_ai_service_unavailable_produces_deterministic_report
+tests/extended/test_cat10_diagnostics_reporting.py::test_T383_multiple_severity_levels
+tests/extended/test_cat10_diagnostics_reporting.py::test_T384_multiple_diagnostic_categories
+tests/extended/test_cat10_diagnostics_reporting.py::test_T385_diagnostic_ordering_across_compiler_phases
+tests/extended/test_cat10_diagnostics_reporting.py::test_T386_duplicate_diagnostic_suppression
+tests/extended/test_cat10_diagnostics_reporting.py::test_T387_source_location_in_final_diagnostic
+tests/extended/test_cat10_diagnostics_reporting.py::test_T388_text_report_with_complete_pipeline
+tests/extended/test_cat10_diagnostics_reporting.py::test_T389_json_report_schema_validation
+tests/extended/test_cat10_diagnostics_reporting.py::test_T390_report_determinism_across_repeated_runs
+tests/extended/test_cat11_traceability.py::test_T391_requirement_to_rtl_mapping
+tests/extended/test_cat11_traceability.py::test_T392_rtl_to_requirement_mapping
+tests/extended/test_cat11_traceability.py::test_T393_unmapped_requirement
+tests/extended/test_cat11_traceability.py::test_T394_unmapped_rtl_construct
+tests/extended/test_cat11_traceability.py::test_T395_multiple_rtl_elements_satisfying_one_requirement
+tests/extended/test_cat11_traceability.py::test_T396_traceability_preserved_through_pipeline
+tests/extended/test_cat12_waveform_simulation.py::test_T397_valid_simulation_log
+tests/extended/test_cat12_waveform_simulation.py::test_T398_invalid_simulation_log
+tests/extended/test_cat12_waveform_simulation.py::test_T399_missing_simulation_result
+tests/extended/test_cat12_waveform_simulation.py::test_T400_multiple_simulation_runs
+tests/extended/test_cat12_waveform_simulation.py::test_T401_vcd_with_one_signal
+tests/extended/test_cat12_waveform_simulation.py::test_T402_vcd_with_multiple_signals
+tests/extended/test_cat12_waveform_simulation.py::test_T403_missing_waveform_signal
+tests/extended/test_cat12_waveform_simulation.py::test_T404_waveform_result_consistency
+tests/extended/test_cat13_api_storage.py::test_T405_upload_specification_to_pipeline
+tests/extended/test_cat13_api_storage.py::test_T406_upload_rtl_to_pipeline
+tests/extended/test_cat13_api_storage.py::test_T407_upload_validation_report
+tests/extended/test_cat13_api_storage.py::test_T408_invalid_upload_rollback
+tests/extended/test_cat13_api_storage.py::test_T409_concurrent_upload_isolation
+tests/extended/test_cat13_api_storage.py::test_T410_duplicate_filename_handling_under_concurrency
+tests/extended/test_cat13_api_storage.py::test_T411_api_malformed_request
+tests/extended/test_cat13_api_storage.py::test_T412_api_complete_error_response_contract
+tests/extended/test_cat14_end_to_end.py::test_T413_specification_parse_semantic_analysis_report
+tests/extended/test_cat14_end_to_end.py::test_T414_specification_plus_rtl_complete_analysis
+tests/extended/test_cat14_end_to_end.py::test_T415_valid_specification_plus_valid_rtl_clean_result
+tests/extended/test_cat14_end_to_end.py::test_T416_width_mismatch_diagnostic_final_report
+tests/extended/test_cat14_end_to_end.py::test_T417_signedness_mismatch_diagnostic_final_report
+tests/extended/test_cat14_end_to_end.py::test_T418_invalid_rtl_parser_diagnostic_report
+tests/extended/test_cat14_end_to_end.py::test_T419_requirement_rtl_traceability_report
+tests/extended/test_cat14_end_to_end.py::test_T420_complete_representative_riva_project
+tests/extended/test_cat1_input_preprocessing.py::test_T266_specification_file_valid_minimal_input
+tests/extended/test_cat1_input_preprocessing.py::test_T267_specification_file_malformed_encoding
+tests/extended/test_cat1_input_preprocessing.py::test_T268_specification_file_empty_file
+tests/extended/test_cat1_input_preprocessing.py::test_T269_specification_file_oversized_input
+tests/extended/test_cat1_input_preprocessing.py::test_T270_rtl_file_valid_minimal_module
+tests/extended/test_cat1_input_preprocessing.py::test_T271_rtl_file_malformed_systemverilog
+tests/extended/test_cat1_input_preprocessing.py::test_T272_rtl_file_empty_rtl
+tests/extended/test_cat1_input_preprocessing.py::test_T273_testbench_file_validation
+tests/extended/test_cat1_input_preprocessing.py::test_T274_unsupported_extension_rejection
+tests/extended/test_cat1_input_preprocessing.py::test_T275_mixed_case_extension_handling
+tests/extended/test_cat1_input_preprocessing.py::test_T276_preprocessor_macro_expansion
+tests/extended/test_cat1_input_preprocessing.py::test_T277_preprocessor_malformed_undefined_construct_handling
+tests/extended/test_cat2_specification_grammar.py::test_T278_multiple_modules
+tests/extended/test_cat2_specification_grammar.py::test_T279_multiple_sections
+tests/extended/test_cat2_specification_grammar.py::test_T280_repeated_metadata
+tests/extended/test_cat2_specification_grammar.py::test_T281_empty_section
+tests/extended/test_cat2_specification_grammar.py::test_T282_empty_key_value
+tests/extended/test_cat2_specification_grammar.py::test_T283_duplicate_keys
+tests/extended/test_cat2_specification_grammar.py::test_T284_duplicate_sections
+tests/extended/test_cat2_specification_grammar.py::test_T285_whitespace_only_values
+tests/extended/test_cat2_specification_grammar.py::test_T286_special_character_values
+tests/extended/test_cat2_specification_grammar.py::test_T287_unicode_values
+tests/extended/test_cat2_specification_grammar.py::test_T288_very_long_identifiers
+tests/extended/test_cat2_specification_grammar.py::test_T289_very_long_requirement_text
+tests/extended/test_cat2_specification_grammar.py::test_T290_deeply_malformed_input_recovery
+tests/extended/test_cat2_specification_grammar.py::test_T291_multiple_independent_syntax_failures
+tests/extended/test_cat2_specification_grammar.py::test_T292_recovery_followed_by_valid_semantic_construction
+tests/extended/test_cat3_ast_traceability.py::test_T293_ast_nested_structure
+tests/extended/test_cat3_ast_traceability.py::test_T294_ast_invalid_node_combination
+tests/extended/test_cat3_ast_traceability.py::test_T295_ast_immutability_under_mutation_attempts
+tests/extended/test_cat3_ast_traceability.py::test_T296_ast_equality
+tests/extended/test_cat3_ast_traceability.py::test_T297_ast_serialization_deserialization
+tests/extended/test_cat3_ast_traceability.py::test_T298_source_location_propagation_through_ast
+tests/extended/test_cat3_ast_traceability.py::test_T299_source_location_preservation_after_parser_recovery
+tests/extended/test_cat3_ast_traceability.py::test_T300_source_location_preservation_through_semantic_transformation
+tests/extended/test_cat4_semantic_analysis.py::test_T301_missing_module_semantic_error
+tests/extended/test_cat4_semantic_analysis.py::test_T302_duplicate_module_detection
+tests/extended/test_cat4_semantic_analysis.py::test_T303_duplicate_signal_detection
+tests/extended/test_cat4_semantic_analysis.py::test_T304_duplicate_parameter_detection
+tests/extended/test_cat4_semantic_analysis.py::test_T305_undefined_signal_reference
+tests/extended/test_cat4_semantic_analysis.py::test_T306_undefined_parameter_reference
+tests/extended/test_cat4_semantic_analysis.py::test_T307_invalid_signal_type
+tests/extended/test_cat4_semantic_analysis.py::test_T308_invalid_parameter_type
+tests/extended/test_cat4_semantic_analysis.py::test_T309_signed_unsigned_interaction
+tests/extended/test_cat4_semantic_analysis.py::test_T310_scalar_vector_interaction
+tests/extended/test_cat4_semantic_analysis.py::test_T311_multi_dimensional_signal
+tests/extended/test_cat4_semantic_analysis.py::test_T312_parameter_expression_resolution
+tests/extended/test_cat4_semantic_analysis.py::test_T313_constant_expression_evaluation
+tests/extended/test_cat4_semantic_analysis.py::test_T314_semantic_diagnostic_ordering
+tests/extended/test_cat4_semantic_analysis.py::test_T315_semantic_analysis_deterministic_rerun
+tests/extended/test_cat5_width_expressions.py::test_T316_1_bit_expression
+tests/extended/test_cat5_width_expressions.py::test_T317_2_bit_expression
+tests/extended/test_cat5_width_expressions.py::test_T318_maximum_width_binary_operands
+tests/extended/test_cat5_width_expressions.py::test_T319_smaller_width_left_operand
+tests/extended/test_cat5_width_expressions.py::test_T320_smaller_width_right_operand
+tests/extended/test_cat5_width_expressions.py::test_T321_mixed_signed_unsigned_operands
+tests/extended/test_cat5_width_expressions.py::test_T322_nested_binary_expressions
+tests/extended/test_cat5_width_expressions.py::test_T323_deeply_nested_expressions
+tests/extended/test_cat5_width_expressions.py::test_T324_unary_operator_width
+tests/extended/test_cat5_width_expressions.py::test_T325_unary_operator_signedness
+tests/extended/test_cat5_width_expressions.py::test_T326_arithmetic_expression
+tests/extended/test_cat5_width_expressions.py::test_T327_logical_expression
+tests/extended/test_cat5_width_expressions.py::test_T328_bitwise_expression
+tests/extended/test_cat5_width_expressions.py::test_T329_shift_expression
+tests/extended/test_cat5_width_expressions.py::test_T330_comparison_expression
+tests/extended/test_cat5_width_expressions.py::test_T331_concatenation_width
+tests/extended/test_cat5_width_expressions.py::test_T332_part_select_width
+tests/extended/test_cat5_width_expressions.py::test_T333_indexed_select_width
+tests/extended/test_cat5_width_expressions.py::test_T334_unsized_literal_interaction
+tests/extended/test_cat5_width_expressions.py::test_T335_sized_literal_overflow_compatibility
+tests/extended/test_cat6_compatibility.py::test_T336_exact_assignment_compatibility
+tests/extended/test_cat6_compatibility.py::test_T337_narrow_destination
+tests/extended/test_cat6_compatibility.py::test_T338_wide_destination
+tests/extended/test_cat6_compatibility.py::test_T339_signed_destination_mismatch
+tests/extended/test_cat6_compatibility.py::test_T340_unsigned_destination_mismatch
+tests/extended/test_cat6_compatibility.py::test_T341_expression_to_port_compatibility
+tests/extended/test_cat6_compatibility.py::test_T342_width_mismatched_port_connection
+tests/extended/test_cat6_compatibility.py::test_T343_signedness_mismatched_port_connection
+tests/extended/test_cat6_compatibility.py::test_T344_parameter_width_incompatibility
+tests/extended/test_cat6_compatibility.py::test_T345_multiple_compatibility_errors_in_one_module
+tests/extended/test_cat7_rtl_parsing.py::test_T346_module_declaration
+tests/extended/test_cat7_rtl_parsing.py::test_T347_module_ports
+tests/extended/test_cat7_rtl_parsing.py::test_T348_signal_declarations
+tests/extended/test_cat7_rtl_parsing.py::test_T349_parameter_declarations
+tests/extended/test_cat7_rtl_parsing.py::test_T350_continuous_assignment
+tests/extended/test_cat7_rtl_parsing.py::test_T351_blocking_assignment
+tests/extended/test_cat7_rtl_parsing.py::test_T352_nonblocking_assignment
+tests/extended/test_cat7_rtl_parsing.py::test_T353_nested_if
+tests/extended/test_cat7_rtl_parsing.py::test_T354_nested_if_else
+tests/extended/test_cat7_rtl_parsing.py::test_T355_case_default
+tests/extended/test_cat7_rtl_parsing.py::test_T356_casez_edge_cases
+tests/extended/test_cat7_rtl_parsing.py::test_T357_casex_edge_cases
+tests/extended/test_cat7_rtl_parsing.py::test_T358_nested_procedural_blocks
+tests/extended/test_cat7_rtl_parsing.py::test_T359_multiple_always_blocks
+tests/extended/test_cat7_rtl_parsing.py::test_T360_invalid_rtl_syntax_diagnostic
+tests/extended/test_cat8_generate_hierarchy.py::test_T361_basic_generate_if
+tests/extended/test_cat8_generate_hierarchy.py::test_T362_generate_if_false_branch
+tests/extended/test_cat8_generate_hierarchy.py::test_T363_generate_if_else
+tests/extended/test_cat8_generate_hierarchy.py::test_T364_generate_for_zero_iterations
+tests/extended/test_cat8_generate_hierarchy.py::test_T365_generate_for_one_iteration
+tests/extended/test_cat8_generate_hierarchy.py::test_T366_generate_for_multiple_iterations
+tests/extended/test_cat8_generate_hierarchy.py::test_T367_parameterized_generate
+tests/extended/test_cat8_generate_hierarchy.py::test_T368_nested_generate_if
+tests/extended/test_cat8_generate_hierarchy.py::test_T369_nested_generate_for
+tests/extended/test_cat8_generate_hierarchy.py::test_T370_mixed_nested_generate_constructs
+tests/extended/test_cat8_generate_hierarchy.py::test_T371_hierarchy_with_missing_instance
+tests/extended/test_cat8_generate_hierarchy.py::test_T372_hierarchy_cycle_detection
+tests/extended/test_cat9_cfg_dataflow.py::test_T373_basic_cfg
+tests/extended/test_cat9_cfg_dataflow.py::test_T374_branch_cfg
+tests/extended/test_cat9_cfg_dataflow.py::test_T375_nested_branch_cfg
+tests/extended/test_cat9_cfg_dataflow.py::test_T376_loop_cfg
+tests/extended/test_cat9_cfg_dataflow.py::test_T377_unreachable_block_detection
+tests/extended/test_cat9_cfg_dataflow.py::test_T378_live_variable_analysis
+tests/extended/test_cat9_cfg_dataflow.py::test_T379_dead_signal_detection
+tests/extended/test_cat9_cfg_dataflow.py::test_T380_dataflow_across_branch
+tests/extended/test_cat9_cfg_dataflow.py::test_T381_dataflow_across_loop
+tests/extended/test_cat9_cfg_dataflow.py::test_T382_analysis_convergence_determinism
+tests/extended/test_hierarchy_and_optimization_invariants.py::test_multi_level_hierarchy_elaboration
+tests/extended/test_hierarchy_and_optimization_invariants.py::test_optimization_semantic_preservation_invariant
+tests/extended/test_preprocessor_pipeline_integration.py::test_preprocessor_pipeline_macro_expansion
+tests/extended/test_preprocessor_pipeline_integration.py::test_preprocessor_pipeline_ifdef_conditional_compilation
+tests/extended/test_preprocessor_pipeline_integration.py::test_preprocessor_to_ast_source_location_preservation
+tests/rtl/test_case_parser.py::test_case_statement
+tests/rtl/test_case_parser.py::test_casez_statement
+tests/rtl/test_case_parser.py::test_casex_statement
+tests/rtl/test_case_parser.py::test_case_multiple_statements
+tests/rtl/test_generate_body_parser.py::test_generate_for_preserves_module_instance
+tests/rtl/test_generate_body_parser.py::test_generate_if_preserves_module_instance
+tests/rtl/test_generate_body_parser.py::test_generate_if_else_preserves_both_members
+tests/rtl/test_generate_for_parser.py::test_generate_for_basic
+tests/rtl/test_generate_for_parser.py::test_generate_for_with_parameter
+tests/rtl/test_generate_for_parser.py::test_generate_for_without_explicit_generate
+tests/rtl/test_generate_if_parser.py::test_generate_if_basic
+tests/rtl/test_generate_if_parser.py::test_generate_if_with_signal_condition
+tests/rtl/test_generate_if_parser.py::test_generate_if_else
+tests/rtl/test_generate_if_parser.py::test_generate_if_without_explicit_generate
+tests/rtl/test_generate_multiple_members.py::test_generate_if_preserves_multiple_module_instances
+tests/rtl/test_legacy_to_rtl_ast_adapter.py::test_adapter_converts_parameter_signal_and_assign
+tests/rtl/test_legacy_to_rtl_ast_adapter.py::test_adapter_converts_module_instance
+tests/rtl/test_legacy_to_rtl_ast_adapter.py::test_adapter_converts_always_block
+tests/rtl/test_legacy_to_rtl_ast_adapter.py::test_adapter_converts_generate_if
+tests/rtl/test_nested_generate_parser.py::test_generate_for_with_multiple_module_instances
+tests/rtl/test_nested_generate_parser.py::test_nested_generate_if_inside_generate_for
+tests/rtl/test_nested_generate_parser.py::test_nested_generate_for_inside_generate_if
+tests/rtl/test_procedural_parser.py::test_if_else_with_nonblocking_assignment
+tests/rtl/test_procedural_parser.py::test_blocking_assignment_expression
+tests/rtl/test_procedural_parser.py::test_nested_begin_end
+tests/rtl/test_rtl_parser_smoke.py::test_rtl_parser_smoke
+
+437 tests collected in 1.68s
+
+Pytest collection exit code: 0
+
+============================================================
+9. FULL PYTEST EXECUTION
+============================================================
+........................................................................ [ 16%]
+........................................................................ [ 32%]
+........................................................................ [ 49%]
+........................................................................ [ 65%]
+........................................................................ [ 82%]
+........................................................................ [ 98%]
+.....                                                                    [100%]
+437 passed in 2.83s
+
+Pytest execution exit code: 0
+
+============================================================
+10. COVERAGE CHECK
+============================================================
+coverage package not installed.
+No coverage measurement performed.
+
+============================================================
+11. TODO / FIXME / HACK / STUB SEARCH
+============================================================
+/home/ilam066/RIVA/backend/app/api/routes/analyze.py:34:    """Extract requirements from specification text ([REQ-xxx] format or key-value format)."""
+/home/ilam066/RIVA/backend/app/api/routes/analyze.py:63:        # Fallback default requirements if no [REQ-xxx] tag found
+/home/ilam066/RIVA/backend/app/semantics/passes/expression_evaluator.py:31:                    pass
+/home/ilam066/RIVA/backend/app/repair/base/repair_rule.py:16:        raise NotImplementedError
+/home/ilam066/RIVA/backend/app/analysis/traceability/requirement_tracer.py:48:                                pass
+/home/ilam066/RIVA/backend/app/analysis/traceability/requirement_tracer.py:60:                                    pass
+/home/ilam066/RIVA/backend/app/simulation/waveform_analyzer.py:64:                    pass
+/home/ilam066/RIVA/backend/app/optimization/base_pass.py:22:        raise NotImplementedError
+/home/ilam066/RIVA/backend/app/optimization/passes/constant_propagation.py:5:from app.optimization.base_pass import OptimizationPass
+/home/ilam066/RIVA/backend/app/optimization/passes/dead_instance_elimination.py:5:from app.optimization.base_pass import OptimizationPass
+/home/ilam066/RIVA/backend/app/optimization/passes/constant_folding.py:5:from app.optimization.base_pass import OptimizationPass
+/home/ilam066/RIVA/backend/app/optimization/passes/dead_signal_elimination.py:5:from app.optimization.base_pass import OptimizationPass
+/home/ilam066/RIVA/backend/app/diagnostics/base/diagnostic_rule.py:17:        raise NotImplementedError
+
+============================================================
+12. BACKUP / TEMPORARY FILE SEARCH
+============================================================
+/home/ilam066/RIVA/backend/app/ast/module_instance.py.bak
+/home/ilam066/RIVA/backend/app/elaboration/instances/instance_resolver.py.bak
+/home/ilam066/RIVA/backend/app/elaboration/model/elaboration_model.py.bak
+/home/ilam066/RIVA/backend/app/elaboration/model/resolved_module.py.bak
+/home/ilam066/RIVA/backend/app/elaboration/netlist/netlist_builder.py.bak
+/home/ilam066/RIVA/backend/app/elaboration/parameters/parameter_elaborator.py.bak
+/home/ilam066/RIVA/backend/app/elaboration/ports/port_binder.py.bak
+/home/ilam066/RIVA/backend/app/elaboration/rtl_graph/rtl_graph_builder.py.bak
+/home/ilam066/RIVA/backend/app/elaboration/validation/port_validator.py.bak
+/home/ilam066/RIVA/backend/app/language/systemverilog/ieee1800_2023_keywords.py.bak
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/always_parser.py.bak
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/module_instance_parser.py.bak
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/module_parser.py.bak
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/parameter_parser.py.bak
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/port_parser.py.bak
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/statement_parser.py.bak
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/number_reader.py.bak
+/home/ilam066/RIVA/backend/app/semantics/passes/assignment_compatibility_checker.py.bak
+/home/ilam066/RIVA/backend/app/semantics/passes/signedness_resolver.py.bak
+/home/ilam066/RIVA/backend/app/semantics/visitors/scope_builder.py.bak
+
+============================================================
+13. AI COMPONENT AUDIT
+============================================================
+/home/ilam066/RIVA/backend/app/ai/ai_reasoning_engine.py
+/home/ilam066/RIVA/backend/app/ai/evidence_store.py
+/home/ilam066/RIVA/backend/app/ai/__init__.py
+/home/ilam066/RIVA/backend/app/ai/__pycache__/ai_reasoning_engine.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/ai/__pycache__/evidence_store.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/ai/__pycache__/__init__.cpython-312.pyc
+
+--- AI references ---
+/home/ilam066/RIVA/backend/app/ai/ai_reasoning_engine.py:2:AI Reasoning Engine.
+/home/ilam066/RIVA/backend/app/ai/ai_reasoning_engine.py:3:Grounded AI interpretation layer sitting directly above deterministic evidence payload.
+/home/ilam066/RIVA/backend/app/ai/ai_reasoning_engine.py:8:from app.ai.evidence_store import EvidencePayload
+/home/ilam066/RIVA/backend/app/ai/ai_reasoning_engine.py:11:class AIReasoningEngine:
+/home/ilam066/RIVA/backend/app/ai/ai_reasoning_engine.py:13:    Constructs knowledge-grounded explanations and repair recommendations based strictly on evidence payload.
+/home/ilam066/RIVA/backend/app/ai/ai_reasoning_engine.py:16:    def generate_explanation(self, payload: EvidencePayload) -> Dict[str, Any]:
+/home/ilam066/RIVA/backend/app/ai/ai_reasoning_engine.py:18:        Synthesizes deterministic evidence into human-readable engineering explanations.
+/home/ilam066/RIVA/backend/app/ai/ai_reasoning_engine.py:31:                f"Deterministic evidence shows this issue requires: {sug}"
+/home/ilam066/RIVA/backend/app/ai/ai_reasoning_engine.py:43:        spec_mismatches = [t for t in data["traceability"] if t["status"] == "FAILED"]
+/home/ilam066/RIVA/backend/app/ai/ai_reasoning_engine.py:49:                    "explanation": f"Specification requirement {spec['req_id']} failed verification: {spec['details']}",
+/home/ilam066/RIVA/backend/app/ai/ai_reasoning_engine.py:67:    def format_llm_prompt(self, payload: EvidencePayload) -> str:
+/home/ilam066/RIVA/backend/app/ai/ai_reasoning_engine.py:69:        Formats evidence payload into a strict prompt template for LLM integration.
+/home/ilam066/RIVA/backend/app/ai/ai_reasoning_engine.py:72:        prompt = (
+/home/ilam066/RIVA/backend/app/ai/ai_reasoning_engine.py:74:            f"Use the following deterministic evidence to explain findings for project '{data['project_name']}':\n\n"
+/home/ilam066/RIVA/backend/app/ai/ai_reasoning_engine.py:75:            f"EVIDENCE PAYLOAD:\n"
+/home/ilam066/RIVA/backend/app/ai/ai_reasoning_engine.py:80:            f"USER QUERY: Explain the root cause of verification failures and provide RTL repair recommendations."
+/home/ilam066/RIVA/backend/app/ai/ai_reasoning_engine.py:82:        return prompt
+/home/ilam066/RIVA/backend/app/ai/evidence_store.py:2:RIVA Evidence Store.
+/home/ilam066/RIVA/backend/app/ai/evidence_store.py:3:Consolidates all deterministic analysis findings into a structured evidence payload.
+/home/ilam066/RIVA/backend/app/ai/evidence_store.py:17:class EvidencePayload:
+/home/ilam066/RIVA/backend/app/ai/evidence_store.py:19:    Structured evidence container that feeds into AI interpretation and report generation.
+/home/ilam066/RIVA/backend/app/ai/evidence_store.py:52:                    "details": t.details,
+/home/ilam066/RIVA/backend/app/ai/evidence_store.py:79:class EvidenceStore:
+/home/ilam066/RIVA/backend/app/ai/evidence_store.py:81:    Collects and manages deterministic evidence payload objects.
+/home/ilam066/RIVA/backend/app/ai/evidence_store.py:86:        self.payload = EvidencePayload(project_name=project_name)
+/home/ilam066/RIVA/backend/app/ai/evidence_store.py:106:    def get_payload(self) -> EvidencePayload:
+/home/ilam066/RIVA/backend/app/reporting/report_generator.py:3:Generates comprehensive Markdown and JSON verification reports from evidence payloads and AI reasoning.
+/home/ilam066/RIVA/backend/app/reporting/report_generator.py:10:from app.ai.evidence_store import EvidencePayload
+/home/ilam066/RIVA/backend/app/reporting/report_generator.py:11:from app.ai.ai_reasoning_engine import AIReasoningEngine
+/home/ilam066/RIVA/backend/app/reporting/report_generator.py:19:    def __init__(self, reasoning_engine: AIReasoningEngine | None = None):
+/home/ilam066/RIVA/backend/app/reporting/report_generator.py:20:        self.reasoning_engine = reasoning_engine or AIReasoningEngine()
+/home/ilam066/RIVA/backend/app/reporting/report_generator.py:22:    def generate_json_report(self, payload: EvidencePayload) -> str:
+/home/ilam066/RIVA/backend/app/reporting/report_generator.py:26:        ai_findings = self.reasoning_engine.generate_explanation(payload)
+/home/ilam066/RIVA/backend/app/reporting/report_generator.py:28:            "evidence": payload.to_dict(),
+/home/ilam066/RIVA/backend/app/reporting/report_generator.py:29:            "ai_reasoning": ai_findings,
+/home/ilam066/RIVA/backend/app/reporting/report_generator.py:33:    def generate_markdown_report(self, payload: EvidencePayload) -> str:
+/home/ilam066/RIVA/backend/app/reporting/report_generator.py:38:        ai_findings = self.reasoning_engine.generate_explanation(payload)
+/home/ilam066/RIVA/backend/app/reporting/report_generator.py:40:        status_flag = "PASSED" if data["errors_count"] == 0 else "FAILED"
+/home/ilam066/RIVA/backend/app/reporting/report_generator.py:46:**Overall Confidence**: {ai_findings['confidence_score']}%  
+/home/ilam066/RIVA/backend/app/reporting/report_generator.py:51:{ai_findings['summary']}
+/home/ilam066/RIVA/backend/app/reporting/report_generator.py:60:### Detailed Diagnostics Table
+/home/ilam066/RIVA/backend/app/reporting/report_generator.py:74:| Requirement ID | Target Signal | Status | Details |
+/home/ilam066/RIVA/backend/app/reporting/report_generator.py:78:            report += f"| `{t['req_id']}` | `{t['signal']}` | `{t['status']}` | {t['details']} |\n"
+/home/ilam066/RIVA/backend/app/reporting/report_generator.py:86:## AI Grounded Explanations & Recommended Fixes
+/home/ilam066/RIVA/backend/app/reporting/report_generator.py:88:        for f in ai_findings["findings"]:
+
+============================================================
+14. TRACEABILITY AUDIT
+============================================================
+/home/ilam066/RIVA/backend/app/ai/evidence_store.py
+/home/ilam066/RIVA/backend/app/ai/__pycache__/evidence_store.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/analysis/traceability/__pycache__/requirement_tracer.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/analysis/traceability/requirement_tracer.py
+/home/ilam066/RIVA/backend/app/domain/__pycache__/requirement.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/domain/requirement.py
+
+============================================================
+15. SIMULATION / VERIFICATION AUDIT
+============================================================
+/home/ilam066/RIVA/backend/app/simulation/__pycache__/simulation_adapter.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/simulation/__pycache__/waveform_analyzer.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/simulation/simulation_adapter.py
+/home/ilam066/RIVA/backend/app/simulation/waveform_analyzer.py
+
+============================================================
+16. OPTIMIZATION AUDIT
+============================================================
+/home/ilam066/RIVA/backend/app/optimization/base_pass.py
+/home/ilam066/RIVA/backend/app/optimization/__init__.py
+/home/ilam066/RIVA/backend/app/optimization/model/optimization_context.py
+/home/ilam066/RIVA/backend/app/optimization/model/pass_result.py
+/home/ilam066/RIVA/backend/app/optimization/model/__pycache__/optimization_context.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/optimization/model/__pycache__/pass_result.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/optimization/optimizer.py
+/home/ilam066/RIVA/backend/app/optimization/passes/constant_folding.py
+/home/ilam066/RIVA/backend/app/optimization/passes/constant_propagation.py
+/home/ilam066/RIVA/backend/app/optimization/passes/dead_instance_elimination.py
+/home/ilam066/RIVA/backend/app/optimization/passes/dead_signal_elimination.py
+/home/ilam066/RIVA/backend/app/optimization/passes/__init__.py
+/home/ilam066/RIVA/backend/app/optimization/passes/__pycache__/constant_folding.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/optimization/passes/__pycache__/constant_propagation.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/optimization/passes/__pycache__/dead_instance_elimination.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/optimization/passes/__pycache__/dead_signal_elimination.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/optimization/passes/__pycache__/__init__.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/optimization/__pycache__/base_pass.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/optimization/__pycache__/__init__.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/optimization/__pycache__/optimizer.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/optimization/typed_ir/__pycache__/typed_constant_folding.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/optimization/typed_ir/__pycache__/typed_constant_propagation.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/optimization/typed_ir/__pycache__/typed_control_flow_simplification.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/optimization/typed_ir/__pycache__/typed_dead_assignment_elimination.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/optimization/typed_ir/typed_constant_folding.py
+/home/ilam066/RIVA/backend/app/optimization/typed_ir/typed_constant_propagation.py
+/home/ilam066/RIVA/backend/app/optimization/typed_ir/typed_control_flow_simplification.py
+/home/ilam066/RIVA/backend/app/optimization/typed_ir/typed_dead_assignment_elimination.py
+
+============================================================
+17. ELABORATION / HIERARCHY AUDIT
+============================================================
+/home/ilam066/RIVA/backend/app/elaboration/cfg/cfg_elaborator.py
+/home/ilam066/RIVA/backend/app/elaboration/cfg/__init__.py
+/home/ilam066/RIVA/backend/app/elaboration/cfg/__pycache__/cfg_elaborator.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/cfg/__pycache__/__init__.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/elaborator.py
+/home/ilam066/RIVA/backend/app/elaboration/generate/generate_elaborator.py
+/home/ilam066/RIVA/backend/app/elaboration/generate/__init__.py
+/home/ilam066/RIVA/backend/app/elaboration/generate/__pycache__/generate_elaborator.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/generate/__pycache__/__init__.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/hierarchy_builder.py
+/home/ilam066/RIVA/backend/app/elaboration/hierarchy/hierarchy_elaborator.py
+/home/ilam066/RIVA/backend/app/elaboration/hierarchy/__init__.py
+/home/ilam066/RIVA/backend/app/elaboration/hierarchy_node.py
+/home/ilam066/RIVA/backend/app/elaboration/hierarchy/__pycache__/hierarchy_elaborator.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/hierarchy/__pycache__/__init__.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/__init__.py
+/home/ilam066/RIVA/backend/app/elaboration/instances/__init__.py
+/home/ilam066/RIVA/backend/app/elaboration/instances/instance_resolver.py
+/home/ilam066/RIVA/backend/app/elaboration/instances/instance_resolver.py.bak
+/home/ilam066/RIVA/backend/app/elaboration/instances/__pycache__/__init__.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/instances/__pycache__/instance_resolver.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/model/bound_hierarchy.py
+/home/ilam066/RIVA/backend/app/elaboration/model/bound_instance.py
+/home/ilam066/RIVA/backend/app/elaboration/model/bound_module.py
+/home/ilam066/RIVA/backend/app/elaboration/model/elaboration_model.py
+/home/ilam066/RIVA/backend/app/elaboration/model/elaboration_model.py.bak
+/home/ilam066/RIVA/backend/app/elaboration/model/__init__.py
+/home/ilam066/RIVA/backend/app/elaboration/model/port_binding.py
+/home/ilam066/RIVA/backend/app/elaboration/model/__pycache__/bound_hierarchy.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/model/__pycache__/bound_instance.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/model/__pycache__/bound_module.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/model/__pycache__/elaboration_model.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/model/__pycache__/__init__.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/model/__pycache__/port_binding.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/model/__pycache__/resolved_hierarchy.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/model/__pycache__/resolved_instance.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/model/__pycache__/resolved_module.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/model/__pycache__/resolved_signal.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/model/__pycache__/resolved_signal_hierarchy.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/model/__pycache__/resolved_signal_instance.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/model/__pycache__/resolved_signal_module.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/model/resolved_hierarchy.py
+/home/ilam066/RIVA/backend/app/elaboration/model/resolved_instance.py
+/home/ilam066/RIVA/backend/app/elaboration/model/resolved_module.py
+/home/ilam066/RIVA/backend/app/elaboration/model/resolved_module.py.bak
+/home/ilam066/RIVA/backend/app/elaboration/model/resolved_signal_hierarchy.py
+/home/ilam066/RIVA/backend/app/elaboration/model/resolved_signal_instance.py
+/home/ilam066/RIVA/backend/app/elaboration/model/resolved_signal_module.py
+/home/ilam066/RIVA/backend/app/elaboration/model/resolved_signal.py
+/home/ilam066/RIVA/backend/app/elaboration/module_elaborator.py
+/home/ilam066/RIVA/backend/app/elaboration/modules/__init__.py
+/home/ilam066/RIVA/backend/app/elaboration/modules/module_resolver.py
+/home/ilam066/RIVA/backend/app/elaboration/modules/__pycache__/__init__.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/modules/__pycache__/module_resolver.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/netlist/__init__.py
+/home/ilam066/RIVA/backend/app/elaboration/netlist/netlist_builder.py
+/home/ilam066/RIVA/backend/app/elaboration/netlist/netlist_builder.py.bak
+/home/ilam066/RIVA/backend/app/elaboration/netlist/__pycache__/__init__.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/netlist/__pycache__/netlist_builder.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/parameters/__init__.py
+/home/ilam066/RIVA/backend/app/elaboration/parameters/parameter_elaborator.py
+/home/ilam066/RIVA/backend/app/elaboration/parameters/parameter_elaborator.py.bak
+/home/ilam066/RIVA/backend/app/elaboration/parameters/__pycache__/__init__.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/parameters/__pycache__/parameter_elaborator.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/ports/__init__.py
+/home/ilam066/RIVA/backend/app/elaboration/ports/port_binder.py
+/home/ilam066/RIVA/backend/app/elaboration/ports/port_binder.py.bak
+/home/ilam066/RIVA/backend/app/elaboration/ports/__pycache__/__init__.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/ports/__pycache__/port_binder.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/__pycache__/elaborator.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/__pycache__/hierarchy_builder.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/__pycache__/hierarchy_node.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/__pycache__/__init__.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/__pycache__/module_elaborator.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/rtl_graph/__init__.py
+/home/ilam066/RIVA/backend/app/elaboration/rtl_graph/__pycache__/__init__.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/rtl_graph/__pycache__/rtl_graph_builder.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/rtl_graph/rtl_graph_builder.py
+/home/ilam066/RIVA/backend/app/elaboration/rtl_graph/rtl_graph_builder.py.bak
+/home/ilam066/RIVA/backend/app/elaboration/signals/__init__.py
+/home/ilam066/RIVA/backend/app/elaboration/signals/__pycache__/__init__.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/signals/__pycache__/signal_resolver.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/signals/signal_resolver.py
+/home/ilam066/RIVA/backend/app/elaboration/utils/ast_cloner.py
+/home/ilam066/RIVA/backend/app/elaboration/utils/generate_substituter.py
+/home/ilam066/RIVA/backend/app/elaboration/utils/__pycache__/ast_cloner.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/utils/__pycache__/generate_substituter.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/validation/__init__.py
+/home/ilam066/RIVA/backend/app/elaboration/validation/instance_validator.py
+/home/ilam066/RIVA/backend/app/elaboration/validation/port_validator.py
+/home/ilam066/RIVA/backend/app/elaboration/validation/port_validator.py.bak
+/home/ilam066/RIVA/backend/app/elaboration/validation/__pycache__/__init__.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/validation/__pycache__/instance_validator.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/elaboration/validation/__pycache__/port_validator.cpython-312.pyc
+
+============================================================
+18. SEMANTIC ANALYSIS AUDIT
+============================================================
+/home/ilam066/RIVA/backend/app/semantics/evaluation/constant_evaluator.py
+/home/ilam066/RIVA/backend/app/semantics/evaluation/__init__.py
+/home/ilam066/RIVA/backend/app/semantics/evaluation/__pycache__/constant_evaluator.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/evaluation/__pycache__/__init__.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/passes/assignment_compatibility_checker.py
+/home/ilam066/RIVA/backend/app/semantics/passes/assignment_compatibility_checker.py.bak
+/home/ilam066/RIVA/backend/app/semantics/passes/constant_folding.py
+/home/ilam066/RIVA/backend/app/semantics/passes/constant_propagation.py
+/home/ilam066/RIVA/backend/app/semantics/passes/expression_evaluator.py
+/home/ilam066/RIVA/backend/app/semantics/passes/expression_type_checker.py
+/home/ilam066/RIVA/backend/app/semantics/passes/identifier_checker.py
+/home/ilam066/RIVA/backend/app/semantics/passes/implicit_net_detector.py
+/home/ilam066/RIVA/backend/app/semantics/passes/__init__.py
+/home/ilam066/RIVA/backend/app/semantics/passes/parameter_type_checker.py
+/home/ilam066/RIVA/backend/app/semantics/passes/port_compatibility_checker.py
+/home/ilam066/RIVA/backend/app/semantics/passes/__pycache__/assignment_compatibility_checker.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/passes/__pycache__/constant_folding.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/passes/__pycache__/constant_propagation.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/passes/__pycache__/expression_evaluator.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/passes/__pycache__/expression_type_checker.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/passes/__pycache__/identifier_checker.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/passes/__pycache__/implicit_net_detector.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/passes/__pycache__/__init__.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/passes/__pycache__/parameter_type_checker.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/passes/__pycache__/port_compatibility_checker.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/passes/__pycache__/signedness_resolver.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/passes/__pycache__/type_resolver.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/passes/__pycache__/width_inference.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/passes/signedness_resolver.py
+/home/ilam066/RIVA/backend/app/semantics/passes/signedness_resolver.py.bak
+/home/ilam066/RIVA/backend/app/semantics/passes/width_inference.py
+/home/ilam066/RIVA/backend/app/semantics/__pycache__/scope.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/__pycache__/scope_kind.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/__pycache__/scope_stack.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/__pycache__/semantic_analyzer.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/__pycache__/semantic_diagnostic.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/__pycache__/semantic_model.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/__pycache__/symbol.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/__pycache__/symbol_kind.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/scope_kind.py
+/home/ilam066/RIVA/backend/app/semantics/scope.py
+/home/ilam066/RIVA/backend/app/semantics/scope_stack.py
+/home/ilam066/RIVA/backend/app/semantics/semantic_analyzer.py
+/home/ilam066/RIVA/backend/app/semantics/semantic_diagnostic.py
+/home/ilam066/RIVA/backend/app/semantics/semantic_model.py
+/home/ilam066/RIVA/backend/app/semantics/symbol_kind.py
+/home/ilam066/RIVA/backend/app/semantics/symbol.py
+/home/ilam066/RIVA/backend/app/semantics/symbols/__init__.py
+/home/ilam066/RIVA/backend/app/semantics/symbols/__pycache__/__init__.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/symbols/__pycache__/symbol_info.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/symbols/symbol_info.py
+/home/ilam066/RIVA/backend/app/semantics/type_checking/__init__.py
+/home/ilam066/RIVA/backend/app/semantics/type_checking/__pycache__/__init__.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/type_checking/__pycache__/type_resolver.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/type_checking/type_resolver.py
+/home/ilam066/RIVA/backend/app/semantics/types/base/__init__.py
+/home/ilam066/RIVA/backend/app/semantics/types/base/__pycache__/__init__.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/types/base/__pycache__/type.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/types/base/type.py
+/home/ilam066/RIVA/backend/app/semantics/types/__init__.py
+/home/ilam066/RIVA/backend/app/semantics/types/__pycache__/__init__.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/types/rtl/__init__.py
+/home/ilam066/RIVA/backend/app/semantics/types/rtl/__pycache__/__init__.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/types/rtl/__pycache__/rtl_type.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/types/rtl/rtl_type.py
+/home/ilam066/RIVA/backend/app/semantics/visitors/base/ast_visitor.py
+/home/ilam066/RIVA/backend/app/semantics/visitors/base/__pycache__/ast_visitor.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/visitors/identifier_resolver.py
+/home/ilam066/RIVA/backend/app/semantics/visitors/__pycache__/identifier_resolver.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/visitors/__pycache__/scope_builder.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/visitors/__pycache__/symbol_collector.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/visitors/scope_builder.py
+/home/ilam066/RIVA/backend/app/semantics/visitors/scope_builder.py.bak
+/home/ilam066/RIVA/backend/app/semantics/visitors/symbol_collector.py
+/home/ilam066/RIVA/backend/app/semantics/width/__init__.py
+/home/ilam066/RIVA/backend/app/semantics/width/__pycache__/__init__.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/width/__pycache__/width_inference.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/semantics/width/width_inference.py
+
+============================================================
+19. RTL PARSER / PREPROCESSOR AUDIT
+============================================================
+/home/ilam066/RIVA/backend/app/parsers/rtl/adapters/__init__.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/adapters/legacy_to_rtl_ast.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/adapters/__pycache__/__init__.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/adapters/__pycache__/legacy_to_rtl_ast.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/character_stream.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/__init__.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/lexer.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/lexer_result.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parser_context.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parse_result.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parser_registry.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parser_result.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/always_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/always_parser.py.bak
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/assignment_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/assign_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/base_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/begin_end_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/case_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/compilation_unit_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/declaration_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/expression_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/generate_body_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/generate_for_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/generate_if_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/generate_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/if_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/module_instance_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/module_instance_parser.py.bak
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/module_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/module_parser.py.bak
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/packed_range_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/parameter_override_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/parameter_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/parameter_parser.py.bak
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/port_connection_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/port_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/port_parser.py.bak
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/__pycache__/always_parser.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/__pycache__/assignment_parser.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/__pycache__/assign_parser.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/__pycache__/base_parser.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/__pycache__/begin_end_parser.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/__pycache__/case_parser.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/__pycache__/compilation_unit_parser.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/__pycache__/declaration_parser.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/__pycache__/expression_parser.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/__pycache__/generate_body_parser.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/__pycache__/generate_for_parser.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/__pycache__/generate_if_parser.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/__pycache__/generate_parser.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/__pycache__/if_parser.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/__pycache__/module_instance_parser.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/__pycache__/module_parser.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/__pycache__/packed_range_parser.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/__pycache__/parameter_override_parser.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/__pycache__/parameter_parser.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/__pycache__/port_connection_parser.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/__pycache__/port_parser.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/__pycache__/signal_parser.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/__pycache__/statement_parser.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/signal_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/statement_parser.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/parsers/statement_parser.py.bak
+/home/ilam066/RIVA/backend/app/parsers/rtl/__pycache__/character_stream.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/__pycache__/__init__.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/__pycache__/lexer.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/__pycache__/lexer_result.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/__pycache__/parser_context.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/__pycache__/parser.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/__pycache__/parse_result.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/__pycache__/parser_registry.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/__pycache__/parser_result.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/attribute_reader.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/base_reader.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/comment_reader.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/directive_reader.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/identifier_reader.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/__init__.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/number_reader.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/number_reader.py.bak
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/operator_reader.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/__pycache__/attribute_reader.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/__pycache__/base_reader.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/__pycache__/comment_reader.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/__pycache__/directive_reader.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/__pycache__/identifier_reader.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/__pycache__/__init__.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/__pycache__/number_reader.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/__pycache__/operator_reader.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/__pycache__/reader_registry.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/__pycache__/string_reader.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/__pycache__/symbol_reader.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/__pycache__/system_identifier_reader.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/reader_registry.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/string_reader.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/symbol_reader.py
+/home/ilam066/RIVA/backend/app/parsers/rtl/readers/system_identifier_reader.py
+/home/ilam066/RIVA/backend/app/preprocessors/rtl/directive.py
+/home/ilam066/RIVA/backend/app/preprocessors/rtl/directive_type.py
+/home/ilam066/RIVA/backend/app/preprocessors/rtl/handler_registry.py
+/home/ilam066/RIVA/backend/app/preprocessors/rtl/handlers/base_handler.py
+/home/ilam066/RIVA/backend/app/preprocessors/rtl/handlers/define_handler.py
+/home/ilam066/RIVA/backend/app/preprocessors/rtl/handlers/else_handler.py
+/home/ilam066/RIVA/backend/app/preprocessors/rtl/handlers/endif_handler.py
+/home/ilam066/RIVA/backend/app/preprocessors/rtl/handlers/ifdef_handler.py
+/home/ilam066/RIVA/backend/app/preprocessors/rtl/handlers/ifndef_handler.py
+/home/ilam066/RIVA/backend/app/preprocessors/rtl/handlers/__pycache__/base_handler.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/preprocessors/rtl/handlers/__pycache__/define_handler.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/preprocessors/rtl/handlers/__pycache__/else_handler.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/preprocessors/rtl/handlers/__pycache__/endif_handler.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/preprocessors/rtl/handlers/__pycache__/ifdef_handler.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/preprocessors/rtl/handlers/__pycache__/ifndef_handler.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/preprocessors/rtl/macro_table.py
+/home/ilam066/RIVA/backend/app/preprocessors/rtl/preprocessor.py
+/home/ilam066/RIVA/backend/app/preprocessors/rtl/preprocessor_result.py
+/home/ilam066/RIVA/backend/app/preprocessors/rtl/__pycache__/directive.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/preprocessors/rtl/__pycache__/directive_type.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/preprocessors/rtl/__pycache__/handler_registry.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/preprocessors/rtl/__pycache__/macro_table.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/preprocessors/rtl/__pycache__/preprocessor.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/preprocessors/rtl/__pycache__/preprocessor_result.cpython-312.pyc
+
+============================================================
+20. API ROUTE AUDIT
+============================================================
+/home/ilam066/RIVA/backend/app/api/dependencies/__init__.py
+/home/ilam066/RIVA/backend/app/api/dependencies/__pycache__/__init__.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/api/__init__.py
+/home/ilam066/RIVA/backend/app/api/__pycache__/__init__.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/api/routes/analyze.py
+/home/ilam066/RIVA/backend/app/api/routes/__init__.py
+/home/ilam066/RIVA/backend/app/api/routes/__pycache__/analyze.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/api/routes/__pycache__/__init__.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/api/routes/__pycache__/upload.cpython-312.pyc
+/home/ilam066/RIVA/backend/app/api/routes/upload.py
+
+============================================================
+21. FRONTEND INVENTORY
+============================================================
+--- package.json ---
+{
+  "name": "frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@fontsource/jetbrains-mono": "^5.3.0",
+    "@fontsource/manrope": "^5.3.0",
+    "lucide-react": "^1.32.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^24.13.3",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.4",
+    "eslint": "^10.8.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.3",
+    "globals": "^17.7.0",
+    "typescript": "~6.0.2",
+    "typescript-eslint": "^8.65.0",
+    "vite": "^8.2.0"
+  }
+}
+
+--- frontend source files ---
+/home/ilam066/RIVA/frontend/src/App.css
+/home/ilam066/RIVA/frontend/src/App.tsx
+/home/ilam066/RIVA/frontend/src/index.css
+/home/ilam066/RIVA/frontend/src/main.tsx
+
+--- frontend source count ---
+4
+
+============================================================
+22. FRONTEND BUILD
+============================================================
+
+> frontend@0.0.0 build
+> tsc -b && vite build
+
+vite v8.2.1 building client environment for production...
+[2Ktransforming...✓ 17 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.45 kB │ gzip:  0.29 kB
+dist/assets/index-DmysLTvr.css   50.28 kB │ gzip:  8.70 kB
+dist/assets/index-Xh_48N_F.js   210.60 kB │ gzip: 64.20 kB
+
+✓ built in 143ms
+
+Frontend build exit code: 0
+
+============================================================
+23. EXAMPLES
+============================================================
+/home/ilam066/RIVA/examples/design.sv
+/home/ilam066/RIVA/examples/specification.txt
+/home/ilam066/RIVA/examples/tb_mux2to1.sv
+
+============================================================
+24. DOCUMENTATION
+============================================================
+/home/ilam066/RIVA/audit/RIVA_REPOSITORY_AUDIT.txt
+/home/ilam066/RIVA/docs/architecture/01_System_Architecture.md
+/home/ilam066/RIVA/docs/architecture/02_Domain_Model.md
+/home/ilam066/RIVA/docs/architecture/03_Data_Flow.md
+/home/ilam066/RIVA/docs/architecture/04_Parser_Architecture.md
+/home/ilam066/RIVA/docs/architecture/05_Verification_Engine.md
+/home/ilam066/RIVA/docs/architecture/06_AI_Architecture.md
+/home/ilam066/RIVA/docs/architecture/07_Coding_Standards.md
+/home/ilam066/RIVA/docs/architecture/08_Project_Roadmap.md
+/home/ilam066/RIVA/docs/RIVA_PROJECT_CONTEXT.md
+/home/ilam066/RIVA/docs/SYSTEMVERILOG_SUBSET.md
+
+============================================================
+25. DEPENDENCY FILES
+============================================================
+/home/ilam066/RIVA/backend/requirements-dev.txt
+/home/ilam066/RIVA/backend/requirements.txt
+/home/ilam066/RIVA/frontend/package.json
+/home/ilam066/RIVA/frontend/package-lock.json
+
+============================================================
+26. PYTHON COMPILE CHECK
+============================================================
+Python compile exit code: 0
+
+============================================================
+27. IMPORT CHECK
+============================================================
+Python: 3.12.3 (main, Jun 19 2026, 12:46:00) [GCC 13.3.0]
+[PASS] import app
+[PASS] app.ai
+[PASS] app.analysis
+[PASS] app.api
+[PASS] app.ast
+[PASS] app.diagnostics
+[PASS] app.elaboration
+[PASS] app.language
+[PASS] app.optimization
+[PASS] app.parsers
+[PASS] app.semantics
+[PASS] app.reporting
+[PASS] app.simulation
+
+============================================================
+28. ROOT GIT-IGNORED ARTIFACT CHECK
+============================================================
+ M backend/app/analysis/cfg/cfg_builder.py
+ M backend/app/analysis/cfg/control_flow_graph.py
+ M backend/app/ast/expression.py
+ M backend/app/common/source_location.py
+ M backend/app/diagnostics/catalog/width_catalog.py
+ M backend/app/diagnostics/rules/width_mismatch.py
+ M backend/app/diagnostics/rules/width_rules.py
+ M backend/app/domain/rtl_ast/always_block_node.py
+ M backend/app/domain/rtl_ast/assign_node.py
+ M backend/app/domain/rtl_ast/instance_node.py
+ M backend/app/domain/rtl_ast/module_node.py
+ M backend/app/domain/rtl_ast/port_node.py
+ M backend/app/elaboration/validation/port_validator.py
+ M backend/app/language/systemverilog/operators.py
+ M backend/app/language/systemverilog/symbols.py
+ M backend/app/main.py
+ M backend/app/parsers/rtl/parse_result.py
+ M backend/app/parsers/rtl/parser.py
+ M backend/app/parsers/rtl/parser_result.py
+ M backend/app/parsers/rtl/parsers/always_parser.py
+ M backend/app/parsers/rtl/parsers/assignment_parser.py
+ M backend/app/parsers/rtl/parsers/case_parser.py
+ M backend/app/parsers/rtl/parsers/generate_for_parser.py
+ M backend/app/parsers/rtl/parsers/generate_if_parser.py
+ M backend/app/parsers/rtl/parsers/generate_parser.py
+ M backend/app/parsers/rtl/parsers/module_parser.py
+ M backend/app/parsers/rtl/parsers/module_parser.py.bak
+ M backend/app/parsers/rtl/parsers/packed_range_parser.py
+ M backend/app/parsers/rtl/parsers/port_connection_parser.py
+ M backend/app/parsers/rtl/parsers/port_parser.py
+ M backend/app/semantics/passes/assignment_compatibility_checker.py
+ M backend/app/semantics/passes/expression_evaluator.py
+ M backend/app/semantics/passes/expression_type_checker.py
+ M backend/app/semantics/passes/parameter_type_checker.py
+ M backend/app/semantics/passes/signedness_resolver.py
+ D backend/app/semantics/passes/type_resolver.py
+ M backend/app/semantics/passes/width_inference.py
+ M backend/app/semantics/scope.py
+ M backend/app/semantics/semantic_analyzer.py
+ M backend/app/semantics/semantic_model.py
+ M backend/app/semantics/symbol.py
+ M backend/app/semantics/symbols/symbol_info.py
+ M backend/app/semantics/type_checking/type_resolver.py
+ M backend/app/semantics/types/base/type.py
+ M backend/app/semantics/types/rtl/rtl_type.py
+ M backend/app/semantics/width/width_inference.py
+ M backend/app/shared/source_location.py
+ M backend/test_assignment_compatibility_checker.py
+ D backend/test_instance_resolver.py.bak
+ D backend/test_netlist_builder.py.bak
+ M backend/test_parameter_type_checker.py
+ D backend/test_port_binder.py.bak
+ M backend/test_port_validator.py
+ D backend/test_rtl_graph_builder.py.bak
+ M backend/test_rtl_unknown_character.py
+ D backend/test_signal_resolver.py.bak
+ M backend/test_signedness_resolver.py
+ M backend/test_type_resolver.py
+ M backend/test_width_inference.py
+?? RIVA_FULL_AUDIT_RESULT.txt
+?? backend/app/ai/ai_reasoning_engine.py
+?? backend/app/ai/evidence_store.py
+?? backend/app/analysis/traceability/
+?? backend/app/api/routes/analyze.py
+?? backend/app/diagnostics/rules/signedness_mismatch.py
+?? backend/app/elaboration/hierarchy_builder.py
+?? backend/app/elaboration/validation/port_validator.py.bak
+?? backend/app/parsers/rtl/adapters/
+?? backend/app/parsers/rtl/parsers/generate_body_parser.py
+?? backend/app/parsers/rtl/parsers/port_parser.py.bak
+?? backend/app/reporting/
+?? backend/app/semantics/passes/assignment_compatibility_checker.py.bak
+?? backend/app/semantics/passes/signedness_resolver.py.bak
+?? backend/app/simulation/
+?? backend/test_ai_evidence_and_reporting.py
+?? backend/test_canonical_semantic_types.py
+?? backend/test_cfg_dataflow_diagnostics.py
+?? backend/test_expression_location.py
+?? backend/test_expression_semantics_extended.py
+?? backend/test_hierarchy_end_to_end.py
+?? backend/test_requirement_tracer.py
+?? backend/test_semantic_analyzer_canonical_types.py
+?? backend/test_semantic_analyzer_diagnostics.py
+?? backend/test_semantic_analyzer_signedness.py
+?? backend/test_signedness_mismatch.py
+?? backend/test_simulation_waveform.py
+?? backend/test_width_mismatch_expressions.py
+?? backend/tests/
+?? docs/SYSTEMVERILOG_SUBSET.md
+?? frontend/
+?? riva_full_audit.sh
+!! .local/
+!! .pytest_cache/
+!! .venv/
+!! audit/
+!! backend/.pytest_cache/
+!! backend/__pycache__/
+!! backend/app/__pycache__/
+!! backend/app/ai/__pycache__/
+!! backend/app/analysis/cfg/__pycache__/
+!! backend/app/analysis/dataflow/__pycache__/
+!! backend/app/analysis/dataflow/analyses/__pycache__/
+!! backend/app/analysis/dataflow/runtime/__pycache__/
+!! backend/app/analysis/traceability/__pycache__/
+!! backend/app/api/__pycache__/
+!! backend/app/api/dependencies/__pycache__/
+!! backend/app/api/routes/__pycache__/
+!! backend/app/ast/__pycache__/
+!! backend/app/ast/visitors/__pycache__/
+!! backend/app/common/__pycache__/
+!! backend/app/compiler/__pycache__/
+!! backend/app/compiler/driver/__pycache__/
+!! backend/app/config/__pycache__/
+!! backend/app/diagnostics/__pycache__/
+!! backend/app/diagnostics/analysis/__pycache__/
+!! backend/app/diagnostics/base/__pycache__/
+!! backend/app/diagnostics/catalog/__pycache__/
+!! backend/app/diagnostics/formatter/__pycache__/
+!! backend/app/diagnostics/model/__pycache__/
+!! backend/app/diagnostics/rules/__pycache__/
+!! backend/app/domain/__pycache__/
+!! backend/app/domain/rtl_ast/__pycache__/
+!! backend/app/domain/rtl_tokens/__pycache__/
+!! backend/app/domain/specification_ast/__pycache__/
+!! backend/app/elaboration/__pycache__/
+!! backend/app/elaboration/cfg/__pycache__/
+!! backend/app/elaboration/generate/__pycache__/
+!! backend/app/elaboration/hierarchy/__pycache__/
+!! backend/app/elaboration/instances/__pycache__/
+!! backend/app/elaboration/model/__pycache__/
+!! backend/app/elaboration/modules/__pycache__/
+!! backend/app/elaboration/netlist/__pycache__/
+!! backend/app/elaboration/parameters/__pycache__/
+!! backend/app/elaboration/ports/__pycache__/
+!! backend/app/elaboration/rtl_graph/__pycache__/
+!! backend/app/elaboration/signals/__pycache__/
+!! backend/app/elaboration/utils/__pycache__/
+!! backend/app/elaboration/validation/__pycache__/
+!! backend/app/engines/__pycache__/
+!! backend/app/engines/diagnostics/__pycache__/
+!! backend/app/engines/reporting/__pycache__/
+!! backend/app/engines/rule_engine/__pycache__/
+!! backend/app/engines/verification/__pycache__/
+!! backend/app/infrastructure/__pycache__/
+!! backend/app/infrastructure/uploads/__pycache__/
+!! backend/app/ir/__pycache__/
+!! backend/app/ir/rtl/__pycache__/
+!! backend/app/knowledge/__pycache__/
+!! backend/app/language/common/__pycache__/
+!! backend/app/language/systemverilog/__pycache__/
+!! backend/app/language/systemverilog/keyword_categories/__pycache__/
+!! backend/app/optimization/__pycache__/
+!! backend/app/optimization/model/__pycache__/
+!! backend/app/optimization/passes/__pycache__/
+!! backend/app/optimization/typed_ir/__pycache__/
+!! backend/app/parsers/__pycache__/
+!! backend/app/parsers/rtl/__pycache__/
+!! backend/app/parsers/rtl/adapters/__pycache__/
+!! backend/app/parsers/rtl/parsers/__pycache__/
+!! backend/app/parsers/rtl/readers/__pycache__/
+!! backend/app/parsers/specification/__pycache__/
+!! backend/app/preprocessors/rtl/__pycache__/
+!! backend/app/preprocessors/rtl/handlers/__pycache__/
+!! backend/app/repair/__pycache__/
+!! backend/app/repair/base/__pycache__/
+!! backend/app/repair/patches/__pycache__/
+!! backend/app/repair/rules/__pycache__/
+!! backend/app/reporting/__pycache__/
+!! backend/app/schemas/__pycache__/
+!! backend/app/semantics/__pycache__/
+!! backend/app/semantics/evaluation/__pycache__/
+!! backend/app/semantics/passes/__pycache__/
+!! backend/app/semantics/symbols/__pycache__/
+!! backend/app/semantics/type_checking/__pycache__/
+!! backend/app/semantics/types/__pycache__/
+!! backend/app/semantics/types/base/__pycache__/
+!! backend/app/semantics/types/rtl/__pycache__/
+!! backend/app/semantics/visitors/__pycache__/
+!! backend/app/semantics/visitors/base/__pycache__/
+!! backend/app/semantics/width/__pycache__/
+!! backend/app/shared/__pycache__/
+!! backend/app/simulation/__pycache__/
+!! backend/app/storage/__pycache__/
+!! backend/app/tests/__pycache__/
+!! backend/test/language/__pycache__/
+!! backend/tests/extended/__pycache__/
+!! backend/tests/rtl/__pycache__/
+!! backend/tools/__pycache__/
+!! backend/uploads/
+!! frontend/dist/
+!! frontend/node_modules/
+
+============================================================
+29. FINAL AUDIT SUMMARY
+============================================================
+Pytest execution exit code: 0
+Pytest collection exit code: 0
+Python compile exit code: 0
+
+============================================================
+                 END RIVA AUDIT
+============================================================

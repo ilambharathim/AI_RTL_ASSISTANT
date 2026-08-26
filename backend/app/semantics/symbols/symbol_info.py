@@ -1,5 +1,8 @@
 """
 Semantic symbol information.
+
+SymbolInfo is the semantic information attached to
+a resolved declaration.
 """
 
 from dataclasses import dataclass
@@ -7,6 +10,9 @@ from dataclasses import dataclass
 
 @dataclass(slots=True)
 class SymbolInfo:
+    """
+    Resolved semantic information for a symbol.
+    """
 
     name: str
 
@@ -20,3 +26,4 @@ class SymbolInfo:
 
     declaration: object | None = None
 
+    semantic_type: object | None = None

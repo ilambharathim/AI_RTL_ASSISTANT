@@ -1,5 +1,5 @@
 """
-Dead instance elimination.
+Dead instance elimination pass.
 """
 
 from app.optimization.base_pass import OptimizationPass
@@ -19,44 +19,19 @@ class DeadInstanceElimination(
     ):
 
         result = PassResult()
+        elaboration = getattr(semantic_model, "elaboration", None)
+        if not elaboration or not hasattr(elaboration, "netlist") or not hasattr(elaboration.netlist, "modules"):
+            return result
 
-        for module in (
-            semantic_model.elaboration.netlist.modules.values()
-        ):
-
-            alive = []
-
-            removed = 0
-
-            for instance in module.instances:
-
-                keep = any(
-
-                    net.signal is not None
-
-                    for net in instance.nets
-
-                )
-
-                if keep:
-
-                    alive.append(
-                        instance,
-                    )
-
+        for module in elaboration.netlist.modules.values():
+            alive_instances = []
+            for instance in getattr(module, "instances", []):
+                is_connected = any(getattr(net, "signal", None) is not None for net in getattr(instance, "nets", []))
+                if is_connected:
+                    alive_instances.append(instance)
                 else:
-
-                    removed += 1
-
-            module.instances = alive
-
-            result.instances_removed += removed
-
-        result.changed = (
-
-            result.instances_removed > 0
-
-        )
+                    result.instances_removed += 1
+                    result.changed = True
+            module.instances = alive_instances
 
         return result
-

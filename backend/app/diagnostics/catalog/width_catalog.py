@@ -37,3 +37,28 @@ RIVA3001 = DiagnosticDefinition(
         "slice or extend the value."
     ),
 )
+
+
+RIVA3002 = DiagnosticDefinition(
+
+    code="RIVA3002",
+
+    category=DiagnosticCategory.WIDTH,
+
+    severity=DiagnosticSeverity.WARNING,
+
+    title="Signedness Mismatch",
+
+    message="Signedness mismatch detected.",
+
+    explanation=(
+        "The signedness of the destination signal differs "
+        "from the source expression."
+    ),
+
+    suggestion=(
+        "Use matching signedness or explicitly cast the "
+        "source expression."
+    ),
+
+)

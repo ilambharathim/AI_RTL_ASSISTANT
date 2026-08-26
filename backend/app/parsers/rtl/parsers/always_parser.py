@@ -58,23 +58,30 @@ class AlwaysParser(BaseParser):
             and context.current().value == "@"
         ):
 
-            sensitivity = "@"
-
             context.advance()
 
+            sensitivity_tokens = []
+
+            #
+            # Collect everything inside @( ... )
+            #
             while not context.eof():
 
                 token = context.current()
-
-                sensitivity += token.value
-
-                context.advance()
 
                 if (
                     token.token_type == RTLTokenType.SYMBOL
                     and token.value == ")"
                 ):
+                    context.advance()
                     break
+
+                sensitivity_tokens.append(token.value)
+                context.advance()
+
+            sensitivity = "@(" + " ".join(
+                sensitivity_tokens
+            ) + ")"
 
         #
         # Find begin
@@ -155,4 +162,3 @@ class AlwaysParser(BaseParser):
         )
 
         return node
-

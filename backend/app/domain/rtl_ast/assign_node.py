@@ -5,5 +5,10 @@ from app.domain.rtl_ast.rtl_node import RTLNode
 
 @dataclass(slots=True)
 class AssignNode(RTLNode):
-    left: str = ""
-    right: str = ""
+    """
+    Represents a continuous assignment.
+    """
+
+    target: str = ""
+
+    expression: str = ""

@@ -25,9 +25,25 @@ class IdentifierExpression(ASTNode):
 
         object.__setattr__(
             self,
+            "location",
+            None,
+        )
+
+        object.__setattr__(
+            self,
             "name",
             name,
         )
+
+    def __str__(self) -> str:
+        return self.name
+
+    def __eq__(self, other) -> bool:
+        if isinstance(other, str):
+            return self.name == other
+        if isinstance(other, IdentifierExpression):
+            return self.name == other.name
+        return False
 
 
 @dataclass(frozen=True, slots=True)
@@ -48,9 +64,25 @@ class LiteralExpression(ASTNode):
 
         object.__setattr__(
             self,
+            "location",
+            None,
+        )
+
+        object.__setattr__(
+            self,
             "value",
             value,
         )
+
+    def __str__(self) -> str:
+        return str(self.value)
+
+    def __eq__(self, other) -> bool:
+        if isinstance(other, str):
+            return str(self.value) == other
+        if isinstance(other, LiteralExpression):
+            return str(self.value) == str(other.value)
+        return False
 
 
 @dataclass(frozen=True, slots=True)
@@ -74,6 +106,12 @@ class UnaryExpression(ASTNode):
 
         object.__setattr__(
             self,
+            "location",
+            None,
+        )
+
+        object.__setattr__(
+            self,
             "operator",
             operator,
         )
@@ -83,6 +121,16 @@ class UnaryExpression(ASTNode):
             "operand",
             operand,
         )
+
+    def __str__(self) -> str:
+        return f"{self.operator}{self.operand}"
+
+    def __eq__(self, other) -> bool:
+        if isinstance(other, str):
+            return str(self) == other
+        if isinstance(other, UnaryExpression):
+            return (self.operator, self.operand) == (other.operator, other.operand)
+        return False
 
 
 @dataclass(frozen=True, slots=True)
@@ -109,6 +157,12 @@ class BinaryExpression(ASTNode):
 
         object.__setattr__(
             self,
+            "location",
+            None,
+        )
+
+        object.__setattr__(
+            self,
             "operator",
             operator,
         )
@@ -124,6 +178,16 @@ class BinaryExpression(ASTNode):
             "right",
             right,
         )
+
+    def __str__(self) -> str:
+        return f"{self.left} {self.operator} {self.right}"
+
+    def __eq__(self, other) -> bool:
+        if isinstance(other, str):
+            return str(self) == other
+        if isinstance(other, BinaryExpression):
+            return (self.operator, self.left, self.right) == (other.operator, other.left, other.right)
+        return False
 
 
 @dataclass(frozen=True, slots=True)
@@ -147,6 +211,12 @@ class FunctionCallExpression(ASTNode):
 
         object.__setattr__(
             self,
+            "location",
+            None,
+        )
+
+        object.__setattr__(
+            self,
             "function_name",
             function_name,
         )
@@ -156,3 +226,14 @@ class FunctionCallExpression(ASTNode):
             "arguments",
             arguments,
         )
+
+    def __str__(self) -> str:
+        args_str = ", ".join(str(a) for a in self.arguments)
+        return f"{self.function_name}({args_str})"
+
+    def __eq__(self, other) -> bool:
+        if isinstance(other, str):
+            return str(self) == other
+        if isinstance(other, FunctionCallExpression):
+            return (self.function_name, self.arguments) == (other.function_name, other.arguments)
+        return False

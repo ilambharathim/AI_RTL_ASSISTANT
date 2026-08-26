@@ -16,6 +16,7 @@ from app.domain.rtl_tokens.token_type import RTLTokenType
 from app.parsers.rtl.parsers.base_parser import BaseParser
 from app.parsers.rtl.parsers.expression_parser import ExpressionParser
 from app.parsers.rtl.parsers.module_instance_parser import ModuleInstanceParser
+from app.parsers.rtl.parsers.generate_body_parser import GenerateBodyParser
 
 
 class GenerateIfParser(BaseParser):
@@ -84,9 +85,18 @@ class GenerateIfParser(BaseParser):
         #
         true_members = []
 
-        if ModuleInstanceParser.matches(
-            context,
+        if (
+            not context.eof()
+            and context.current().token_type == RTLTokenType.KEYWORD
+            and context.current().value == "begin"
         ):
+            true_members = list(
+                GenerateBodyParser.parse(
+                    context,
+                )
+            )
+
+        elif ModuleInstanceParser.matches(context):
 
             true_members.append(
                 ModuleInstanceParser.parse(
@@ -108,9 +118,18 @@ class GenerateIfParser(BaseParser):
 
             context.advance()
 
-            if ModuleInstanceParser.matches(
-                context,
+            if (
+                not context.eof()
+                and context.current().token_type == RTLTokenType.KEYWORD
+                and context.current().value == "begin"
             ):
+                false_members = list(
+                    GenerateBodyParser.parse(
+                        context,
+                    )
+                )
+
+            elif ModuleInstanceParser.matches(context):
 
                 false_members.append(
                     ModuleInstanceParser.parse(

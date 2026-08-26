@@ -2,6 +2,9 @@
 Signedness Resolver.
 
 Determines signed/unsigned information for declared symbols.
+
+The canonical SemanticModel.semantic_types repository is updated
+alongside the legacy model.types representation.
 """
 
 from app.ast import (
@@ -9,6 +12,8 @@ from app.ast import (
     ModuleDeclaration,
     SignalDeclaration,
 )
+
+from app.semantics.types.rtl.rtl_type import RTLType
 
 
 class SignednessResolver:
@@ -18,7 +23,6 @@ class SignednessResolver:
         tree,
         model,
     ):
-
         if isinstance(tree, CompilationUnit):
 
             for declaration in tree.declarations:
@@ -41,6 +45,14 @@ class SignednessResolver:
 
         if isinstance(tree, SignalDeclaration):
 
+            signed = (
+                "signed"
+                in str(tree.signal_type).lower()
+            )
+
+            #
+            # Keep legacy metadata synchronized.
+            #
             model.types.setdefault(
                 tree.name,
                 {},
@@ -48,6 +60,23 @@ class SignednessResolver:
 
             model.types[
                 tree.name
-            ]["signed"] = (
-                "signed" in tree.signal_type.lower()
+            ]["signed"] = signed
+
+            #
+            # Synchronize canonical semantic type.
+            #
+            current = model.get_semantic_type(
+                tree.name,
             )
+
+            if current is not None:
+
+                model.set_semantic_type(
+                    tree.name,
+                    RTLType(
+                        name=current.name,
+                        width=current.width,
+                        signed=signed,
+                        packed=current.packed,
+                    ),
+                )

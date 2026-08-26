@@ -18,3 +18,7 @@ class Symbol:
     kind: SymbolKind
 
     declaration: object | None = None
+
+    semantic_type: object | None = None
+
+    constant_value: object = None

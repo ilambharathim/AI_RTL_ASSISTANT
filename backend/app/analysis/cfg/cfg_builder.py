@@ -53,6 +53,21 @@ class CFGBuilder:
         if node is None:
             return current
 
+        from app.ast import CompilationUnit, ModuleDeclaration, AlwaysBlock
+
+        if isinstance(node, CompilationUnit):
+            for decl in node.declarations:
+                current = self._visit(decl, graph, current)
+            return current
+
+        if isinstance(node, ModuleDeclaration):
+            for member in node.members:
+                current = self._visit(member, graph, current)
+            return current
+
+        if isinstance(node, AlwaysBlock):
+            return self._visit(node.statements, graph, current)
+
         #
         # tuple
         #

@@ -133,3 +133,87 @@ print(errors[0])
 
 print("PortValidator test passed.")
 
+
+
+def test_port_validator_prefers_canonical_semantic_types():
+    from app.semantics.types.rtl.rtl_type import RTLType
+
+    child = ModuleDeclaration(
+        name="child",
+        ports=(
+            PortDeclaration(
+                direction="input",
+                signal_type="logic",
+                packed_range=None,
+                name="a",
+            ),
+        ),
+        members=(),
+    )
+
+    top = ModuleDeclaration(
+        name="top",
+        ports=(),
+        members=(
+            SignalDeclaration(
+                signal_type="logic",
+                packed_range=None,
+                name="x",
+            ),
+            ModuleInstance(
+                module_name="child",
+                instance_name="u0",
+                parameter_overrides=(),
+                connections=(
+                    PortConnection(
+                        "a",
+                        IdentifierExpression("x"),
+                    ),
+                ),
+            ),
+        ),
+    )
+
+    tree = CompilationUnit(
+        declarations=(
+            child,
+            top,
+        ),
+    )
+
+    model = SemanticModel()
+
+    model.set_semantic_type(
+        "x",
+        RTLType(
+            name="logic",
+            width=8,
+            signed=False,
+            packed=False,
+        ),
+    )
+
+    model.set_semantic_type(
+        "a",
+        RTLType(
+            name="logic",
+            width=4,
+            signed=False,
+            packed=False,
+        ),
+    )
+
+    errors = PortValidator().validate(
+        tree,
+        model,
+    )
+
+    assert len(errors) == 1
+
+    assert (
+        "Width mismatch on port 'a'"
+        in errors[0]
+    )
+
+    assert "expected 4" in errors[0]
+    assert "got 8" in errors[0]

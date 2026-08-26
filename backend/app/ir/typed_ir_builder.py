@@ -71,7 +71,10 @@ class TypedIRBuilder:
                     module.name
                 ] = module
 
-        semantic_model.elaboration.ir = modules
+        if isinstance(semantic_model.elaboration, dict):
+            semantic_model.elaboration["ir"] = modules
+        elif semantic_model.elaboration is not None:
+            semantic_model.elaboration.ir = modules
 
         return modules
 
@@ -116,7 +119,7 @@ class TypedIRBuilder:
                     node.expression,
                 ),
 
-                blocking=node.blocking,
+                blocking=getattr(node, "blocking", True),
 
             )
 

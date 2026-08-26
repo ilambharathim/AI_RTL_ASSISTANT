@@ -46,3 +46,9 @@ class ModuleDeclaration(ASTNode):
             "members",
             members,
         )
+
+        object.__setattr__(
+            self,
+            "location",
+            None,
+        )

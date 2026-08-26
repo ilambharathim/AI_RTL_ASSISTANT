@@ -1,5 +1,5 @@
 """
-Dead signal elimination.
+Dead signal elimination pass.
 """
 
 from app.optimization.base_pass import OptimizationPass
@@ -19,44 +19,22 @@ class DeadSignalElimination(
     ):
 
         result = PassResult()
+        elaboration = getattr(semantic_model, "elaboration", None)
+        if not elaboration or not hasattr(elaboration, "netlist") or not hasattr(elaboration.netlist, "modules"):
+            return result
 
         used = set()
+        for module in elaboration.netlist.modules.values():
+            for instance in getattr(module, "instances", []):
+                for net in getattr(instance, "nets", []):
+                    if getattr(net, "signal", None):
+                        used.add(net.signal)
 
-        for module in (
-            semantic_model.elaboration.netlist.modules.values()
-        ):
-
-            for instance in module.instances:
-
-                for net in instance.nets:
-
-                    if net.signal is not None:
-
-                        used.add(
-                            net.signal,
-                        )
-
-        dead = [
-
-            name
-
-            for name in semantic_model.symbols
-
-            if name not in used
-
-        ]
-
+        symbols = getattr(semantic_model, "symbols", {})
+        dead = [name for name in list(symbols.keys()) if name not in used]
         for name in dead:
-
-            del semantic_model.symbols[name]
-
-        result.symbols_removed = len(dead)
-
-        result.changed = (
-
-            len(dead) > 0
-
-        )
+            del symbols[name]
+            result.symbols_removed += 1
+            result.changed = True
 
         return result
-

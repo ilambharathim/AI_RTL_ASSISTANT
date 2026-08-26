@@ -66,8 +66,8 @@ class StringReader:
 
                     diagnostics.append(
                         LexerDiagnosticFactory.unknown_character(
-                            location,
                             "unterminated escape sequence",
+                            location,
                         )
                     )
 
@@ -83,8 +83,8 @@ class StringReader:
 
                     diagnostics.append(
                         LexerDiagnosticFactory.unknown_character(
-                            location,
                             f"unknown escape '\\{escape}'",
+                            location,
                         )
                     )
 
@@ -95,9 +95,8 @@ class StringReader:
             characters.append(character)
 
         diagnostics.append(
-            LexerDiagnosticFactory.unknown_character(
+            LexerDiagnosticFactory.unterminated_string(
                 location,
-                "unterminated string literal",
             )
         )
 

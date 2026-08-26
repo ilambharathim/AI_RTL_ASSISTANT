@@ -38,3 +38,9 @@ class PortConnection(ASTNode):
             expression,
         )
 
+        object.__setattr__(
+            self,
+            "location",
+            None,
+        )
+

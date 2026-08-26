@@ -29,9 +29,18 @@ class TypedDeadAssignmentElimination:
         context,
     ):
 
+        elaboration = getattr(semantic_model, "elaboration", None)
+        if not elaboration:
+            return PassResult()
+
+        ir_modules = elaboration.get("ir", {}) if isinstance(elaboration, dict) else getattr(elaboration, "ir", {})
+
         changed = False
 
-        for module in semantic_model.elaboration.ir.values():
+        for module in ir_modules.values():
+
+            if not hasattr(module, "statements"):
+                continue
 
             used = set()
 

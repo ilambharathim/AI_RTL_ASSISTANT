@@ -8,10 +8,11 @@ from app.ast import (
 from app.ast.expression import LiteralExpression
 
 from app.semantics.semantic_model import SemanticModel
-from app.semantics.passes.width_inference import WidthInference
+from app.semantics.type_checking.type_resolver import TypeResolver
+from app.semantics.width.width_inference import WidthInference
 
 
-def test_width_inference():
+def test_width_inference_updates_legacy_and_canonical_types():
 
     tree = CompilationUnit(
         declarations=(
@@ -22,9 +23,9 @@ def test_width_inference():
                     SignalDeclaration(
                         signal_type="logic",
                         packed_range=PackedRange(
-                        LiteralExpression("7"),
-                        LiteralExpression("0"),
-                    ),
+                            LiteralExpression("7"),
+                            LiteralExpression("0"),
+                        ),
                         name="a",
                     ),
                 ),
@@ -34,9 +35,21 @@ def test_width_inference():
 
     model = SemanticModel()
 
+    TypeResolver().resolve(
+        tree,
+        model,
+    )
+
     WidthInference().infer(
         tree,
         model,
     )
 
     assert model.types["a"]["width"] == 8
+
+    semantic_type = model.get_semantic_type("a")
+
+    assert semantic_type is not None
+    assert semantic_type.width == 8
+    assert semantic_type.signed is False
+    assert semantic_type.packed is True

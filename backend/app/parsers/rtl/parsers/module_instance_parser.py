@@ -128,13 +128,6 @@ class ModuleInstanceParser(BaseParser):
             or context.current().token_type
             != RTLTokenType.IDENTIFIER
         ):
-            print("\n===== ModuleInstanceParser DEBUG =====")
-            if not context.eof():
-                t = context.current()
-                print("Current token:", t.token_type, repr(t.value))
-            else:
-                print("EOF reached")
-            print("======================================\n")
             raise RuntimeError(
                 "Expected instance name."
             )

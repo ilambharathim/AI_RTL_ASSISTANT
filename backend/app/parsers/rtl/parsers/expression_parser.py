@@ -283,9 +283,15 @@ class ExpressionParser(BaseParser):
 
                 )
 
-            return IdentifierExpression(
+            node = IdentifierExpression(
                 name,
             )
+            object.__setattr__(
+                node,
+                "location",
+                token.source_location,
+            )
+            return node
 
         #
         # literal
