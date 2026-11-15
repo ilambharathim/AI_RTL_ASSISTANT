@@ -38,11 +38,59 @@ export interface WaveformObservation {
   timestamp: number;
 }
 
+export interface WaveformEvent {
+  signal: string;
+  timestamp: number;
+  value: string;
+}
+
+export interface SimulationMetadata {
+  timescale?: string;
+  start_time?: number;
+  end_time?: number;
+  duration?: number;
+  clock_signals?: string[];
+  clock_periods?: Record<string, number>;
+  clock_frequencies?: Record<string, string>;
+}
+
+export interface SignalActivity {
+  transitions: number;
+}
+
 export interface WaveformResult {
-  status: "success" | "error" | "empty";
+  status: "success" | "error" | "empty" | "unavailable" | "PASSED";
+  source?: "generated" | "uploaded" | "none" | string;
   events_count: number;
   signals_analyzed: string[];
+  events?: WaveformEvent[];
   observations?: WaveformObservation[];
+  message?: string;
+  simulation?: SimulationMetadata;
+  signal_activity?: Record<string, SignalActivity>;
+}
+
+export interface SignalMetadata {
+  name: string;
+  direction: "input" | "output" | "internal" | string;
+  data_type: string;
+  width: number;
+  signed: boolean;
+}
+
+export interface DesignMetadata {
+  top_module: string;
+  module_count: number;
+  instance_count: number;
+  port_count: number;
+  signal_count: number;
+  input_count: number;
+  output_count: number;
+  parameter_count: number;
+  assignment_count: number;
+  always_block_count: number;
+  operation_counts: Record<string, number>;
+  signals: SignalMetadata[];
 }
 
 export interface AIFinding {
@@ -66,6 +114,7 @@ export interface Reports {
 export interface AnalyzeResponse {
   status: string;
   top_module: string;
+  design_metadata?: DesignMetadata;
   diagnostics: Diagnostic[];
   hierarchy: HierarchyNode[];
   traceability: TraceabilityLink[];

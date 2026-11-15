@@ -1,4 +1,4 @@
-import { Folder, FileText, Code, FileCode2, Activity, ShieldCheck, FileCheck2 } from 'lucide-react';
+import { Folder, FileText, Code, FileCode2, ShieldCheck, FileCheck2 } from 'lucide-react';
 import type { AnalysisStatus } from '../../types/state';
 import type { AnalyzeResponse } from '../../types/api';
 
@@ -14,7 +14,6 @@ const navItems = [
   { id: 'specification',  label: 'Specification',  icon: FileText,    group: 'input' },
   { id: 'rtl',            label: 'RTL',            icon: Code,        group: 'input' },
   { id: 'testbench',      label: 'Testbench',      icon: FileCode2,   group: 'input' },
-  { id: 'analysis',       label: 'Analysis',       icon: Activity,    group: 'output' },
   { id: 'results',        label: 'Results',        icon: ShieldCheck, group: 'output' },
   { id: 'reports',        label: 'Reports',        icon: FileCheck2,  group: 'output' },
 ];

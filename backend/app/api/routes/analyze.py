@@ -16,6 +16,8 @@ from app.domain.requirement import Requirement
 from app.analysis.traceability.requirement_tracer import RequirementTracer
 from app.diagnostics.diagnostic_engine import DiagnosticEngine
 from app.simulation.waveform_analyzer import WaveformAnalyzer
+from app.simulation.simulator_runner import SimulatorRunner
+from app.analysis.design_metadata_extractor import DesignMetadataExtractor
 from app.ai.evidence_store import EvidenceStore
 from app.ai.ai_reasoning_engine import AIReasoningEngine
 from app.reporting.report_generator import ConsolidatedReportGenerator
@@ -114,12 +116,17 @@ def analyze_project(payload: AnalyzeRequest):
     tracer = RequirementTracer()
     trace_res = tracer.trace(requirements, semantic_model)
 
-    # 7. Waveform Analysis (if VCD present)
+    # 7. Waveform Analysis (VCD upload or automated simulation generation)
     waveform_analysis = {}
     wf_observations = []
     if payload.vcd_content:
         wf_analyzer = WaveformAnalyzer()
-        waveform_res = wf_analyzer.analyze_vcd_text(payload.vcd_content)
+        waveform_res = wf_analyzer.analyze_vcd_text(payload.vcd_content, source="uploaded")
+        waveform_analysis = waveform_res
+        wf_observations = waveform_res.get("observations_raw", [])
+    elif payload.testbench_code and payload.testbench_code.strip():
+        runner = SimulatorRunner()
+        waveform_res = runner.execute_simulation(rtl_code, payload.testbench_code.strip())
         waveform_analysis = waveform_res
         wf_observations = waveform_res.get("observations_raw", [])
 
@@ -185,9 +192,14 @@ def analyze_project(payload: AnalyzeRequest):
             "actual": getattr(link, "details", "Completed")
         })
 
+    # Format design metadata
+    meta_extractor = DesignMetadataExtractor()
+    design_metadata = meta_extractor.extract_metadata(syntax_tree, semantic_model)
+
     return {
         "status": "success",
         "top_module": top_name,
+        "design_metadata": design_metadata,
         "diagnostics": diag_list,
         "hierarchy": hierarchy_data,
         "traceability": links_list,

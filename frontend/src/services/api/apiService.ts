@@ -40,6 +40,26 @@ export class ApiService {
     return data as AnalyzeResponse;
   }
 
+  static async kiwiChat(payload: { messages: Array<{ role: string; content: string }>; project_context: Record<string, unknown> }): Promise<{ text: string; provider: string; live_ai: boolean }> {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/kiwi/chat`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (response.ok) {
+        return await response.json();
+      }
+    } catch {
+      // Fallback response if network error
+    }
+    return {
+      text: "Unable to connect to Kiwi assistant backend service. Please check network connection.",
+      provider: "offline",
+      live_ai: false,
+    };
+  }
+
   static async checkHealth(): Promise<boolean> {
     try {
       const response = await fetch(`${API_BASE_URL}/`, { method: "GET" });

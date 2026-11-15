@@ -1,12 +1,13 @@
 import { Info } from 'lucide-react';
 import { KiwiAssistantWidget } from '../common/KiwiAssistantWidget';
 import { RivaIntelligencePanel } from '../ai/RivaIntelligencePanel';
-import type { InputStatus, AnalysisState } from '../../types/state';
+import type { InputStatus, AnalysisState, ProjectState } from '../../types/state';
 
 interface ContextPanelProps {
   activeSection: string;
   inputStatus: InputStatus;
   analysisState: AnalysisState;
+  projectState?: ProjectState;
 }
 
 const SECTION_CONTEXT: Record<string, { label: string; description: string }> = {
@@ -15,12 +16,11 @@ const SECTION_CONTEXT: Record<string, { label: string; description: string }> = 
   rtl:           { label: 'RTL',            description: 'SystemVerilog RTL is parsed and semantically analyzed by the backend engine.' },
   testbench:     { label: 'Testbench',      description: 'Optional: Simulation stimulus for waveform-linked verification.' },
   waveform:      { label: 'Waveform (VCD)', description: 'Optional: VCD trace analyzed by the backend waveform engine.' },
-  analysis:      { label: 'Analysis',       description: 'Verification pipeline status.' },
   results:       { label: 'Results',        description: 'Grounded backend verification results, hierarchy, traceability, and AI explanation.' },
   reports:       { label: 'Reports',        description: 'Backend-generated consolidated Markdown and JSON verification reports.' },
 };
 
-export function ContextPanel({ activeSection, inputStatus, analysisState }: ContextPanelProps) {
+export function ContextPanel({ activeSection, inputStatus, analysisState, projectState }: ContextPanelProps) {
   const ctx = SECTION_CONTEXT[activeSection] ?? SECTION_CONTEXT['overview'];
 
   return (
@@ -62,7 +62,7 @@ export function ContextPanel({ activeSection, inputStatus, analysisState }: Cont
       </div>
       {/* 4. Kiwi Assistant Footer Widget */}
       <div className="p-3 border-t border-slate-800 flex-shrink-0">
-        <KiwiAssistantWidget />
+        <KiwiAssistantWidget analysisState={analysisState} projectState={projectState} />
       </div>
     </aside>
   );

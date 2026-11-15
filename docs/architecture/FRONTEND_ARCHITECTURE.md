@@ -108,3 +108,17 @@ Phase 10 changes are **presentation-only** and do not alter backend contracts, v
 - **ContextPanel**: Narrowed to 288px, added Reports section context, consistent `#0A0D0E` background.
 - **RivaShell**: Subtler atmospheric glow with `riva-bg-glow` animation, dimmer placeholder text colors, top-left gradient origin.
 - **VerificationWorkspace**: Removed stale Phase 3 placeholder text.
+
+## 11. Visual Design System
+- **Layout Architecture**: 4-panel EDA workstation grid (Header: `h-[52px]`, Sidebar: `w-52`, Workspace: flexible center `flex-1`, Context Panel: `w-72`, Status Bar: `h-7`).
+- **Color Palette**:
+  - Platform Background: `#0F1516` near-black green-charcoal foundation with subtle radial cyan glow (`riva-bg-glow`).
+  - Primary Panels: `#0B0F10` / `#0A0D0E` translucent dark surfaces.
+  - Nested Cards: `#0d1117` / `#11191A` code and diagnostic containers.
+  - Borders: `border-slate-800` / `border-slate-800/80` thin technical rules.
+  - Accent Palette: Cyan (`#22d3ee`) for primary actions and technical metadata; Emerald (`#34d399`) for verified/clean status; Amber (`#fbbf24`) for warnings; Rose (`#f43f5e`) for errors.
+- **Typography System**:
+  - Primary UI: `Inter` (weights 300–700).
+  - Technical / Code: `JetBrains Mono` (weights 400–600).
+- **Interactive Behavior**: Keyboard accessibility via `:focus-visible` rings (`outline-cyan-500/60`), reduced motion support via `@media (prefers-reduced-motion: reduce)`, and printable report formatting via `@media print`.
+

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { FileCheck2, ArrowRight } from 'lucide-react';
 import { VerificationSummary } from '../results/VerificationSummary';
+import { DesignOverviewPanel } from '../results/DesignOverviewPanel';
 import { DiagnosticOverview } from '../results/DiagnosticOverview';
 import type { DiagnosticFilter } from '../results/DiagnosticOverview';
 import { DiagnosticList } from '../results/DiagnosticList';
@@ -33,6 +34,9 @@ export function AnalysisResultSummary({ result, onNavigateToEditor, onNavigateTo
     <div className="max-w-4xl mx-auto w-full py-4 space-y-6">
       {/* 1. Verification Summary */}
       <VerificationSummary result={result} />
+
+      {/* 1.5. Design Overview (Metadata & Signal Intelligence) */}
+      <DesignOverviewPanel metadata={result.design_metadata} />
 
       {/* 2. Diagnostics */}
       {result.diagnostics && result.diagnostics.length > 0 && (

@@ -72,25 +72,7 @@ export function RivaShell() {
       );
     }
 
-    // Analysis section
-    if (activeSection === 'analysis') {
-      if (analysisState.status === 'error' && analysisState.error) {
-        return (
-          <main className="flex-1 p-6 overflow-hidden relative z-10 flex flex-col">
-            <AnalysisError message={analysisState.error} onRetry={runAnalysis} />
-          </main>
-        );
-      }
-      return (
-        <main className="flex-1 p-6 overflow-hidden relative z-10 flex flex-col items-center justify-center">
-          <p className="text-slate-700 font-mono text-sm">
-            {analysisState.status === 'success'
-              ? 'Analysis complete — check Results.'
-              : 'Ready to analyze. Use Overview → Start Verification.'}
-          </p>
-        </main>
-      );
-    }
+
 
     // Default: editor workspace
     return (
@@ -124,6 +106,7 @@ export function RivaShell() {
           activeSection={activeSection}
           inputStatus={inputStatus}
           analysisState={analysisState}
+          projectState={projectState}
         />
       </div>
 

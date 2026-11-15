@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.routes.upload import router as upload_router
 from app.api.routes.analyze import router as analyze_router
 from app.api.routes.projects import router as projects_router
+from app.api.routes.kiwi import router as kiwi_router
 
 app = FastAPI(
     title="RIVA Backend API",
@@ -19,11 +20,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Support /upload, /api/upload, /api/analyze, and /api/projects
+# Support /upload, /api/upload, /api/analyze, /api/projects, and /api/kiwi/chat
 app.include_router(upload_router)
 app.include_router(upload_router, prefix="/api")
 app.include_router(analyze_router, prefix="/api")
 app.include_router(projects_router, prefix="/api")
+app.include_router(kiwi_router, prefix="/api")
 
 
 @app.get("/")

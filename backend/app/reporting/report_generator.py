@@ -38,10 +38,13 @@ class ConsolidatedReportGenerator:
         ai_findings = self.reasoning_engine.generate_explanation(payload)
 
         status_flag = "PASSED" if data["errors_count"] == 0 else "FAILED"
+        hierarchy = data.get("hierarchy_summary", {})
+        top_mod = hierarchy.get("top_module", "top")
 
         report = f"""# RIVA Consolidated Verification Report
 
 **Project**: {payload.project_name}  
+**Top Module**: `{top_mod}`  
 **Verification Status**: `{status_flag}`  
 **Overall Confidence**: {ai_findings['confidence_score']}%  
 
