@@ -37,11 +37,6 @@
       <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.5"/>
     </filter>
 
-    <filter id="glowCyan" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="4" result="blur"/>
-      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-    </filter>
-
     <!-- Arrow Markers -->
     <marker id="arrowCyan" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
       <path d="M 0 1 L 10 5 L 0 9 z" fill="#06b6d4"/>
@@ -51,9 +46,6 @@
     </marker>
     <marker id="arrowEmerald" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
       <path d="M 0 1 L 10 5 L 0 9 z" fill="#10b981"/>
-    </marker>
-    <marker id="arrowAmber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f59e0b"/>
     </marker>
   </defs>
 
@@ -100,7 +92,7 @@
       <text x="26" y="31" fill="#38bdf8" font-size="14" font-weight="bold" text-anchor="middle">SV</text>
       <text x="50" y="26" fill="#f1f5f9" font-size="13" font-weight="600">RTL Source</text>
       <text x="50" y="42" fill="#94a3b8" font-size="11">SystemVerilog / V</text>
-      <path d="M 12 55 L 168 55" stroke="#334155" stroke-width="0.8"/>
+      <line x1="12" y1="55" x2="168" y2="55" stroke="#334155" stroke-width="0.8"/>
       <text x="12" y="72" fill="#64748b" font-size="10">• Modules, Ports, Nets</text>
       <text x="12" y="86" fill="#64748b" font-size="10">• Always blocks &amp; FSMs</text>
     </g>
@@ -112,7 +104,7 @@
       <text x="26" y="31" fill="#a855f7" font-size="14" font-weight="bold" text-anchor="middle">SP</text>
       <text x="50" y="26" fill="#f1f5f9" font-size="13" font-weight="600">Design Specs</text>
       <text x="50" y="42" fill="#94a3b8" font-size="11">Markdown / Req Text</text>
-      <path d="M 12 55 L 168 55" stroke="#334155" stroke-width="0.8"/>
+      <line x1="12" y1="55" x2="168" y2="55" stroke="#334155" stroke-width="0.8"/>
       <text x="12" y="72" fill="#64748b" font-size="10">• REQ tags &amp; contracts</text>
       <text x="12" y="86" fill="#64748b" font-size="10">• Temporal properties</text>
     </g>
@@ -124,16 +116,16 @@
       <text x="26" y="31" fill="#34d399" font-size="14" font-weight="bold" text-anchor="middle">TB</text>
       <text x="50" y="26" fill="#f1f5f9" font-size="13" font-weight="600">Verification TB</text>
       <text x="50" y="42" fill="#94a3b8" font-size="11">VCD Waveform Trace</text>
-      <path d="M 12 55 L 168 55" stroke="#334155" stroke-width="0.8"/>
+      <line x1="12" y1="55" x2="168" y2="55" stroke="#334155" stroke-width="0.8"/>
       <text x="12" y="72" fill="#64748b" font-size="10">• Simulation stim &amp; clocks</text>
       <text x="12" y="86" fill="#64748b" font-size="10">• Transition edge logs</text>
     </g>
   </g>
 
-  <!-- Arrow: Col 1 -> Col 2 -->
-  <path d="M 240 200 L 285 200" stroke="#06b6d4" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrowCyan)"/>
-  <path d="M 240 310 L 285 310" stroke="#06b6d4" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrowCyan)"/>
-  <path d="M 240 420 L 285 420" stroke="#06b6d4" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrowCyan)"/>
+  <!-- Connectors: Col 1 -> Col 2 -->
+  <line x1="240" y1="202" x2="284" y2="202" stroke="#06b6d4" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrowCyan)"/>
+  <line x1="240" y1="312" x2="284" y2="312" stroke="#06b6d4" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrowCyan)"/>
+  <line x1="240" y1="422" x2="284" y2="422" stroke="#06b6d4" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrowCyan)"/>
 
   <!-- ==================== COLUMN 2: DETERMINISTIC CORE ==================== -->
   <g transform="translate(290, 110)">
@@ -169,8 +161,8 @@
     </g>
   </g>
 
-  <!-- Arrow: Col 2 -> Col 3 -->
-  <path d="M 490 265 L 535 265" stroke="#3b82f6" stroke-width="2.5" marker-end="url(#arrowCyan)"/>
+  <!-- Connector: Col 2 -> Col 3 -->
+  <line x1="490" y1="267" x2="534" y2="267" stroke="#3b82f6" stroke-width="2.5" marker-end="url(#arrowCyan)"/>
 
   <!-- ==================== COLUMN 3: DIAGNOSTICS & TRACEABILITY ==================== -->
   <g transform="translate(540, 110)">
@@ -209,8 +201,8 @@
     </g>
   </g>
 
-  <!-- Arrow: Col 3 -> Col 4 -->
-  <path d="M 740 265 L 785 265" stroke="#a855f7" stroke-width="2.5" marker-end="url(#arrowPurple)"/>
+  <!-- Connector: Col 3 -> Col 4 -->
+  <line x1="740" y1="267" x2="784" y2="267" stroke="#a855f7" stroke-width="2.5" marker-end="url(#arrowPurple)"/>
 
   <!-- ==================== COLUMN 4: GROUNDED AI & SIMULATION LOOP ==================== -->
   <g transform="translate(790, 110)">
@@ -247,8 +239,10 @@
     </g>
   </g>
 
-  <!-- Arrow: Col 4 -> Workstation (Bottom) -->
-  <path d="M 990 265 L 1030 265 L 1030 450 L 600 450" stroke="#10b981" stroke-width="2.5" marker-end="url(#arrowEmerald)"/>
+  <!-- Connectors: Feed Down Into Stage 5 (Workstation) -->
+  <line x1="390" y1="470" x2="390" y2="480" stroke="#06b6d4" stroke-width="2.5" marker-end="url(#arrowCyan)"/>
+  <line x1="640" y1="470" x2="640" y2="480" stroke="#a855f7" stroke-width="2.5" marker-end="url(#arrowPurple)"/>
+  <line x1="890" y1="470" x2="890" y2="480" stroke="#10b981" stroke-width="2.5" marker-end="url(#arrowEmerald)"/>
 
   <!-- ==================== STAGE 5: INTERACTIVE WORKSTATION ==================== -->
   <g transform="translate(60, 485)" filter="url(#shadow)">
